@@ -97,7 +97,40 @@ Un compteur croissant par canal interdit le rejeu.
 
 <div align="center">
 
-<!-- CAPTURES -->
+<img src="docs/captures/mac-fenetre.png" width="86%" alt="La fenêtre macOS : appairage, autorisations, et le panneau de diagnostic à droite">
+
+<br><br>
+
+<table>
+<tr>
+<td align="center" width="25%"><img src="docs/captures/iphone-trackpad.png" width="100%" alt="Surface tactile"><br><sub><b>Trackpad</b><br>1 doigt : curseur · 2 : défilement · 3 : gestes</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-mac-constantes.png" width="100%" alt="Constantes du Mac et placement des fenêtres"><br><sub><b>Mac</b><br>Constantes, apps, placement des fenêtres</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-media-reprise.png" width="100%" alt="Reprise de lecture"><br><sub><b>Reprise de lecture</b><br>Ce qui joue sur le Mac, repris sur l'iPhone</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-clavier-texte.png" width="100%" alt="Clavier et presse-papiers partagé"><br><sub><b>Clavier</b><br>Texte, dictée, presse-papiers partagé</sub></td>
+</tr>
+</table>
+
+<details>
+<summary><b>Voir plus d'écrans</b></summary>
+
+<br>
+
+<table>
+<tr>
+<td align="center" width="25%"><img src="docs/captures/iphone-mac-outils.png" width="100%"><br><sub>Onglets, presse-papiers, MIDI, notes, macros, mode jeu</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-mac-fenetres.png" width="100%"><br><sub>Moitiés, quarts, plein écran, réduire</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-clavier-touches.png" width="100%"><br><sub>Modificateurs, F1–F12, navigation</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-media-presentation.png" width="100%"><br><sub>Volume, luminosité, mode présentation</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/captures/iphone-clavier-azerty.png" width="100%"><br><sub>Disposition AZERTY exacte</sub></td>
+<td align="center"><img src="docs/captures/iphone-mac-statistiques.png" width="100%"><br><sub>Statistiques d'usage</sub></td>
+<td align="center"><img src="docs/captures/iphone-reglages.png" width="100%"><br><sub>Réglages et appairage</sub></td>
+<td align="center"><img src="docs/captures/iphone-mac-suite.png" width="100%"><br><sub>Alimentation et concentration</sub></td>
+</tr>
+</table>
+
+</details>
 
 </div>
 

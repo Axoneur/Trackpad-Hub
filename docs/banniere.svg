@@ -1,89 +1,155 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-label="TrackPad Hub — votre iPhone devient le trackpad de votre Mac">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="TrackPad Hub — le doigt glisse sur l'iPhone, le curseur suit sur le Mac">
   <defs>
-    <linearGradient id="fond" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0B1020"/>
-      <stop offset="55%" stop-color="#141C33"/>
-      <stop offset="100%" stop-color="#0A0F1C"/>
+    <linearGradient id="ciel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#070B16"/>
+      <stop offset="45%" stop-color="#111A31"/>
+      <stop offset="100%" stop-color="#060912"/>
     </linearGradient>
 
-    <linearGradient id="lueur" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="encreTitre" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#BBD4FF"/>
+      <stop offset="100%" stop-color="#7AA7F5"/>
+    </linearGradient>
+
+    <linearGradient id="filet" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#3B82F6" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#60A5FA" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#7DD3FC" stop-opacity="0.9"/>
       <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
       <animateTransform attributeName="gradientTransform" type="translate"
-                        values="-1 0; 1 0; -1 0" dur="7s" repeatCount="indefinite"/>
+                        values="-1 0; 1 0; -1 0" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
 
-    <linearGradient id="titre" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#9CC4FF"/>
-    </linearGradient>
+    <radialGradient id="aura">
+      <stop offset="0%" stop-color="#93C5FD" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#93C5FD" stop-opacity="0"/>
+    </radialGradient>
 
-    <filter id="halo" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="14" result="f"/>
-      <feMerge><feMergeNode in="f"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="doux" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="6"/>
     </filter>
+
+    <!-- Le doigt et le curseur suivent la même courbe, l'une transposée dans
+         l'écran du Mac : c'est tout le propos de l'app, montré plutôt que dit.
+         
+         Trajectoires exprimées **depuis l'origine**, et non en absolu : les
+         éléments portent alors leur point de départ dans leurs propres
+         coordonnées. Un lecteur qui n'anime pas le SVG les affiche donc au bon
+         endroit, au lieu de les empiler dans le coin haut-gauche. -->
+    <path id="traceDoigt" d="M 0,0 C 25,-100 65,-40 85,-180"/>
+    <path id="traceCurseur" d="M 0,0 C 86,-89 222,-35 291,-160"/>
   </defs>
 
-  <rect width="1200" height="320" fill="url(#fond)"/>
-  <rect width="1200" height="3" fill="url(#lueur)"/>
+  <rect width="1200" height="400" fill="url(#ciel)"/>
+  <rect width="1200" height="2" fill="url(#filet)"/>
 
-  <!-- Surface du trackpad, à gauche : le doigt qui la parcourt donne le sujet
-       du projet sans une ligne de texte. -->
-  <g transform="translate(78 74)">
-    <rect width="300" height="176" rx="26" fill="#FFFFFF" fill-opacity="0.05"
-          stroke="#FFFFFF" stroke-opacity="0.14"/>
-    <circle r="17" fill="#60A5FA" fill-opacity="0.28" filter="url(#halo)">
-      <animateMotion dur="6s" repeatCount="indefinite"
-                     path="M 62,124 C 120,42 196,150 244,58"/>
-    </circle>
-    <circle r="7" fill="#DBEAFE">
-      <animateMotion dur="6s" repeatCount="indefinite"
-                     path="M 62,124 C 120,42 196,150 244,58"/>
-    </circle>
+  <!-- ── Texte ───────────────────────────────────────────────────────── -->
+  <g font-family="ui-sans-serif,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial">
+    <text x="70" y="150" font-size="52" font-weight="800" fill="url(#encreTitre)"
+          letter-spacing="-1">TrackPad Hub</text>
+    <text x="72" y="192" font-size="19" fill="#9FB6DC">Votre iPhone devient le trackpad de votre Mac.</text>
+    <text x="72" y="222" font-size="19" fill="#9FB6DC">Gestes, clavier, fenêtres, média.</text>
+
+    <g font-size="13" font-weight="600">
+      <g transform="translate(72 262)">
+        <rect width="104" height="30" rx="15" fill="#1D4ED8" fill-opacity="0.22" stroke="#60A5FA" stroke-opacity="0.45"/>
+        <text x="52" y="20" text-anchor="middle" fill="#BFDBFE">USB · 1 ms</text>
+      </g>
+      <g transform="translate(186 262)">
+        <rect width="106" height="30" rx="15" fill="#1D4ED8" fill-opacity="0.22" stroke="#60A5FA" stroke-opacity="0.45"/>
+        <text x="53" y="20" text-anchor="middle" fill="#BFDBFE">Wi-Fi · 3 ms</text>
+      </g>
+      <g transform="translate(302 262)">
+        <rect width="96" height="30" rx="15" fill="#1D4ED8" fill-opacity="0.22" stroke="#60A5FA" stroke-opacity="0.45"/>
+        <text x="48" y="20" text-anchor="middle" fill="#BFDBFE">Bluetooth</text>
+      </g>
+    </g>
+
+    <text x="72" y="330" font-size="13" fill="#5B7099">Chiffré de bout en bout · Compte Apple gratuit · GPL-3.0</text>
   </g>
 
-  <!-- Le curseur du Mac suit le même tracé, décalé : c'est exactement ce que
-       fait l'app. -->
-  <g transform="translate(470 96)">
-    <rect width="640" height="150" rx="14" fill="#FFFFFF" fill-opacity="0.035"
+  <!-- ── iPhone ──────────────────────────────────────────────────────── -->
+  <g>
+    <rect x="470" y="45" width="150" height="310" rx="30" fill="#0D1526" stroke="#3A4C6E" stroke-width="2"/>
+    <rect x="480" y="55" width="130" height="290" rx="22" fill="#0A101E"/>
+    <rect x="522" y="61" width="46" height="9" rx="4.5" fill="#1B2740"/>
+
+    <!-- Surface tactile -->
+    <rect x="487" y="82" width="116" height="228" rx="16" fill="#FFFFFF" fill-opacity="0.045"
           stroke="#FFFFFF" stroke-opacity="0.10"/>
-    <g fill="#FFFFFF" fill-opacity="0.9">
-      <path d="M0 0 L0 17 L4.4 13.2 L7.2 19.4 L10.2 18 L7.4 11.9 L13 11.6 Z">
-        <animateMotion dur="6s" repeatCount="indefinite" begin="0.35s"
-                       path="M 96,104 C 220,26 380,132 486,42"/>
-      </path>
-    </g>
+
+    <!-- Halo puis point de contact, sur la même courbe -->
+    <circle cx="505" cy="300" r="26" fill="url(#aura)">
+      <animateMotion dur="5.5s" repeatCount="indefinite" calcMode="spline"
+                     keyTimes="0;1" keySplines="0.4 0 0.2 1">
+        <mpath href="#traceDoigt"/>
+      </animateMotion>
+    </circle>
+    <circle cx="505" cy="300" r="9" fill="#DBEAFE">
+      <animateMotion dur="5.5s" repeatCount="indefinite" calcMode="spline"
+                     keyTimes="0;1" keySplines="0.4 0 0.2 1">
+        <mpath href="#traceDoigt"/>
+      </animateMotion>
+    </circle>
+
+    <!-- Barre d'accueil -->
+    <rect x="518" y="330" width="54" height="4" rx="2" fill="#33415C"/>
   </g>
 
-  <text x="78" y="52" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial"
-        font-size="34" font-weight="700" fill="url(#titre)">TrackPad Hub</text>
+  <!-- ── Le message qui traverse ─────────────────────────────────────── -->
+  <g>
+    <line x1="628" y1="200" x2="694" y2="200" stroke="#2A3A5C" stroke-width="2" stroke-dasharray="3 5"/>
+    <circle r="4" fill="#7DD3FC" filter="url(#doux)">
+      <animate attributeName="cx" values="628;694" dur="1.1s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="200;200" dur="1.1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="1.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="4" fill="#7DD3FC" filter="url(#doux)">
+      <animate attributeName="cx" values="628;694" dur="1.1s" begin="0.55s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="200;200" dur="1.1s" begin="0.55s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="1.1s" begin="0.55s" repeatCount="indefinite"/>
+    </circle>
+  </g>
 
-  <text x="470" y="76" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial"
-        font-size="19" fill="#C7D6F5">Votre iPhone devient le trackpad de votre Mac.</text>
+  <!-- ── Fenêtre macOS ───────────────────────────────────────────────── -->
+  <g>
+    <rect x="700" y="60" width="440" height="280" rx="14" fill="#0D1526" stroke="#3A4C6E" stroke-width="2"/>
+    <rect x="700" y="60" width="440" height="34" rx="14" fill="#152037"/>
+    <rect x="700" y="80" width="440" height="14" fill="#152037"/>
+    <circle cx="722" cy="77" r="5.5" fill="#FF5F57"/>
+    <circle cx="740" cy="77" r="5.5" fill="#FEBC2E"/>
+    <circle cx="758" cy="77" r="5.5" fill="#28C840"/>
+    <text x="920" y="82" text-anchor="middle" font-size="12"
+          font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial" fill="#8397BC">TrackPad Hub</text>
 
-  <!-- Les trois transports, qui s'allument à tour de rôle. -->
-  <g font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial" font-size="14">
-    <g transform="translate(470 268)">
-      <rect width="112" height="30" rx="15" fill="#3B82F6" fill-opacity="0.16"
-            stroke="#60A5FA" stroke-opacity="0.5">
-        <animate attributeName="fill-opacity" values="0.16;0.45;0.16" dur="4.5s" repeatCount="indefinite"/>
-      </rect>
-      <text x="56" y="20" text-anchor="middle" fill="#BFDBFE">USB · 1 ms</text>
+    <!-- Contenu esquissé : des cartes, comme dans l'app -->
+    <g fill="#FFFFFF" fill-opacity="0.05" stroke="#FFFFFF" stroke-opacity="0.07">
+      <rect x="716" y="108" width="408" height="52" rx="10"/>
+      <rect x="716" y="170" width="196" height="72" rx="10"/>
+      <rect x="928" y="170" width="196" height="72" rx="10"/>
+      <rect x="716" y="252" width="408" height="72" rx="10"/>
     </g>
-    <g transform="translate(596 268)">
-      <rect width="112" height="30" rx="15" fill="#3B82F6" fill-opacity="0.16"
-            stroke="#60A5FA" stroke-opacity="0.5">
-        <animate attributeName="fill-opacity" values="0.16;0.45;0.16" dur="4.5s" begin="1.5s" repeatCount="indefinite"/>
-      </rect>
-      <text x="56" y="20" text-anchor="middle" fill="#BFDBFE">Wi-Fi · 3 ms</text>
+    <g fill="#3E5680">
+      <rect x="732" y="124" width="120" height="8" rx="4"/>
+      <rect x="732" y="140" width="196" height="6" rx="3"/>
+      <rect x="732" y="188" width="88" height="7" rx="3.5"/>
+      <rect x="944" y="188" width="88" height="7" rx="3.5"/>
+      <rect x="732" y="270" width="140" height="7" rx="3.5"/>
     </g>
-    <g transform="translate(722 268)">
-      <rect width="126" height="30" rx="15" fill="#3B82F6" fill-opacity="0.16"
-            stroke="#60A5FA" stroke-opacity="0.5">
-        <animate attributeName="fill-opacity" values="0.16;0.45;0.16" dur="4.5s" begin="3s" repeatCount="indefinite"/>
-      </rect>
-      <text x="63" y="20" text-anchor="middle" fill="#BFDBFE">Bluetooth · secours</text>
+    <circle cx="1108" cy="134" r="6" fill="#28C840" fill-opacity="0.85">
+      <animate attributeName="fill-opacity" values="0.85;0.25;0.85" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Le curseur reprend la courbe du doigt, avec un léger retard : c'est
+         ce décalage qu'on perçoit comme de la latence. -->
+    <g fill="#FFFFFF" transform="translate(783 289)">
+      <path d="M0 0 L0 19 L4.9 14.7 L8 21.6 L11.4 20 L8.2 13.2 L14.5 12.9 Z"
+            stroke="#0B1220" stroke-width="1.2" stroke-linejoin="round">
+        <animateMotion dur="5.5s" begin="0.18s" repeatCount="indefinite" calcMode="spline"
+                       keyTimes="0;1" keySplines="0.4 0 0.2 1">
+          <mpath href="#traceCurseur"/>
+        </animateMotion>
+      </path>
     </g>
   </g>
 </svg>
