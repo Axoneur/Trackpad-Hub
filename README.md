@@ -319,6 +319,34 @@ En ligne de commande : `./reinstall.sh --install`
 > **L'app iPhone expire dans 3 jours**
 > [ Renouveler maintenant ] [ Automatiser tous les 6 jours ]
 
+### 🔔 Vous êtes prévenu même sans ouvrir l'app
+
+Personne ne garde une fenêtre ouverte pour surveiller une date. Les deux apps
+envoient donc de vraies notifications, à **trois moments** seulement — J-3,
+J-1, et le jour même :
+
+| Quand | Sur le Mac | Sur l'iPhone |
+|---|---|---|
+| 3 jours avant | « L'app iPhone expire dans 3 jours » | « TrackPad Hub expire dans 3 jours » |
+| La veille | « L'app iPhone expire demain » | « TrackPad Hub expire demain » |
+| Le jour même | « L'app iPhone a expiré » | « TrackPad Hub a expiré » |
+
+Trois paliers et pas un rappel quotidien : une notification qui se répète tous
+les jours finit coupée, et l'avertissement utile n'est alors jamais lu.
+
+L'iPhone **dépose ses avertissements à l'avance**, dès le lancement. C'est
+indispensable : une fois la signature expirée l'app ne s'ouvre plus, donc elle
+ne peut plus prévenir de rien. iOS les délivre quand même.
+
+> **Si vous aviez refusé les notifications**, l'app macOS le détecte et affiche
+> une carte **« Notifications désactivées »** avec un bouton vers les Réglages.
+> macOS ne redemande jamais après un refus : seuls les Réglages Système
+> débloquent.
+
+**L'app macOS annonce aussi les nouvelles versions** : elle consulte les
+publications du dépôt au lancement et vous notifie une fois, pas à chaque
+ouverture.
+
 **3. À la main** — iPhone branché et déverrouillé :
 
 ```bash

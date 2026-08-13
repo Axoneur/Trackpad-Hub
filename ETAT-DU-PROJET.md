@@ -851,6 +851,94 @@ vérifiés au compilateur, pas de mémoire :
 `containerBackground` lui-même) ; `.glassEffect` et `GlassEffectContainer`
 sont **macOS 26+**.
 
+
+### Maintenance : expiration et mises à jour (13 août 2026)
+
+Trois fichiers, un seul but : que l'utilisateur n'ait pas à surveiller une date.
+
+| Fichier | Rôle |
+|---|---|
+| `Shared/SigningExpiry.swift` | Lit l'expiration dans le profil **embarqué** (iPhone) |
+| `MacHost/Services/SigningWatch.swift` | Lit les profils du dossier d'Xcode (Mac), relance horaire |
+| `Shared/ReleaseChecker.swift` | Consulte les publications GitHub, une fois par jour |
+| `MacHost/Services/MaintenanceNotifier.swift` | Notifie sur le Mac, par paliers |
+| `iOSApp/ExpiryNotice.swift` | Programme les notifications iPhone **à l'avance** |
+
+**Paliers plutôt que rappel quotidien.** `[3, 1, 0]` jours, chacun annoncé une
+seule fois (mémorisé dans les préférences). Une notification répétée chaque
+jour est coupée par l'utilisateur au bout de trois jours, et l'avertissement
+utile qui suit n'est alors jamais lu.
+
+**Pourquoi l'iPhone programme à l'avance.** Expirée, l'app ne s'ouvre plus :
+au moment où l'avertissement compte, elle n'est plus là pour l'émettre. Les
+trois notifications sont donc déposées dès le lancement, et reprogrammées à
+chaque fois — une réinstallation repousse la date, les anciennes deviendraient
+fausses.
+
+#### Piège : `first(where:)` bloquait l'escalade
+
+`paliers.first(where: { jours <= $0 })` renvoie **3** pour toute valeur
+inférieure à 3. Une fois le palier 3 mémorisé, « expire demain » et « expiré »
+n'auraient **jamais** été émis. Vérifié sur banc :
+
+```
+jours | first(where:) | last(where:)
+  3   |      3        |      3
+  1   |      3        |      1        ← le bon palier
+  0   |      3        |      0
+```
+
+`last` sur une liste décroissante donne l'escalade attendue.
+
+#### Piège : rien n'était branché
+
+`SigningWatch.actualiser()` et `ReleaseChecker.verifier()` n'étaient appelés
+**nulle part**. `grep` sur tout le projet : un seul résultat, la déclaration
+elle-même. Ni la bannière d'expiration, ni celle de mise à jour ne pouvaient
+donc apparaître — la fonctionnalité entière était inatteignable alors que le
+code semblait complet. Branchés dans `ContentView.onAppear`.
+
+Rappel de méthode : un `@StateObject` créé ne prouve rien ; seul un appel
+prouve qu'il tourne.
+
+#### Piège : les notifications étaient refusées, en silence
+
+Mesuré depuis l'app :
+
+```
+UNErrorDomain Code=1 "Notifications are not allowed for this application"
+autorisation notifications · refusé par l'utilisateur
+```
+
+Après un refus, `requestAuthorization` **ne redemande jamais** : elle échoue
+immédiatement, sans alerte. Le seul recours est Réglages Système. L'app
+affiche donc une carte « Notifications désactivées » avec un bouton vers les
+Réglages — sans elle, l'app restait muette et l'utilisateur découvrait
+l'expiration en constatant que rien ne s'ouvre.
+
+Ce diagnostic n'a été possible qu'après avoir **journalisé l'erreur** au lieu
+de la jeter : « refusé » seul ne distingue pas un refus utilisateur d'un
+bundle mal enregistré, et les deux se corrigent différemment.
+
+#### Piège : `reinstall.sh` annonçait 7 jours à tort
+
+Le script disait « profils renouvelés pour 7 jours » quelle que soit la
+réalité. Mesuré : après réinstallation, le profil expirait toujours le même
+jour — Apple ne délivre un profil neuf que lorsque l'ancien approche de sa
+fin, sinon Xcode réutilise l'existant. Le script lit maintenant la date réelle
+dans le profil embarqué et l'affiche, en heure locale (`date -j -u` à la
+lecture : la date du profil est en UTC, sans `-u` elle était décalée de deux
+heures).
+
+#### Ce qui n'a pas pu être vérifié
+
+Le dépôt effectif des notifications **sur l'iPhone** n'est pas mesuré :
+`log collect --device` exige root et `log stream --device` n'existe plus sur
+macOS 26. Sont vérifiés en revanche la compilation, la lecture du profil
+embarqué du bundle installé, et les trois dates calculées — toutes futures et
+correctement espacées. `iOSApp/TraceiOS.swift` journalise le dépôt pour qui
+peut lire le journal de l'appareil.
+
 ---
 
 ## 10. Ce qui reste ouvert

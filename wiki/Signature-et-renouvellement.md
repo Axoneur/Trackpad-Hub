@@ -103,9 +103,59 @@ Branchez l'iPhone, déverrouillez-le, puis dans le dossier du projet :
 
 ---
 
+## Être prévenu sans y penser
+
+Les deux apps envoient de vraies notifications à trois moments : **J-3**,
+**J-1**, et le jour de l'expiration.
+
+| Quand | Mac | iPhone |
+|---|---|---|
+| 3 jours avant | « L'app iPhone expire dans 3 jours » | « TrackPad Hub expire dans 3 jours » |
+| La veille | « L'app iPhone expire demain » | « TrackPad Hub expire demain » |
+| Le jour même | « L'app iPhone a expiré » | « TrackPad Hub a expiré » |
+
+**Pourquoi trois paliers et pas un rappel quotidien.** Une notification qui
+répète la même chose chaque jour finit désactivée au bout de trois jours — et
+l'avertissement vraiment utile, celui de la veille, n'est alors jamais lu.
+Chaque palier n'est annoncé qu'une fois.
+
+**Pourquoi l'iPhone programme à l'avance.** Une fois la signature expirée,
+l'app ne s'ouvre plus : au moment où l'avertissement serait le plus utile, elle
+n'est plus là pour l'émettre. Elle dépose donc ses trois avertissements dès le
+lancement, tant qu'elle fonctionne encore. iOS les délivre même si l'app ne
+s'ouvre plus. Ils sont reprogrammés à chaque lancement, puisqu'une
+réinstallation repousse la date.
+
+**Le Mac relit la date toutes les heures.** Une app de bureau reste ouverte des
+jours ; sans cette relecture, la date lue au lancement resterait figée et le
+palier « expire demain » ne serait jamais franchi.
+
+### Si vous ne recevez rien
+
+Un refus des notifications est définitif du point de vue de l'app : macOS ne
+réaffiche jamais l'alerte de demande. L'app macOS le détecte et affiche une
+carte **« Notifications désactivées »** avec un bouton **Ouvrir les Réglages**.
+
+Sur l'iPhone : Réglages → Notifications → TrackPad Hub.
+
+---
+
 ## Vérifier combien de temps il reste
 
-L'app macOS l'affiche quand l'échéance approche. Pour le savoir à tout moment :
+`./reinstall.sh` l'annonce à la fin de chaque installation, avec la date
+réelle lue dans le profil :
+
+```
+Terminé — l'app iPhone fonctionne jusqu'au mardi 18 août à 12h25
+          soit encore 4 jour(s).
+```
+
+> **Relancer le script ne repousse pas toujours l'échéance.** Apple ne délivre
+> un profil neuf que lorsque l'ancien approche de sa fin ; entre-temps Xcode
+> réutilise celui qui existe et la date ne bouge pas. C'est normal.
+
+L'app macOS l'affiche aussi quand l'échéance approche. Pour le savoir à tout
+moment :
 
 ```bash
 for f in ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/*.mobileprovision; do

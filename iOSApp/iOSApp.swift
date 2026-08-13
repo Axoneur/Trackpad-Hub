@@ -37,6 +37,9 @@ struct iOSApp: App {
                     connection.start()
                     // Au lancement, une fois par jour au plus.
                     releases.verifier()
+                    // Déposées d'avance : quand la signature expire, l'app ne
+                    // s'ouvre plus et ne peut donc plus prévenir de rien.
+                    ExpiryNotice.programmer()
                 }
                 .onChange(of: connection.pairingState) { _, state in
                     SharedStore.isPaired = (state == .paired)

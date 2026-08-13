@@ -26,6 +26,10 @@ final class ReleaseChecker: ObservableObject {
     @Published private(set) var disponible: Release?
     @Published private(set) var verificationEnCours = false
 
+    /// Appelé une seule fois par version découverte, pour notifier.
+    /// Branché côté Mac ; l'iPhone programme ses propres notifications.
+    var onNouvelleVersion: ((Release) -> Void)?
+
     /// Version de cette app, telle qu'écrite dans `project.yml`.
     static var versionActuelle: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0"
@@ -57,6 +61,7 @@ final class ReleaseChecker: ObservableObject {
                     return
                 }
                 self.disponible = trouvee
+                self.onNouvelleVersion?(trouvee)
             }
         }
     }

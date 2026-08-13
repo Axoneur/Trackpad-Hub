@@ -254,8 +254,39 @@ if ! xcrun devicectl device install app --device "$DEVICE" "$APP" > /tmp/trackpa
     exit 1
 fi
 
+# La vraie date, lue dans le profil embarqué — et non « 7 jours »
+# supposés. Mesuré : Xcode réutilise souvent le profil existant au lieu d'en
+# émettre un neuf, et l'échéance ne bouge alors pas d'un jour. Annoncer 7
+# jours dans ce cas, c'est promettre une marge qui n'existe pas.
 echo ""
-echo "Terminé — profils renouvelés pour 7 jours."
+ECHEANCE=""
+PROFIL=$(find "$HOME/Library/Developer/Xcode/DerivedData" \
+    -path "*Debug-iphoneos/iOSApp.app/embedded.mobileprovision" 2>/dev/null | head -1)
+if [ -n "$PROFIL" ]; then
+    ECHEANCE=$(security cms -D -i "$PROFIL" 2>/dev/null \
+        | plutil -extract ExpirationDate raw -o - - 2>/dev/null)
+fi
+
+if [ -n "$ECHEANCE" ]; then
+    # `-u` à la **lecture** : la date du profil est en UTC. Sans lui elle
+    # serait prise pour une heure locale, et affichée avec deux heures de
+    # décalage. L'affichage, lui, repasse en heure locale et en français.
+    EPOCH=$(date -j -u -f "%Y-%m-%dT%H:%M:%SZ" "$ECHEANCE" +%s 2>/dev/null || echo 0)
+    JOURS=$(( (EPOCH - $(date +%s)) / 86400 ))
+    LISIBLE=$(LC_TIME=fr_FR.UTF-8 date -j -r "$EPOCH" "+%A %d %B à %Hh%M" 2>/dev/null)
+    if [ "$JOURS" -gt 0 ] 2>/dev/null; then
+        echo "Terminé — l'app iPhone fonctionne jusqu'au $LISIBLE"
+        echo "          soit encore $JOURS jour(s)."
+        echo ""
+        echo "Relancer ce script ne repousse pas toujours l'échéance : Apple ne"
+        echo "délivre un nouveau profil de 7 jours que lorsque l'ancien approche"
+        echo "de sa fin. C'est normal, et l'app macOS vous préviendra à temps."
+    else
+        echo "Terminé — installation faite."
+    fi
+else
+    echo "Terminé — installation faite."
+fi
 echo ""
 echo "Si c'est la première installation, l'iPhone refusera d'ouvrir l'app."
 echo "Allez dans : Réglages > Général > VPN et gestion de l'appareil,"

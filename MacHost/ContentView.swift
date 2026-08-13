@@ -6,6 +6,7 @@ struct ContentView: View {
     @StateObject private var accessibility = AccessibilityManager()
     @StateObject private var releases = ReleaseChecker()
     @StateObject private var signature = SigningWatch()
+    @State private var notificationsBloquees = false
     @EnvironmentObject private var panels: MacHostApp.PanelState
 
     /// Vide = suivre la disposition active du Mac.
@@ -64,6 +65,7 @@ struct ContentView: View {
                 header
 
                 if signature.doitAvertir { signatureSection.glassCard() }
+                if notificationsBloquees { notificationsSection.glassCard() }
                 if releases.disponible != nil { updateSection.glassCard() }
 
                 addDeviceSection
@@ -88,7 +90,52 @@ struct ContentView: View {
             .padding(16)
         }
         .softScrollEdges()
-        .onAppear { layouts = KeyboardLayout.installed() }
+        .onAppear {
+            layouts = KeyboardLayout.installed()
+            // Notifier avant de vérifier : `verifier()` peut répondre tout de
+            // suite depuis son cache, et le rappel serait alors posé trop tard.
+            releases.onNouvelleVersion = { sortie in
+                MaintenanceNotifier.signalerVersion(sortie.version, notes: sortie.notes)
+            }
+            MaintenanceNotifier.diagnostiquer { notificationsBloquees = $0 }
+            releases.verifier()
+            signature.actualiser()
+        }
+    }
+
+    /// Notifications refusées : l'avertissement d'expiration n'arrivera pas.
+    ///
+    /// Affiché seulement dans ce cas. Une fois le refus enregistré, macOS
+    /// n'affichera plus jamais d'alerte de demande : redemander ne sert à
+    /// rien, seuls les Réglages Système débloquent. Sans cette carte, l'app
+    /// resterait muette et l'utilisateur découvrirait l'expiration en
+    /// constatant que l'app iPhone ne s'ouvre plus.
+    @ViewBuilder
+    private var notificationsSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Notifications désactivées", systemImage: "bell.slash")
+                .font(.headline)
+                .foregroundStyle(.orange)
+
+            Text("TrackPad Hub ne pourra pas vous prévenir avant l'expiration de la signature. L'avertissement restera visible ici, dans cette fenêtre, mais seulement si vous l'ouvrez.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+            HStack {
+                Button("Ouvrir les Réglages") {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.Notifications-Settings.extension") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                .glassButton(prominent: true)
+                Button("Revérifier") {
+                    MaintenanceNotifier.diagnostiquer { notificationsBloquees = $0 }
+                }
+                .glassButton()
+                Spacer()
+            }
+            .controlSize(.small)
+        }
     }
 
     /// Expiration de la signature de l'app iPhone.

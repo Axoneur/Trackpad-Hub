@@ -50,10 +50,28 @@ final class SigningWatch: ObservableObject {
         return "L'app iPhone expire dans \(jours) jours"
     }
 
+    private var minuterie: Timer?
+
+    init() {
+        actualiser()
+        // Une app de bureau reste ouverte des jours. Sans relance, la date
+        // lue au lancement resterait figée et le palier « expire demain »
+        // ne serait jamais franchi tant que l'app n'est pas relancée.
+        // Toutes les heures : le palier le plus fin est le jour.
+        minuterie = Timer.scheduledTimer(withTimeInterval: 3_600, repeats: true) { _ in
+            Task { @MainActor in self.actualiser() }
+        }
+    }
+
     // MARK: - Lecture
 
     func actualiser() {
         expiration = Self.prochaineExpiration()
+        // Prévenir hors de l'app : personne ne garde la fenêtre ouverte pour
+        // surveiller une date d'expiration.
+        if let jours = joursRestants {
+            MaintenanceNotifier.signalerExpiration(jours: jours)
+        }
     }
 
     private static func prochaineExpiration() -> Date? {

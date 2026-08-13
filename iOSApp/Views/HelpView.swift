@@ -424,7 +424,9 @@ enum HelpLibrary {
                 "Quand une version plus récente existe, un bandeau apparaît en haut des Réglages.",
                 "Sur le Mac : « git pull » puis « ./reinstall.sh --all ».",
                 "Un compte Apple gratuit signe pour 7 jours : passé ce délai, l'app iPhone cesse de s'ouvrir.",
-                "L'app macOS prévient trois jours avant, et propose de renouveler en un clic."
+                "Vous êtes prévenu par notification à trois moments : trois jours avant, la veille, et le jour même.",
+                "L'iPhone dépose ces avertissements à l'avance, dès l'ouverture : une fois expirée l'app ne s'ouvre plus, elle ne pourrait donc plus prévenir.",
+                "L'app macOS prévient elle aussi, et propose de renouveler en un clic."
             ],
             troubleshooting: [
                 ("L'app iPhone ne s'ouvre plus du tout",
@@ -432,11 +434,14 @@ enum HelpLibrary {
                 ("Je ne veux plus y penser",
                  "Sur le Mac, bouton « Automatiser tous les 6 jours ». Un agent système s'en charge, l'iPhone devant être branché à ce moment-là."),
                 ("Aucun bandeau de mise à jour n'apparaît",
-                 "C'est qu'il n'y en a pas. La vérification a lieu une fois par jour au maximum.")
+                 "C'est qu'il n'y en a pas. La vérification a lieu une fois par jour au maximum."),
+                ("Je ne reçois aucune notification d'expiration",
+                 "Réglages > Notifications > TrackPad Hub. Après un refus, iOS ne redemande jamais : seuls les Réglages débloquent.")
             ],
             tips: [
                 "Le compte payant supprime la limite des 7 jours, mais n'est utile que pour distribuer l'app.",
-                "La vérification n'envoie rien : elle lit une page publique de GitHub."
+                "La vérification n'envoie rien : elle lit une page publique de GitHub.",
+                "Trois avertissements seulement, jamais un par jour : un rappel quotidien finit coupé, et celui qui compte vraiment n'est plus lu."
             ]
         ),
 
