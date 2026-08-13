@@ -93,6 +93,19 @@ targets:
         NSSpeechRecognitionUsageDescription: "La reconnaissance vocale transforme votre voix en texte, envoyé ensuite à votre Mac."
         NSMotionUsageDescription: "La souris gyroscopique utilise les capteurs de mouvement pour déplacer le curseur du Mac quand vous inclinez l'iPhone."
         NSCameraUsageDescription: "La caméra sert à scanner le QR code d'appairage affiché par votre Mac."
+        # Déclarées explicitement : l'iPad exige les **quatre** orientations,
+        # sauf à se déclarer plein écran exclusif. Sans ça, Xcode avertit et
+        # l'app se comporte mal quand on retourne la tablette. L'iPhone garde
+        # les trois habituelles — personne ne tient un téléphone à l'envers.
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ${TPH_PREFIX}.ios

@@ -22,6 +22,27 @@ import Combine
 /// pour un résultat identique, serait du bruit pur.
 ///
 /// Le seuil reste réglable, « à chaque branchement » compris.
+/// Dernière ligne lue sur la sortie du script, protégée par un verrou.
+///
+/// Elle est **écrite** depuis la file d'entrée/sortie du tube et **relue**
+/// depuis le gestionnaire de fin du processus, qui s'exécute sur une autre
+/// file. Une simple variable capturée serait une course de données — Swift 6
+/// refuse d'ailleurs de compiler ce motif.
+private final class LigneCourante: @unchecked Sendable {
+    private let verrou = NSLock()
+    private var valeur = ""
+
+    func ecrire(_ texte: String) {
+        verrou.lock(); defer { verrou.unlock() }
+        valeur = texte
+    }
+
+    func lire() -> String {
+        verrou.lock(); defer { verrou.unlock() }
+        return valeur
+    }
+}
+
 @MainActor
 final class AutoRefresh: ObservableObject {
 
@@ -193,7 +214,7 @@ final class AutoRefresh: ObservableObject {
         // La dernière ligne utile du script sert d'indicateur d'avancement :
         // une barre qui tourne sans rien dire pendant deux minutes laisse
         // croire à un blocage.
-        var derniereLigne = ""
+        let derniereLigne = LigneCourante()
         tube.fileHandleForReading.readabilityHandler = { poignee in
             let morceau = poignee.availableData
             guard !morceau.isEmpty, let texte = String(data: morceau, encoding: .utf8)
@@ -201,7 +222,7 @@ final class AutoRefresh: ObservableObject {
             let lignes = texte.split(separator: "\n").map(String.init)
                 .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
             guard let derniere = lignes.last else { return }
-            derniereLigne = derniere
+            derniereLigne.ecrire(derniere)
             Task { @MainActor [weak self] in
                 guard let self, case .enCours = self.etat else { return }
                 self.etat = .enCours(derniere)
@@ -211,7 +232,7 @@ final class AutoRefresh: ObservableObject {
         processus.terminationHandler = { [weak self] fini in
             tube.fileHandleForReading.readabilityHandler = nil
             let code = fini.terminationStatus
-            let sortie = derniereLigne
+            let sortie = derniereLigne.lire()
             Task { @MainActor in
                 guard let self else { return }
                 self.processus = nil

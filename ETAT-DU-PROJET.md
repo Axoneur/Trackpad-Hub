@@ -1014,6 +1014,43 @@ traite que l'iPhone — le seul qui expire.
   c'est-à-dire « jamais ». `enregistrerDefauts()` déplacé dans
   `MacHostApp.init()`.
 
+### Passe de vérification complète (13 août 2026)
+
+Compilations **à froid**, `clean build`, configuration Release, dérivé vide :
+MacHost (macOS) et iOSApp (`generic/platform=iOS`, appareil réel) avec ses
+deux extensions embarquées, `KeyboardExt.appex` et `Widgets.appex`. Zéro
+erreur, zéro avertissement après les corrections ci-dessous. Puis
+installation signée sur l'iPhone et lancement vérifié.
+
+#### Piège : le journal noyé par la détection média
+
+`HandoffController.refresh()` traçait à chaque sondage : douze lignes
+identiques par minute, qui noyaient tout le reste — or c'est ce journal qui
+sert à diagnostiquer les pannes silencieuses, et cette cécité a déjà coûté
+plusieurs conclusions fausses.
+
+Le garde `found != current` ne bloque jamais pendant une lecture, et c'est
+**normal** : `position` avance, l'égalité est donc fausse à chaque tour. Ce
+renvoi est voulu — l'iPhone anime sa barre de progression et reprend à la
+bonne seconde. Ce n'était donc pas un bug fonctionnel, contrairement à ce que
+le commentaire d'origine laissait croire. Seule la trace est désormais filtrée
+sur l'**identité** du média (source, titre, URL, lecture en cours).
+
+#### Piège : course de données sur la sortie du script
+
+`AutoRefresh` capturait `var derniereLigne`, écrite depuis la file du tube et
+relue depuis le gestionnaire de fin du processus — deux files distinctes.
+Avertissement du compilateur, et **erreur** en mode Swift 6. Remplacée par une
+petite classe `LigneCourante` protégée par `NSLock`.
+
+#### Orientations non déclarées
+
+L'app vise aussi l'iPad (`TARGETED_DEVICE_FAMILY: "1,2"`) sans déclarer
+d'orientations : l'iPad les exige toutes les quatre, sauf à se déclarer plein
+écran exclusif. `UISupportedInterfaceOrientations` et sa variante `~ipad` sont
+maintenant explicites — l'iPhone garde les trois habituelles, l'iPad les
+quatre.
+
 #### Ce qui n'a pas pu être vérifié
 
 Le dépôt effectif des notifications **sur l'iPhone** n'est pas mesuré :

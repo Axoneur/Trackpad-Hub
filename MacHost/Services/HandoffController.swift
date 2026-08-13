@@ -30,6 +30,10 @@ final class HandoffController {
     /// Ce que le Mac propose de reprendre.
     private(set) var current: MediaHandoff?
 
+    /// Dernière identité de média journalisée, pour ne pas retracer une
+    /// simple avancée de la position de lecture.
+    private var derniereIdentiteTracee = ""
+
     /// Appelé quand la proposition change, pour la pousser vers l'iPhone.
     var onChange: ((MediaHandoff?) -> Void)?
 
@@ -70,12 +74,30 @@ final class HandoffController {
         queue.async { [weak self] in
             guard let self else { return }
             let found = self.detect()
-            Trace.action("média détecté · " + (found.map { "\($0.source) : \($0.title)" } ?? "rien"))
             DispatchQueue.main.async {
-                // On ne pousse que si ça a vraiment changé : sinon l'iPhone
-                // redessinerait sa carte toutes les cinq secondes.
                 guard found != self.current else { return }
                 self.current = found
+
+                // Pendant une lecture, `position` avance : l'égalité est donc
+                // fausse à chaque sondage et l'envoi part toutes les cinq
+                // secondes. C'est **voulu** — l'iPhone s'en sert pour animer
+                // sa barre de progression et pour reprendre à la bonne
+                // seconde. Le garde ci-dessus n'arrête que les états
+                // réellement figés : rien en lecture, ou page inchangée.
+                //
+                // Le journal, lui, ne doit pas suivre ce rythme : douze lignes
+                // identiques par minute noyaient tout le reste, et c'est ce
+                // journal qui sert à diagnostiquer les pannes silencieuses.
+                // On ne trace donc que les changements d'identité du média.
+                let identite = found.map {
+                    "\($0.source)|\($0.title)|\($0.url)|\($0.isPlaying)"
+                } ?? "rien"
+                if identite != self.derniereIdentiteTracee {
+                    self.derniereIdentiteTracee = identite
+                    Trace.action("média détecté · " + (found.map {
+                        "\($0.source) : \($0.title)" } ?? "rien"))
+                }
+
                 self.onChange?(found)
             }
         }
