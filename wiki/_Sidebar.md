@@ -4,6 +4,7 @@
 - [[Accueil|Home]]
 - [[Installation]]
 - [[Premier appairage|Premier-appairage]]
+- [[Signature et renouvellement|Signature-et-renouvellement]]
 
 **Guide**
 - [[Trackpad]]

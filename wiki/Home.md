@@ -12,6 +12,7 @@
 |---|---|
 | 🆕 **Vous découvrez** | [[Installation]] puis [[Premier appairage\|Premier-appairage]] |
 | 🖱️ **Vous voulez tout savoir des gestes** | [[Trackpad]] |
+| ⏳ **L'app iPhone ne s'ouvre plus** | [[Signature et renouvellement\|Signature-et-renouvellement]] |
 | 🔧 **Quelque chose ne marche pas** | [[Dépannage\|Depannage]] |
 | 🧑‍💻 **Vous voulez contribuer** | [[Architecture]] |
 

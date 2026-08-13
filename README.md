@@ -253,30 +253,87 @@ git pull && ./reinstall.sh --all
 
 ---
 
-## ⏳ Pourquoi l'app cesse de fonctionner au bout de 7 jours
+## 🔏 La signature : ce que vous avez à faire
 
-Avec un compte Apple **gratuit**, Apple ne signe une app que pour **7 jours**.
-Passé ce délai, l'app iPhone refuse de s'ouvrir.
+**Rien.** Il n'existe aucune manipulation de signature à effectuer.
 
-**Ce n'est pas une panne, et ce n'est pas réparable** : c'est la règle d'Apple
-pour les comptes sans abonnement. L'app macOS, elle, n'est pas concernée.
+Elle se fait toute seule à chaque `./reinstall.sh`. C'est pour ça que vous ne
+la voyez jamais : il n'y a rien à voir.
 
-Trois façons de vivre avec, de la plus simple à la plus manuelle :
+<details>
+<summary><b>Ce qui se passe réellement, si vous voulez comprendre</b></summary>
 
-| | Comment | Ce que ça donne |
+<br>
+
+Apple refuse qu'un iPhone lance une app venue de nulle part. Chaque app doit
+porter une preuve d'origine, faite de deux morceaux :
+
+| Morceau | Ce que c'est | Qui le fabrique |
 |---|---|---|
-| **1. Automatique** | Dans l'app macOS, bouton **« Automatiser tous les 6 jours »** | Vous n'y pensez plus. L'iPhone doit être branché au moment où ça se déclenche |
-| **2. En un clic** | L'app macOS prévient **3 jours avant** et propose **« Renouveler maintenant »** | Un clic, le script se lance dans le Terminal |
-| **3. À la main** | `./reinstall.sh --all` | Quand vous voulez |
+| **Certificat** | Votre identité de développeur | Xcode, quand vous ajoutez votre compte |
+| **Profil** | L'autorisation d'installer cette app sur cet iPhone | Xcode, à chaque compilation |
 
-La même chose en ligne de commande, si vous préférez :
-
-```bash
-./reinstall.sh --install     # planifie tous les 6 jours
+```
+vous : ./reinstall.sh --all
+   └─► xcodebuild
+         ├─► demande un profil pour votre équipe
+         ├─► signe les apps avec votre certificat
+         └─► installe sur l'iPhone
 ```
 
-> Un compte Apple payant (99 €/an) supprime cette limite. Il n'est utile que si
-> vous voulez **distribuer** l'app à d'autres personnes.
+La seule chose que vous avez fournie, c'est votre identifiant d'équipe, une
+fois, à `./setup.sh`.
+
+</details>
+
+---
+
+## ⏳ Pourquoi l'app iPhone s'arrête au bout de 7 jours
+
+| Type de compte Apple | Durée du profil |
+|---|---|
+| **Gratuit** | **7 jours** |
+| Payant, 99 €/an | 1 an |
+
+Avec un compte gratuit, au bout de 7 jours l'app iPhone **refuse de s'ouvrir**.
+Elle ne plante pas et ne s'efface pas : elle ne démarre plus.
+
+> **Ce n'est pas un bug et ce n'est pas réparable.** C'est la règle d'Apple
+> pour les comptes sans abonnement. L'app **macOS n'est pas concernée**.
+
+### Renouveler = réinstaller
+
+Il n'y a pas d'opération spéciale : on réinstalle, la signature est refaite au
+passage, et c'est reparti pour 7 jours.
+
+**1. Ne plus jamais y penser** — dans l'app macOS :
+
+> **[ Automatiser tous les 6 jours ]**
+
+Un agent système réinstalle tout seul. Seule condition : l'iPhone branché à ce
+moment-là. Sinon la tentative échoue sans dégât et recommence au cycle suivant.
+En ligne de commande : `./reinstall.sh --install`
+
+**2. En un clic** — l'app macOS prévient **3 jours avant** :
+
+> **L'app iPhone expire dans 3 jours**
+> [ Renouveler maintenant ] [ Automatiser tous les 6 jours ]
+
+**3. À la main** — iPhone branché et déverrouillé :
+
+```bash
+./reinstall.sh --all
+```
+
+### Ce que le renouvellement ne casse pas
+
+| | |
+|---|---|
+| L'appairage | conservé — le jeton vit dans le trousseau |
+| Réglages, macros, statistiques | conservés |
+| Les autorisations macOS | conservées |
+
+📖 Détail complet : [wiki, Signature et renouvellement](https://github.com/Axoneur/Trackpad-Hub/wiki/Signature-et-renouvellement)
 
 ---
 
