@@ -20,11 +20,15 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 <div align="center">
 
-<img src="docs/captures/mac-fenetre.png" width="88%" alt="La fenêtre macOS">
+### Sur le Mac
 
-<sub>**Sur le Mac** — appairage, autorisations, et le panneau de diagnostic qui montre en direct ce que l'iPhone envoie.</sub>
+<img src="docs/captures/mac-fenetre.png" width="88%">
+
+<sub>Appairage à gauche, diagnostic à droite. C'est la seule fenêtre de l'app macOS.</sub>
 
 <br><br>
+
+### Sur l'iPhone — les cinq onglets
 
 <table>
 <tr>
@@ -35,31 +39,43 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 <td align="center" width="20%"><img src="docs/captures/iphone-reglages.png" width="100%"></td>
 </tr>
 <tr>
-<td align="center"><b>Trackpad</b><br><sub>Curseur, gestes, clics</sub></td>
-<td align="center"><b>Clavier</b><br><sub>Texte, raccourcis, dictée</sub></td>
-<td align="center"><b>Média</b><br><sub>Lecture, volume, reprise</sub></td>
-<td align="center"><b>Mac</b><br><sub>Fenêtres, apps, outils</sub></td>
-<td align="center"><b>Réglages</b><br><sub>Appairage, capteurs</sub></td>
+<td align="center"><b>1. Trackpad</b><br><sub>Curseur, gestes, clics</sub></td>
+<td align="center"><b>2. Clavier</b><br><sub>Texte, raccourcis, dictée</sub></td>
+<td align="center"><b>3. Média</b><br><sub>Lecture, volume, reprise</sub></td>
+<td align="center"><b>4. Mac</b><br><sub>Fenêtres, apps, outils</sub></td>
+<td align="center"><b>5. Réglages</b><br><sub>Appairage, capteurs</sub></td>
 </tr>
 </table>
 
 <details>
-<summary><b>Huit autres écrans</b></summary>
+<summary><b>Voir les autres écrans, dans le même ordre</b></summary>
 
 <br>
 
 <table>
 <tr>
-<td align="center" width="25%"><img src="docs/captures/iphone-clavier-texte.png" width="100%"><br><sub>Champ de texte, dictée, presse-papiers</sub></td>
-<td align="center" width="25%"><img src="docs/captures/iphone-clavier-touches.png" width="100%"><br><sub>Modificateurs, F1–F12, navigation</sub></td>
-<td align="center" width="25%"><img src="docs/captures/iphone-media-presentation.png" width="100%"><br><sub>Volume, luminosité, présentation</sub></td>
-<td align="center" width="25%"><img src="docs/captures/iphone-mac-fenetres.png" width="100%"><br><sub>Placement des fenêtres</sub></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-clavier-texte.png" width="100%"></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-clavier-touches.png" width="100%"></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-media-presentation.png" width="100%"></td>
+<td align="center" width="25%"><img src="docs/captures/iphone-mac-fenetres.png" width="100%"></td>
 </tr>
 <tr>
-<td align="center"><img src="docs/captures/iphone-mac-outils.png" width="100%"><br><sub>Onglets, MIDI, macros, mode jeu</sub></td>
-<td align="center"><img src="docs/captures/iphone-mac-statistiques.png" width="100%"><br><sub>Statistiques d'usage</sub></td>
-<td align="center"><img src="docs/captures/iphone-mac-suite.png" width="100%"><br><sub>Navigation et alimentation</sub></td>
-<td align="center"><img src="docs/captures/iphone-media-presentation.png" width="100%"><br><sub>Minuteur de présentation</sub></td>
+<td align="center"><sub><b>Clavier</b> — texte, dictée, presse-papiers</sub></td>
+<td align="center"><sub><b>Clavier</b> — modificateurs, F1–F12</sub></td>
+<td align="center"><sub><b>Média</b> — volume, présentation</sub></td>
+<td align="center"><sub><b>Mac</b> — placement des fenêtres</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/captures/iphone-mac-outils.png" width="100%"></td>
+<td align="center"><img src="docs/captures/iphone-mac-statistiques.png" width="100%"></td>
+<td align="center"><img src="docs/captures/iphone-mac-suite.png" width="100%"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><sub><b>Mac</b> — onglets, MIDI, macros, jeu</sub></td>
+<td align="center"><sub><b>Mac</b> — statistiques d'usage</sub></td>
+<td align="center"><sub><b>Mac</b> — navigation, alimentation</sub></td>
+<td align="center"></td>
 </tr>
 </table>
 
@@ -71,22 +87,41 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 ## Installation
 
-> Il n'y a **aucun binaire à télécharger**. Chacun compile et signe avec son
-> propre identifiant Apple — un identifiant **gratuit** suffit.
+### Comment ça marche, en une phrase
 
-### 1. Ce qu'il vous faut
+**Tout se fait depuis le Mac.** Vous compilez les deux apps sur le Mac, et le
+Mac installe l'app iPhone par le câble. Sur l'iPhone, vous n'avez que deux
+choses à toucher.
 
-| | Détail |
-|---|---|
-| **Mac** | macOS 14 ou plus récent, avec **Xcode** installé (App Store, gratuit, ~15 Go) |
-| **iPhone** | iOS 18 ou plus récent, et un câble pour la première installation |
-| **Identifiant Apple** | gratuit. Ajoutez-le dans Xcode → Settings → Accounts |
-| **XcodeGen** | le projet Xcode est **généré**, pas versionné |
+| | Sur le **Mac** | Sur l'**iPhone** |
+|---|---|---|
+| Ce que vous installez | Xcode, XcodeGen | rien |
+| Ce que vous tapez | 3 commandes | rien |
+| Ce que vous touchez | — | 2 réglages |
+| Durée | 15 à 20 min la première fois | 1 min |
 
-<details>
-<summary><b>Installer XcodeGen sans Homebrew</b></summary>
+> **Il n'y a aucun binaire à télécharger.** Chacun compile et signe avec son
+> propre identifiant Apple — un identifiant **gratuit** suffit, sans abonnement.
 
-<br>
+---
+
+## 🖥️ Sur le Mac
+
+### Étape 1 — Installer Xcode
+
+App Store → chercher **Xcode** → installer. C'est gratuit, mais volumineux
+(~15 Go) et long.
+
+Ouvrez-le une fois, acceptez les conditions, puis :
+
+> Xcode → Settings → Accounts → **+** → ajoutez votre identifiant Apple
+
+C'est ce compte qui signera les apps. **Aucun abonnement payant n'est requis.**
+
+### Étape 2 — Installer XcodeGen
+
+Le projet Xcode n'est pas versionné : il est **généré** à partir d'un fichier
+de description. XcodeGen fait cette génération.
 
 ```bash
 git clone https://github.com/yonaskolb/XcodeGen
@@ -94,16 +129,15 @@ cd XcodeGen
 make install PREFIX=$HOME/.local
 ```
 
-⚠️ **Piège** : XcodeGen a besoin de son dossier `SettingPresets/` **à côté du
-binaire**. S'il manque, il produit un projet sans `PRODUCT_NAME` et la
-compilation échoue sur un message trompeur :
-`module name "" is not a valid identifier`.
+> ⚠️ **Vérifiez ceci avant de continuer :**
+> ```bash
+> ls ~/.local/bin/SettingPresets
+> ```
+> Le dossier doit contenir des fichiers. S'il est vide ou absent, la
+> compilation échouera plus tard sur un message trompeur :
+> `module name "" is not a valid identifier`.
 
-Vérifiez : `ls ~/.local/bin/SettingPresets` doit lister des fichiers.
-
-</details>
-
-### 2. Cloner et configurer
+### Étape 3 — Récupérer le projet et le configurer
 
 ```bash
 git clone https://github.com/Axoneur/Trackpad-Hub.git
@@ -111,77 +145,138 @@ cd Trackpad-Hub
 ./setup.sh
 ```
 
-`setup.sh` pose **deux questions**, une seule fois :
+Le script pose **deux questions**, une seule fois dans la vie du projet.
 
 <table>
-<tr><td width="30%"><b>Équipe de signature</b></td><td>
+<tr><td width="34%"><b>Identifiant d'équipe</b></td><td>
 
-Dix caractères, propres à votre identifiant Apple.
-**Où la trouver** : Xcode → Settings → Accounts → sélectionnez votre
-identifiant : l'identifiant d'équipe est affiché à droite.
+Dix caractères, propres à votre compte Apple.
+
+**Où le trouver** : Xcode → Settings → Accounts → cliquez sur votre identifiant
+Apple. L'identifiant d'équipe est affiché à droite, sous « Team ».
 
 </td></tr>
 <tr><td><b>Préfixe d'identifiant</b></td><td>
 
 Par exemple `com.votrenom`.
-**Pourquoi c'est obligatoire** : un App ID explicite est **unique dans tout le
-système d'Apple**. `com.trackpadhub` appartient déjà au dépôt d'origine et sera
-refusé. Le script propose un défaut à partir de votre nom d'utilisateur.
+
+**Pourquoi il doit être à vous** : Apple n'autorise qu'un seul compte à
+enregistrer un identifiant donné. `com.trackpadhub` appartient déjà au dépôt
+d'origine — le réutiliser fait échouer l'installation. Le script vous en
+propose un.
 
 </td></tr>
 </table>
 
-Les réponses vont dans `trackpadhub.conf`, qui n'est **pas** versionné.
+Vos réponses vont dans `trackpadhub.conf`, qui reste sur votre machine.
 
-### 3. Installer
+### Étape 4 — Compiler et installer
+
+Branchez l'iPhone au Mac, déverrouillez-le, puis :
 
 ```bash
-./reinstall.sh --all      # les deux apps, iPhone branché
+./reinstall.sh --all
 ```
 
-| Commande | Effet |
+La première compilation prend quelques minutes. À la fin, le script affiche :
+
+```
+App macOS installée et relancée (PID 6337, l'ancien était 6100)
+Terminé — profils renouvelés pour 7 jours.
+```
+
+> **Si les deux PID sont identiques**, l'ancienne version tourne encore : ce
+> n'est pas votre nouveau code qui s'exécute.
+
+| Commande | Ce qu'elle installe |
 |---|---|
+| `./reinstall.sh --all` | les deux apps |
 | `./reinstall.sh --mac` | l'app macOS seule |
 | `./reinstall.sh` | l'app iPhone seule |
-| `./reinstall.sh --all` | les deux |
-| `./reinstall.sh --lite` | iPhone sans le clavier système ni les widgets |
-| `./reinstall.sh --install` | **réinstallation automatique tous les 6 jours** |
+| `./reinstall.sh --lite` | iPhone, sans le clavier système ni les widgets |
 
-Le script affiche `App macOS installée et relancée (PID X, l'ancien était Y)`.
-**Si les deux PID sont identiques, l'ancienne version tourne encore** — le
-correctif que vous venez de compiler n'est pas celui qui s'exécute.
+### Étape 5 — Accorder les autorisations
 
-### 4. Faire confiance à l'app sur l'iPhone
+L'app macOS les demande d'elle-même au premier lancement. Acceptez-les toutes.
 
-À la première installation, l'iPhone refuse d'ouvrir l'app :
+| Autorisation | Sans elle |
+|---|---|
+| **Accessibilité** | le curseur et le clavier ne fonctionnent pas du tout |
+| **Automatisation** | les bureaux, App Exposé, le redémarrage et l'extinction ne font rien |
+| **Réseau local** | le Mac ne trouve pas l'iPhone |
+| **Bluetooth** | pas de liaison de secours sans Wi-Fi |
 
-> Réglages → Général → VPN et gestion de l'appareil → votre compte développeur → **Se fier**
+Si vous avez refusé par erreur :
 
-### 🔄 Mises à jour
+> Réglages Système → Confidentialité et sécurité → **Accessibilité** → cochez TrackPad Hub
 
-À l'ouverture, les deux apps interrogent **une fois par jour** les versions
-publiées sur GitHub. Un bandeau n'apparaît que s'il y a réellement plus récent.
-La vérification lit une page publique : elle n'envoie rien.
+> L'autorisation Accessibilité est liée à **l'emplacement de l'app**. Si vous
+> la déplacez, il faut la réaccorder.
 
-Pour mettre à jour : `git pull` puis `./reinstall.sh --all`.
+---
 
-### ⏳ La limite des 7 jours
+## 📱 Sur l'iPhone
 
-Avec un compte Apple **gratuit**, une signature vaut **7 jours**. Passé ce
-délai l'app cesse de s'ouvrir : ce n'est pas une panne, c'est la règle d'Apple.
+Vous n'installez rien : le Mac s'en est chargé à l'étape 4. Il reste deux
+choses à toucher.
+
+### Étape 1 — Autoriser l'app à s'ouvrir
+
+À la toute première installation, iOS refuse d'ouvrir une app signée par un
+compte personnel tant qu'on ne l'a pas déclaré :
+
+> Réglages → Général → **VPN et gestion de l'appareil** → touchez votre compte
+> développeur → **Se fier**
+
+Cette étape n'est nécessaire **qu'une fois**.
+
+### Étape 2 — Accepter le réseau local
+
+Ouvrez TrackPad Hub. iOS demande l'accès au **réseau local** : acceptez.
+Sans cet accord, l'iPhone ne peut pas trouver le Mac.
+
+C'est tout. Passez à [l'appairage](#premier-appairage).
+
+---
+
+## 🔄 Rester à jour
+
+À l'ouverture, les deux apps regardent **une fois par jour** s'il existe une
+version plus récente sur GitHub. Un bandeau n'apparaît que s'il y en a une.
+Cette vérification lit une page publique : elle n'envoie rien.
+
+Pour mettre à jour, sur le Mac :
 
 ```bash
-./reinstall.sh --install
+git pull && ./reinstall.sh --all
 ```
 
-pose un agent `launchd` qui réinstalle tout seul tous les 6 jours. L'iPhone
-doit être branché à ce moment-là ; sinon la tentative échoue sans dégât et
-recommence au cycle suivant.
+---
 
-**L'app macOS vous prévient trois jours avant** — elle lit la date d'expiration
-du profil iOS — et propose deux boutons : *Renouveler maintenant*, qui relance
-le script dans le Terminal, et *Automatiser tous les 6 jours*, qui pose l'agent
-sans passer par la ligne de commande.
+## ⏳ Pourquoi l'app cesse de fonctionner au bout de 7 jours
+
+Avec un compte Apple **gratuit**, Apple ne signe une app que pour **7 jours**.
+Passé ce délai, l'app iPhone refuse de s'ouvrir.
+
+**Ce n'est pas une panne, et ce n'est pas réparable** : c'est la règle d'Apple
+pour les comptes sans abonnement. L'app macOS, elle, n'est pas concernée.
+
+Trois façons de vivre avec, de la plus simple à la plus manuelle :
+
+| | Comment | Ce que ça donne |
+|---|---|---|
+| **1. Automatique** | Dans l'app macOS, bouton **« Automatiser tous les 6 jours »** | Vous n'y pensez plus. L'iPhone doit être branché au moment où ça se déclenche |
+| **2. En un clic** | L'app macOS prévient **3 jours avant** et propose **« Renouveler maintenant »** | Un clic, le script se lance dans le Terminal |
+| **3. À la main** | `./reinstall.sh --all` | Quand vous voulez |
+
+La même chose en ligne de commande, si vous préférez :
+
+```bash
+./reinstall.sh --install     # planifie tous les 6 jours
+```
+
+> Un compte Apple payant (99 €/an) supprime cette limite. Il n'est utile que si
+> vous voulez **distribuer** l'app à d'autres personnes.
 
 ---
 
