@@ -306,6 +306,29 @@ Elle ne plante pas et ne s'efface pas : elle ne démarre plus.
 Il n'y a pas d'opération spéciale : on réinstalle, la signature est refaite au
 passage, et c'est reparti pour 7 jours.
 
+**0. Ne rien faire du tout** — *branchez simplement l'iPhone.*
+
+Si l'app macOS est ouverte et que l'échéance approche, une fenêtre s'ouvre
+d'elle-même :
+
+> **Rafraîchissement de l'application**
+> Le rafraîchissement démarre dans 6 secondes.
+> [ Pas maintenant ] [ Rafraîchir tout de suite ]
+
+Puis ça se fait tout seul, en une à deux minutes. Rien à taper, rien à ouvrir.
+Le bouton **Pas maintenant** existe parce que la réinstallation coupe la
+liaison en cours : si vous êtes justement en train de vous servir du téléphone
+comme trackpad, vous pouvez repousser.
+
+Réglable dans cette même fenêtre : **à chaque branchement**, **3 jours avant**
+(par défaut) ou **1 jour avant**.
+
+> **Pourquoi pas à chaque branchement par défaut ?** Parce que ça ne servirait
+> à rien. Apple ne délivre un profil neuf que lorsque l'ancien approche de sa
+> fin — réinstaller quatre jours à l'avance ne déplace pas la date d'un seul
+> jour. Ce serait deux minutes de compilation à chaque fois que vous mettez le
+> téléphone à charger, pour un résultat identique.
+
 **1. Ne plus jamais y penser** — dans l'app macOS :
 
 > **[ Automatiser tous les 6 jours ]**

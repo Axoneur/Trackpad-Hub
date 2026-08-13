@@ -980,6 +980,40 @@ Toujours compiler ainsi hors de `reinstall.sh` :
 source ./trackpadhub.conf && xcodebuild -project TrackPadHub.xcodeproj ...
 ```
 
+### Rafraîchissement automatique au branchement (13 août 2026)
+
+`MacHost/Services/AutoRefresh.swift` : l'iPhone branché déclenche une fenêtre
+qui décompte six secondes puis lance `reinstall.sh`. Vérifié de bout en bout —
+détection, compte à rebours, exécution, succès, échéance relue.
+
+**Le signal vient de l'appareil, pas de la liaison.** `USBLink.onConnected`
+n'annonce que l'ouverture du tunnel, donc suppose l'app iPhone lancée. Or c'est
+exactement quand elle **ne peut plus se lancer** qu'il faut réagir. D'où
+`onDeviceAttached`, émis depuis la boucle `Listen` d'usbmuxd sur le message
+`Attached`, avant toute tentative de tunnel. `usbmuxd` renvoie aussi `Attached`
+pour les appareils déjà branchés à l'ouverture de l'app : les deux ordres —
+brancher puis ouvrir, ouvrir puis brancher — sont couverts.
+
+**Sans argument, pas `--all`.** `reinstall.sh --all` relance l'app macOS, donc
+tue le processus qui pilote le rafraîchissement. Sans argument, le script ne
+traite que l'iPhone — le seul qui expire.
+
+#### Trois défauts corrigés dans la foulée
+
+- **Annuler pendant l'exécution figeait la fonction.** `terminate()` fait
+  sortir bash avec un code non nul ; le gestionnaire de fin écrasait alors
+  l'état par `.echoue` *après* l'annulation. L'état ne revenant jamais à
+  `.repos`, le garde-fou d'entrée bloquait tout rafraîchissement ultérieur —
+  une seule annulation désactivait la fonction jusqu'au redémarrage. Corrigé
+  par un drapeau `annulationDemandee`.
+- **Échap refermait la feuille sans rien arrêter.** Le compte à rebours
+  continuait et une réinstallation de deux minutes démarrait sans plus rien à
+  l'écran. `.interactiveDismissDisabled()`.
+- **Seuil lu avant enregistrement des défauts.** Le rappel USB peut précéder
+  l'affichage de la fenêtre ; `UserDefaults.integer` renvoyait alors 0,
+  c'est-à-dire « jamais ». `enregistrerDefauts()` déplacé dans
+  `MacHostApp.init()`.
+
 #### Ce qui n'a pas pu être vérifié
 
 Le dépôt effectif des notifications **sur l'iPhone** n'est pas mesuré :

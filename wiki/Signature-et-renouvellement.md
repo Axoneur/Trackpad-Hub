@@ -61,6 +61,34 @@ certificat, qui lui ne s'épuise pas de cette façon.
 
 ---
 
+## Le plus simple : brancher l'iPhone
+
+Si l'app macOS est ouverte et que l'échéance approche, brancher le câble
+suffit. Une fenêtre s'ouvre, décompte six secondes, et le rafraîchissement
+part tout seul.
+
+Ce qui se passe alors est exactement `./reinstall.sh` **sans argument** :
+seule l'app iPhone est reconstruite. C'est délibéré — `--all` relancerait
+l'app macOS, c'est-à-dire tuerait le processus en train de piloter
+l'opération. L'app du Mac n'expire pas, elle n'a rien à y gagner.
+
+| Réglage | Choix | Par défaut |
+|---|---|---|
+| Rafraîchir automatiquement | oui / non | oui |
+| Déclencher | à chaque branchement · 3 jours avant · 1 jour avant | 3 jours avant |
+
+**Pourquoi pas à chaque branchement.** Mesuré : réinstaller alors qu'il restait
+quatre jours n'a pas déplacé la date d'expiration d'une heure. Apple ne délivre
+un profil neuf que lorsque l'ancien approche de sa fin ; sinon Xcode réutilise
+celui qui existe. Deux minutes de compilation à chaque mise en charge, pour
+rien.
+
+**Pourquoi un bouton « Pas maintenant ».** La réinstallation coupe la liaison
+en cours. Si le téléphone sert de trackpad à ce moment-là, il faut pouvoir
+repousser.
+
+---
+
 ## Renouveler : trois façons
 
 Renouveler, c'est simplement **réinstaller**. La signature est refaite au

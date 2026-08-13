@@ -44,6 +44,13 @@ final class MessageConnection: NSObject, ObservableObject {
 
     @Published private(set) var connectedPeers: [Peer] = []
     @Published private(set) var isConnected = false
+
+    /// Un iPhone est **branché en USB**, que l'app y tourne ou non.
+    ///
+    /// Distinct de `isConnected` : la signature expirée empêche l'app iPhone
+    /// de démarrer, il n'y a alors aucune liaison — mais l'appareil est bien
+    /// là, et c'est le moment où le Mac peut le réparer.
+    @Published private(set) var isDeviceAttached = false
     @Published private(set) var pairingState: PairingState = .idle
 
     /// Code à 6 chiffres affiché sur le Mac pendant un appairage.
@@ -230,6 +237,14 @@ final class MessageConnection: NSObject, ObservableObject {
     /// supplémentaire — brancher un iPhone inconnu ne le rend pas maître du
     /// Mac.
     private func wireUSB() {
+        // Déjà renvoyés sur la file principale par `USBLink`.
+        usb.onDeviceAttached = { [weak self] _ in
+            self?.isDeviceAttached = true
+        }
+        usb.onDeviceDetached = { [weak self] in
+            self?.isDeviceAttached = false
+        }
+
         usb.onConnected = { [weak self] in
             DispatchQueue.main.async {
                 guard let self else { return }

@@ -19,6 +19,11 @@ struct MacHostApp: App {
     }
 
     init() {
+        // Avant toute lecture : `AutoRefresh` consulte les préférences depuis
+        // un rappel USB qui peut arriver avant l'affichage de la fenêtre, et
+        // obtiendrait alors un seuil de 0 — c'est-à-dire jamais.
+        AutoRefresh.enregistrerDefauts()
+
         let router = Router()
         let hostName = Host.current().localizedName ?? "Mac"
         let connection = MessageConnection(displayName: hostName, isHost: true)

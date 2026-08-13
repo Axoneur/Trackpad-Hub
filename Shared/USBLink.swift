@@ -46,6 +46,20 @@ final class USBLink {
     var onLost: (() -> Void)?
     var onData: ((Data) -> Void)?
 
+    /// Un iPhone vient d'être **branché**, indépendamment de l'app.
+    ///
+    /// Distinct de `onConnected`, qui n'annonce que l'ouverture du tunnel et
+    /// suppose donc l'app iPhone lancée et au premier plan. Or c'est
+    /// précisément quand l'app **ne peut plus se lancer** — signature
+    /// expirée — qu'il faut réagir au branchement. `onDeviceAttached` est le
+    /// seul signal disponible dans ce cas.
+    ///
+    /// `usbmuxd` émet aussi `Attached` pour les appareils déjà branchés au
+    /// moment où l'on commence à écouter : brancher puis ouvrir l'app déclenche
+    /// donc le rappel, tout autant que l'inverse.
+    var onDeviceAttached: ((String) -> Void)?
+    var onDeviceDetached: (() -> Void)?
+
     private(set) var isConnected = false {
         didSet {
             guard isConnected != oldValue else { return }
@@ -231,8 +245,15 @@ final class USBLink {
                let deviceID = message["DeviceID"] as? Int,
                let properties = message["Properties"] as? [String: Any],
                (properties["ConnectionType"] as? String) == "USB" {
+                let serie = (properties["SerialNumber"] as? String) ?? ""
+                DispatchQueue.main.async { [weak self] in
+                    self?.onDeviceAttached?(serie)
+                }
                 openTunnel(to: deviceID)
             } else if type == "Detached" {
+                DispatchQueue.main.async { [weak self] in
+                    self?.onDeviceDetached?()
+                }
                 closeTunnel()
             }
         }

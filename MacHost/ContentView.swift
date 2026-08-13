@@ -7,6 +7,15 @@ struct ContentView: View {
     @StateObject private var releases = ReleaseChecker()
     @StateObject private var signature = SigningWatch()
     @State private var notificationsBloquees = false
+    @StateObject private var refresh: AutoRefresh
+
+    init() {
+        // `SigningWatch` et `AutoRefresh` partagent la même instance : le
+        // rafraîchissement lit l'échéance et la relit une fois terminé.
+        let watch = SigningWatch()
+        _signature = StateObject(wrappedValue: watch)
+        _refresh = StateObject(wrappedValue: AutoRefresh(signature: watch))
+    }
     @EnvironmentObject private var panels: MacHostApp.PanelState
 
     /// Vide = suivre la disposition active du Mac.
@@ -98,8 +107,21 @@ struct ContentView: View {
                 MaintenanceNotifier.signalerVersion(sortie.version, notes: sortie.notes)
             }
             MaintenanceNotifier.diagnostiquer { notificationsBloquees = $0 }
+            AutoRefresh.enregistrerDefauts()
             releases.verifier()
+            // Avant l'examen du branchement : la décision de rafraîchir se
+            // prend sur les jours restants, qui viennent d'ici.
             signature.actualiser()
+            // Un iPhone déjà branché à l'ouverture de l'app compte aussi :
+            // `usbmuxd` annonce « Attached » pour les appareils déjà présents,
+            // mais ce message peut être arrivé avant que la vue n'existe.
+            if connection.isDeviceAttached { refresh.appareilBranche() }
+        }
+        .onChange(of: connection.isDeviceAttached) { _, branche in
+            branche ? refresh.appareilBranche() : refresh.appareilDebranche()
+        }
+        .sheet(isPresented: $refresh.visible) {
+            RefreshSheet(refresh: refresh)
         }
     }
 
