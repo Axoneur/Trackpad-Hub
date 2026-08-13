@@ -4,6 +4,8 @@ struct ContentView: View {
     @EnvironmentObject private var connection: MessageConnection
     @EnvironmentObject private var router: Router
     @StateObject private var accessibility = AccessibilityManager()
+    @StateObject private var releases = ReleaseChecker()
+    @StateObject private var signature = SigningWatch()
     @EnvironmentObject private var panels: MacHostApp.PanelState
 
     /// Vide = suivre la disposition active du Mac.
@@ -61,6 +63,9 @@ struct ContentView: View {
             GlassStack(spacing: 14) {
                 header
 
+                if signature.doitAvertir { signatureSection.glassCard() }
+                if releases.disponible != nil { updateSection.glassCard() }
+
                 addDeviceSection
                     .glassCard()
 
@@ -84,6 +89,58 @@ struct ContentView: View {
         }
         .softScrollEdges()
         .onAppear { layouts = KeyboardLayout.installed() }
+    }
+
+    /// Expiration de la signature de l'app iPhone.
+    ///
+    /// Affichée sur le **Mac** alors qu'elle concerne l'iPhone : c'est le Mac
+    /// qui détient le remède, puisque la réinstallation part d'ici.
+    @ViewBuilder
+    private var signatureSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(signature.resume ?? "", systemImage: "clock.badge.exclamationmark")
+                .font(.headline)
+                .foregroundStyle((signature.joursRestants ?? 1) < 0 ? .red : .orange)
+
+            Text("Un compte Apple gratuit signe pour 7 jours. Passé ce délai, l'app iPhone cesse de s'ouvrir — ce n'est pas une panne.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+            HStack {
+                Button("Renouveler maintenant") { signature.renouveler() }
+                    .glassButton(prominent: true)
+                    .disabled(signature.cheminProjet == nil)
+                Button("Automatiser tous les 6 jours") { signature.planifier() }
+                    .glassButton()
+                Spacer()
+            }
+            .controlSize(.small)
+
+            if let message = signature.dernierMessage {
+                Text(message)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    /// Mise à jour publiée sur GitHub.
+    ///
+    /// N'apparaît que s'il y a réellement une version plus récente : un
+    /// bandeau permanent qui répète « à jour » finit par ne plus être lu.
+    @ViewBuilder
+    private var updateSection: some View {
+        if let sortie = releases.disponible {
+            VStack(alignment: .leading, spacing: 6) {
+                Label("Version \(sortie.version) disponible", systemImage: "arrow.down.circle.fill")
+                    .font(.headline)
+                Text("Vous utilisez la \(ReleaseChecker.versionActuelle). Dans le dossier du projet : « git pull » puis « ./reinstall.sh --all ».")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                Link("Voir les nouveautés", destination: sortie.url)
+                    .font(.callout)
+            }
+        }
     }
 
     /// Disposition utilisée pour traduire les caractères reçus en touches.

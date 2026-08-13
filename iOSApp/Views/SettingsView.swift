@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var connection: MessageConnection
+    @EnvironmentObject private var releases: ReleaseChecker
 
     @AppStorage(KeyboardStyle.storageKey) private var keyboardStyle = KeyboardStyle.azerty.rawValue
     @AppStorage("pointerAcceleration") private var pointerAcceleration = true
@@ -31,6 +32,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                if SigningExpiry.isExpiringSoon || releases.disponible != nil {
+                    Section { MaintenanceCard() }
+                }
+
                 Section {
                     NavigationLink {
                         HelpView()

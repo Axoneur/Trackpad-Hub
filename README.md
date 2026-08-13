@@ -157,6 +157,14 @@ correctif que vous venez de compiler n'est pas celui qui s'exécute.
 
 > Réglages → Général → VPN et gestion de l'appareil → votre compte développeur → **Se fier**
 
+### 🔄 Mises à jour
+
+À l'ouverture, les deux apps interrogent **une fois par jour** les versions
+publiées sur GitHub. Un bandeau n'apparaît que s'il y a réellement plus récent.
+La vérification lit une page publique : elle n'envoie rien.
+
+Pour mettre à jour : `git pull` puis `./reinstall.sh --all`.
+
 ### ⏳ La limite des 7 jours
 
 Avec un compte Apple **gratuit**, une signature vaut **7 jours**. Passé ce
@@ -169,6 +177,11 @@ délai l'app cesse de s'ouvrir : ce n'est pas une panne, c'est la règle d'Apple
 pose un agent `launchd` qui réinstalle tout seul tous les 6 jours. L'iPhone
 doit être branché à ce moment-là ; sinon la tentative échoue sans dégât et
 recommence au cycle suivant.
+
+**L'app macOS vous prévient trois jours avant** — elle lit la date d'expiration
+du profil iOS — et propose deux boutons : *Renouveler maintenant*, qui relance
+le script dans le Terminal, et *Automatiser tous les 6 jours*, qui pose l'agent
+sans passer par la ligne de commande.
 
 ---
 

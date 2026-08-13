@@ -110,6 +110,22 @@ pose un agent `launchd` qui réinstalle tout seul tous les 6 jours. L'iPhone
 doit être branché à ce moment-là ; sinon la tentative échoue sans dégât et
 recommence au cycle suivant.
 
+**L'app macOS vous prévient trois jours avant.** Elle lit la date d'expiration
+du profil iOS dans le dossier d'Xcode, et propose deux boutons :
+
+| Bouton | Effet |
+|---|---|
+| **Renouveler maintenant** | Relance `./reinstall.sh --all` dans le Terminal |
+| **Automatiser tous les 6 jours** | Pose l'agent `launchd`, sans ligne de commande |
+
+## Mises à jour
+
+À l'ouverture, les deux apps interrogent **une fois par jour** les versions
+publiées sur GitHub. Un bandeau n'apparaît que s'il y a réellement plus récent.
+La vérification lit une page publique : elle n'envoie rien.
+
+Pour mettre à jour : `git pull` puis `./reinstall.sh --all`.
+
 Un compte payant (99 €/an) lève cette limite et permet la notarisation. Ce
 n'est nécessaire que pour **distribuer** l'app à d'autres.
 

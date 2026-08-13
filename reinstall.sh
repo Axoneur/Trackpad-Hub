@@ -16,6 +16,10 @@
 # Configuration locale : équipe de signature et préfixe d'identifiant.
 # XcodeGen les lit dans l'environnement (voir project.yml).
 CONF="$(cd "$(dirname "$0")" && pwd)/trackpadhub.conf"
+
+# Mémorise le chemin du projet : l'app macOS s'en sert pour proposer un
+# renouvellement en un clic quand la signature approche de son terme.
+defaults write com.trackpadhub.machost cheminProjet "$(cd "$(dirname "$0")" && pwd)" 2>/dev/null || true
 if [ -f "$CONF" ]; then
     # shellcheck source=/dev/null
     . "$CONF"

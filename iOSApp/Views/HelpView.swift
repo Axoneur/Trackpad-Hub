@@ -415,6 +415,32 @@ enum HelpLibrary {
         ),
 
         HelpTopic(
+            title: "Mises à jour et signature",
+            icon: "arrow.down.circle.fill",
+            tint: .blue,
+            purpose: "Rester à jour, et comprendre pourquoi l'app expire.",
+            steps: [
+                "À l'ouverture, l'app interroge une fois par jour les versions publiées sur GitHub.",
+                "Quand une version plus récente existe, un bandeau apparaît en haut des Réglages.",
+                "Sur le Mac : « git pull » puis « ./reinstall.sh --all ».",
+                "Un compte Apple gratuit signe pour 7 jours : passé ce délai, l'app iPhone cesse de s'ouvrir.",
+                "L'app macOS prévient trois jours avant, et propose de renouveler en un clic."
+            ],
+            troubleshooting: [
+                ("L'app iPhone ne s'ouvre plus du tout",
+                 "La signature a expiré. Ce n'est pas une panne. Sur le Mac : ./reinstall.sh --all"),
+                ("Je ne veux plus y penser",
+                 "Sur le Mac, bouton « Automatiser tous les 6 jours ». Un agent système s'en charge, l'iPhone devant être branché à ce moment-là."),
+                ("Aucun bandeau de mise à jour n'apparaît",
+                 "C'est qu'il n'y en a pas. La vérification a lieu une fois par jour au maximum.")
+            ],
+            tips: [
+                "Le compte payant supprime la limite des 7 jours, mais n'est utile que pour distribuer l'app.",
+                "La vérification n'envoie rien : elle lit une page publique de GitHub."
+            ]
+        ),
+
+        HelpTopic(
             title: "Sécurité",
             icon: "lock.shield",
             tint: .mint,

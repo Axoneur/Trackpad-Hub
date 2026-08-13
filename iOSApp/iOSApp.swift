@@ -6,6 +6,7 @@ struct iOSApp: App {
     @StateObject private var macState = MacState()
     @StateObject private var macros = MacroStore()
     @StateObject private var stats = UsageStats()
+    @StateObject private var releases = ReleaseChecker()
 
     init() {
         let name = UIDevice.current.name.isEmpty ? "iPhone" : UIDevice.current.name
@@ -19,6 +20,7 @@ struct iOSApp: App {
                 .environmentObject(macState)
                 .environmentObject(macros)
                 .environmentObject(stats)
+                .environmentObject(releases)
                 .onAppear {
                     // Les réponses du Mac (apps, presse-papiers, constantes)
                     // alimentent le miroir local.
@@ -33,6 +35,8 @@ struct iOSApp: App {
                     // existant au lieu de l'écraser.
                     stats.attach(to: connection)
                     connection.start()
+                    // Au lancement, une fois par jour au plus.
+                    releases.verifier()
                 }
                 .onChange(of: connection.pairingState) { _, state in
                     SharedStore.isPaired = (state == .paired)
