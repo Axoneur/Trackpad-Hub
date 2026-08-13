@@ -68,7 +68,7 @@ suffit. Une fenêtre s'ouvre, décompte six secondes, et le rafraîchissement
 part tout seul.
 
 Ce qui se passe alors est exactement `./reinstall.sh` **sans argument** :
-seule l'app iPhone est reconstruite. C'est délibéré — `--all` relancerait
+seule l'app iPhone est reconstruite. C'est délibéré : `--all` relancerait
 l'app macOS, c'est-à-dire tuerait le processus en train de piloter
 l'opération. L'app du Mac n'expire pas, elle n'a rien à y gagner.
 
@@ -94,7 +94,7 @@ repousser.
 Renouveler, c'est simplement **réinstaller**. La signature est refaite au
 passage, et vous repartez pour 7 jours.
 
-### 1. Ne plus jamais y penser — recommandé
+### 1. Ne plus jamais y penser (recommandé)
 
 Dans l'app **macOS**, quand l'avertissement apparaît :
 
@@ -143,7 +143,7 @@ Les deux apps envoient de vraies notifications à trois moments : **J-3**,
 | Le jour même | « L'app iPhone a expiré » | « TrackPad Hub a expiré » |
 
 **Pourquoi trois paliers et pas un rappel quotidien.** Une notification qui
-répète la même chose chaque jour finit désactivée au bout de trois jours — et
+répète la même chose chaque jour finit désactivée au bout de trois jours, et
 l'avertissement vraiment utile, celui de la veille, n'est alors jamais lu.
 Chaque palier n'est annoncé qu'une fois.
 
@@ -174,7 +174,7 @@ La section affiche en dessous **les dates exactes** qui seront utilisées. Un
 changement reprogramme aussitôt : les notifications étant déposées d'avance,
 celles déjà en place resteraient sinon sur l'ancien horaire.
 
-Un rappel dont l'heure tomberait après l'expiration est simplement ignoré — il
+Un rappel dont l'heure tomberait après l'expiration est simplement ignoré : il
 n'apprendrait plus rien, l'app aurait déjà cessé de s'ouvrir.
 
 ### La demande d'autorisation, au premier lancement
@@ -199,7 +199,7 @@ Sur l'iPhone : Réglages → Notifications → TrackPad Hub.
 réelle lue dans le profil :
 
 ```
-Terminé — l'app iPhone fonctionne jusqu'au mardi 18 août à 12h25
+Terminé, l'app iPhone fonctionne jusqu'au mardi 18 août à 12h25
           soit encore 4 jour(s).
 ```
 

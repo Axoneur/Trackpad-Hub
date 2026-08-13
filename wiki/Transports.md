@@ -5,9 +5,9 @@ la plus rapide disponible gagne.
 
 | | Quand | Latence | Rôle |
 |---|---|---|---|
-| 🔌 **USB** | câble branché, app au premier plan | **1–2 ms**, constante | Le meilleur, pour dessiner ou jouer |
-| 📶 **Wi-Fi** | réseau commun | 2–5 ms, variable | L'usage courant |
-| 🔵 **Bluetooth** | ni câble ni Wi-Fi | 15–30 ms | Secours : hôtel, avion, réseau invité |
+| 🔌 **USB** | câble branché, app au premier plan | **1 à 2 ms**, constante | Le meilleur, pour dessiner ou jouer |
+| 📶 **Wi-Fi** | réseau commun | 2 à 5 ms, variable | L'usage courant |
+| 🔵 **Bluetooth** | ni câble ni Wi-Fi | 15 à 30 ms | Secours : hôtel, avion, réseau invité |
 
 Les trois portent **le même protocole, le même appairage et le même
 chiffrement**. Seul le tuyau change. Un câble ne donne aucun droit de plus :
@@ -21,7 +21,7 @@ brancher un iPhone inconnu ne le rend pas maître du Mac.
 | **TCP** | clics, touches, appairage, apps, presse-papiers, fichiers | Un clic perdu ne se devine pas |
 
 Le Mac annonce le service Bonjour `_trackpadhub._tcp`, l'iPhone le cherche. Le
-port UDP voyage sur le canal TCP une fois l'appairage fait — inutile de
+port UDP voyage sur le canal TCP une fois l'appairage fait, inutile donc de
 l'annoncer à la cantonade.
 
 ## USB : comment ça marche
@@ -40,7 +40,7 @@ connecte à travers `usbmuxd`.
 
 ## Bluetooth : ce qu'il vaut
 
-Le débit suffit largement pour le curseur — un déplacement pèse 11 octets, à
+Le débit suffit largement pour le curseur : un déplacement pèse 11 octets, à
 120 par seconde cela fait 1,3 ko/s. La latence, elle, est moins bonne :
 l'intervalle de connexion BLE va de 15 à 30 ms. D'où le rôle de secours.
 

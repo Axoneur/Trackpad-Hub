@@ -1,5 +1,7 @@
 # <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/lock-shield.png" width="24" align="center"> Sécurité
 
+*Ce qui protège la liaison, et pourquoi être sur le même réseau ne suffit pas.*
+
 ## Le principe
 
 **Se connecter au réseau ne donne aucun droit.** Tant qu'un appareil n'a pas
@@ -30,12 +32,12 @@ Une fois l'appairage réussi, chaque trame est scellée en **AES-GCM**.
 
 | | |
 |---|---|
-| **Clé** | Dérivée du jeton par HKDF-SHA256, **salée par le défi de la connexion** — elle change donc à chaque fois |
+| **Clé** | Dérivée du jeton par HKDF-SHA256, **salée par le défi de la connexion**, elle change donc à chaque fois |
 | **Anti-rejeu** | Le nonce porte un compteur strictement croissant, **par direction et par transport** |
 | **Avant appairage** | Les messages voyagent en clair : ils ne portent aucun secret, seule une preuve HMAC circule |
 
 > Saler la clé avec le défi n'est pas cosmétique. Sans ce sel, la clé ne
-> dépendrait que du jeton, donc serait identique d'une session à l'autre —
+> dépendrait que du jeton, donc serait identique d'une session à l'autre, ce
 > alors que les compteurs anti-rejeu repartent de zéro à chaque connexion. Un
 > paquet capté un jour serait rejouable le lendemain.
 

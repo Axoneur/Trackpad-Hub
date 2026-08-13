@@ -1,5 +1,7 @@
 # ⚙️ Réglages
 
+*Tout ce qui se règle depuis l'iPhone : appairage, capteurs, accessibilité, rappels.*
+
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-reglages.png" width="34%"></div>
 
 | Section | Ce qu'on y règle |
@@ -15,7 +17,7 @@
 | **Accessibilité** | Fort contraste, mode une main |
 
 > La disposition choisie ici ne change que **les lettres dessinées sur les
-> touches** de l'iPhone. Le Mac traduit ensuite selon sa propre disposition —
+> touches** de l'iPhone. Le Mac traduit ensuite selon sa propre disposition,
 > réglable dans l'app macOS.
 
 ## Trackpad
@@ -29,7 +31,7 @@
 
 ## <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/hand-raised-slash-fill.png" width="20" align="center"> Mode poche
 
-Le capteur de proximité — celui qui éteint l'écran pendant un appel — détecte
+Le capteur de proximité, celui qui éteint l'écran pendant un appel, détecte
 le tissu d'une poche ou une table. Tant qu'il est couvert, **plus aucune action
 ne part vers le Mac**, et un voile s'affiche pour l'expliquer.
 

@@ -7,7 +7,7 @@ Le Mac se présente comme un **appareil MIDI** nommé « TrackPad Hub ».
 Trois fonctionnalités butaient sur le même mur : mode DJ, égaliseur audio,
 palettes et roulettes pour les apps créatives. Toutes supposaient de capter ou
 de traiter le son du système, ce qui exige un **pilote audio virtuel** installé
-sur le Mac — un projet séparé, avec son propre installeur.
+sur le Mac, soit un projet séparé avec son propre installeur.
 
 Le MIDI contourne le mur entièrement : **aucun son ne transite**.
 
@@ -20,14 +20,16 @@ Le MIDI contourne le mur entièrement : **aucun son ne transite**.
 | **3** | Bougez un curseur ou touchez un pad dans l'app |
 | **4** | C'est associé |
 
-Quatre curseurs — contrôleurs 1 à 4 sur le canal 1 — et huit pads, sensibles à
+Quatre curseurs (contrôleurs 1 à 4 sur le canal 1) et huit pads, sensibles à
 l'appui **et** au relâchement, comme de vrais pads.
 
 ## Ce qu'il faut savoir
 
-- Aucun pilote à installer : `MIDISourceCreateWithProtocol` est une API publique
-- Aucune autorisation demandée
-- L'appareil apparaît dans la liste MIDI du système, visible par tout logiciel
+| | |
+|---|---|
+| **Aucun pilote à installer** | `MIDISourceCreateWithProtocol` est une API publique |
+| **Aucune autorisation demandée** | Rien à accepter au premier lancement |
+| **Visible par tout logiciel** | L'appareil apparaît dans la liste MIDI du système |
 
 ---
 

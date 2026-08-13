@@ -1,7 +1,7 @@
 # Installation
 
 > Il n'y a **aucun binaire à télécharger**. Chacun compile et signe avec son
-> propre identifiant Apple — un identifiant **gratuit** suffit.
+> propre identifiant Apple. Un identifiant **gratuit** suffit.
 
 ## 1. Prérequis
 
@@ -25,7 +25,7 @@ make install PREFIX=$HOME/.local
 > compilation échoue sur un message trompeur :
 > `module name "" is not a valid identifier`.
 >
-> Vérifiez avec `ls ~/.local/bin/SettingPresets` — le dossier doit contenir des fichiers.
+> Vérifiez avec `ls ~/.local/bin/SettingPresets` : le dossier doit contenir des fichiers.
 
 ## 2. Cloner et configurer
 
@@ -76,7 +76,7 @@ App macOS installée et relancée (PID 1234, l'ancien était 1200)
 ```
 
 > **Si les deux PID sont identiques, l'ancienne version tourne encore.** Le
-> code que vous venez de compiler n'est pas celui qui s'exécute — vérifiez-le
+> code que vous venez de compiler n'est pas celui qui s'exécute. Vérifiez-le
 > avant de conclure qu'un correctif ne fonctionne pas.
 
 ## 4. Faire confiance à l'app sur l'iPhone
@@ -89,7 +89,7 @@ App macOS installée et relancée (PID 1234, l'ancien était 1200)
 
 | Autorisation | Pour quoi | Quand |
 |---|---|---|
-| **Accessibilité** | curseur, clics, clavier — **tout en dépend** | demandée au lancement |
+| **Accessibilité** | curseur, clics, clavier : **tout en dépend** | demandée au lancement |
 | **Automatisation** | bureaux, App Exposé, redémarrage, extinction | demandée au lancement |
 | **Réseau local** | découverte de l'iPhone | demandée au lancement |
 | **Bluetooth** | liaison de secours | à la première utilisation |

@@ -1,5 +1,7 @@
 # <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/keyboard.png" width="24" align="center"> Clavier
 
+*Taper sur l'iPhone, écrire sur le Mac : texte, raccourcis, dictée, presse-papiers.*
+
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-clavier-azerty.png" width="32%"> <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-clavier-touches.png" width="32%"></div>
 
 ## Envoyer du texte
@@ -19,7 +21,7 @@ et suivante, Échap, Tab, Espace, Entrée, Suppression.
 Un keycode macOS désigne une **touche physique**, pas une lettre. La touche `0`
 produit `a` en QWERTY US et `q` en AZERTY français.
 
-Une table figée transformerait donc ⌘A — tout sélectionner — en ⌘Q — quitter
+Une table figée transformerait donc ⌘A (tout sélectionner) en ⌘Q (quitter
 l'app. Sur ce Mac, mesuré :
 
 ```
@@ -28,8 +30,8 @@ disposition réelle : « a » → touche 12                      ok
 ```
 
 **L'iPhone envoie donc des caractères, jamais des keycodes.** Le Mac les traduit
-contre sa disposition **active**. Seules les touches nommées — entrée,
-tabulation, flèches — voyagent en keycode : leur position ne change pas d'une
+contre sa disposition **active**. Seules les touches nommées (entrée,
+tabulation, flèches) voyagent en keycode : leur position ne change pas d'une
 disposition à l'autre.
 
 > Un raccourci est **toujours** résolu contre la disposition active, jamais
@@ -56,7 +58,7 @@ disposition à l'autre.
 | **Envoyer** | Pousse le presse-papiers de l'iPhone vers le Mac |
 | **Récupérer** | Redemande au Mac son contenu actuel |
 
-Texte uniquement — ni images, ni fichiers. Pour l'historique complet, voir
+Texte uniquement, ni images ni fichiers. Pour l'historique complet, voir
 [[Onglet Mac|Mac]].
 
 ## <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/globe.png" width="20" align="center"> Clavier système, optionnel
@@ -65,7 +67,7 @@ Taper vers le Mac depuis **n'importe quelle app** de l'iPhone.
 
 1. Réglages iOS → Général → Clavier → Claviers → **Ajouter un clavier**
 2. Choisissez **« Clavier TrackPad Hub »**
-3. Touchez son nom, activez **« Autoriser l'accès complet »** — nécessaire pour accéder au réseau
+3. Touchez son nom, activez **« Autoriser l'accès complet »**, nécessaire pour accéder au réseau
 4. Dans un champ de saisie, basculez avec 🌐
 
 L'extension **réutilise l'appairage** de l'app : aucun code à ressaisir.
@@ -80,7 +82,7 @@ L'extension **réutilise l'appairage** de l'app : aucun code à ressaisir.
 | Symptôme | Solution |
 |---|---|
 | Les mauvaises lettres arrivent | Dans l'app macOS, choisissez la bonne disposition au lieu de « Suivre le clavier actif » |
-| Le clavier affiché n'est pas dans le bon ordre | [[Réglages|Reglages]] → Clavier → Disposition affichée |
+| Le clavier affiché n'est pas dans le bon ordre | [[Réglages\|Reglages]] → Clavier → Disposition affichée |
 
 ---
 

@@ -35,7 +35,7 @@ Les délais entre actions sont conservés tels quels : ouvrir Spotlight puis
 taper immédiatement perdrait les premières lettres, le temps que la fenêtre
 apparaisse.
 
-Ils sont **plafonnés à cinq secondes** — une interruption pendant
+Ils sont **plafonnés à cinq secondes**, pour qu'une interruption pendant
 l'enregistrement ne fige pas la macro.
 
 ## Problèmes courants

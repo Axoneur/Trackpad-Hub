@@ -19,7 +19,7 @@ Le vide au milieu est voulu : c'est là que se posent les paumes.
 Des **touches maintenues**, pas des frappes. Avancer suppose de garder la
 touche enfoncée ; un appui bref ferait faire un pas au personnage.
 
-> Un vrai gamepad exigerait un pilote HID virtuel installé sur le Mac — un
+> Un vrai gamepad exigerait un pilote HID virtuel installé sur le Mac, soit un
 > projet séparé, avec son installeur. Les jeux Mac lisent presque tous le
 > clavier, ce qui rend cette voie suffisante et sans rien à installer.
 

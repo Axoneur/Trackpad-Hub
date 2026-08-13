@@ -1,5 +1,7 @@
 # <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/square-stack.png" width="24" align="center"> Onglet Mac
 
+*Piloter le Mac lui-même : constantes, applications, fenêtres, onglets, outils.*
+
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-mac-constantes.png" width="32%"> <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-mac-outils.png" width="32%"></div>
 
 ## Constantes
@@ -72,7 +74,7 @@ Deux destinations, à ne pas confondre :
 
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-mac-statistiques.png" width="32%"></div>
 
-Temps connecté, et actions classées **par fréquence** — la plus utilisée en
+Temps connecté, et actions classées **par fréquence**, la plus utilisée en
 tête. L'icône en haut à droite remet tout à zéro.
 
 > Ces chiffres **restent sur l'iPhone**. Ils ne sont ni envoyés au Mac, ni
@@ -81,7 +83,7 @@ tête. L'icône en haut à droite remet tout à zéro.
 ## Navigation et alimentation
 
 Bureau, Mission Control, fenêtre suivante, Spotlight,
-<img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/moon-circle-fill.png" width="16" align="center"> Concentration, <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/captions-bubble-fill.png" width="16" align="center"> Sous-titres —
+<img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/moon-circle-fill.png" width="16" align="center"> Concentration, <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/captions-bubble-fill.png" width="16" align="center"> Sous-titres,
 puis veille, verrouillage, écran de veille, déconnexion, redémarrage, extinction.
 
 > Redémarrer, Éteindre et Déconnexion demandent confirmation.

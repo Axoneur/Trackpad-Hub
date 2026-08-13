@@ -1,5 +1,7 @@
 # <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/rectangle-and-hand-point-up-left.png" width="24" align="center"> Trackpad
 
+*Le curseur, les gestes et les clics. C'est l'écran qu'on utilise le plus.*
+
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-trackpad.png" width="34%"></div>
 
 ## Les gestes
@@ -35,14 +37,14 @@
 | <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/speedometer.png" width="18" align="center"> | **Vitesses** | Sensibilité du curseur et du défilement |
 | <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/keyboard.png" width="18" align="center"> | **Clavier** | Ouvre le clavier par-dessus, sans quitter l'écran |
 
-### <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/hand-raised-fill.png" width="20" align="center"> Maintenir le clic — le bouton le plus utile
+### <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/hand-raised-fill.png" width="20" align="center"> Maintenir le clic, le bouton le plus utile
 
 C'est celui qui permet de **déplacer une fenêtre** ou de la **redimensionner**.
 Ces deux gestes exigent de garder le bouton enfoncé pendant qu'on déplace le
 curseur, ce qu'aucun appui bref ne permet.
 
 1. Placez le curseur sur la barre de titre de la fenêtre
-2. Touchez **Maintenir le clic** — le bouton s'entoure de couleur
+2. Touchez **Maintenir le clic**, le bouton s'entoure de couleur
 3. Faites glisser un doigt sur la surface
 4. Retouchez le bouton pour relâcher
 
@@ -67,7 +69,7 @@ Une zone morte d'environ 7° absorbe le tremblement de la main.
 |---|---|
 | Tout ce que je touche se met à glisser | Le clic est resté maintenu : retouchez <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/hand-raised-fill.png" width="14" align="center"> |
 | Je n'arrive pas à déplacer une fenêtre | Voir la procédure en quatre étapes ci-dessus |
-| Le défilement part à l'envers | [[Réglages|Reglages]] → Trackpad → **Défilement naturel** |
+| Le défilement part à l'envers | [[Réglages\|Reglages]] → Trackpad → **Défilement naturel** |
 | Le curseur est trop lent ou trop nerveux | Touchez <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/speedometer.png" width="14" align="center"> |
 | Le clic droit envoie deux clics gauches | Posez les deux doigts **en même temps**, sans les faire glisser |
 | <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/dot-circle-and-hand-point-up-left-fill.png" width="14" align="center"> est grisé | Les capteurs ne répondent pas. Fermez et rouvrez l'app |

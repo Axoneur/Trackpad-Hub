@@ -1,14 +1,16 @@
 # <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/playpause-fill.png" width="24" align="center"> Média
 
+*Commander la lecture du Mac, et reprendre sur l'iPhone ce qui y joue.*
+
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-media-reprise.png" width="32%"> <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/iphone-media-presentation.png" width="32%"></div>
 
 ## Lecture et volume
 
-| | Fonction |
-|:-:|---|
-| <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/playpause-fill.png" width="18" align="center"> | **Lecture, précédent, suivant** — agit sur l'app qui joue, quelle qu'elle soit |
-| <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/speedometer.png" width="18" align="center"> | **Volume** — par curseur, via le réglage système du Mac |
-| ☀️ | **Luminosité** — moins clair, plus clair, éteindre l'écran |
+| | Fonction | Ce qu'elle fait |
+|:-:|---|---|
+| <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/playpause-fill.png" width="18" align="center"> | **Lecture, précédent, suivant** | Agit sur l'app qui joue, quelle qu'elle soit |
+| <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/speedometer.png" width="18" align="center"> | **Volume** | Par curseur, via le réglage système du Mac |
+| ☀️ | **Luminosité** | Moins clair, plus clair, éteindre l'écran |
 
 > Si lecture/pause reste sans effet : certaines versions de macOS bloquent le
 > contrôle média des apps tierces. Un repli par touches clavier prend alors le
@@ -34,7 +36,7 @@ Une carte apparaît dès qu'il y a quelque chose à reprendre. Elle distingue
 | Affichage | Ce que le Mac a détecté |
 |---|---|
 | **Page ouverte sur le Mac** | L'onglet actif du navigateur. Toujours disponible |
-| **Lecture en cours sur le Mac** | Une vidéo ou un morceau **réellement en train de jouer**, avec position et durée — **Picture in Picture compris** |
+| **Lecture en cours sur le Mac** | Une vidéo ou un morceau **réellement en train de jouer**, avec position et durée, **Picture in Picture compris** |
 
 Touchez **« Reprendre sur l'iPhone »** : le lien s'ouvre ici et le Mac se met
 en pause. La pause se désactive dans la carte si vous voulez garder le son sur

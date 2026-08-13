@@ -1,28 +1,28 @@
 ### TrackPad Hub
 
-**Démarrer**
-- [[Accueil|Home]]
-- [[Installation]]
-- [[Premier appairage|Premier-appairage]]
-- [[Signature et renouvellement|Signature-et-renouvellement]]
+**Démarrer**<br>
+[[Accueil|Home]]<br>
+[[Installation]]<br>
+[[Premier appairage|Premier-appairage]]<br>
+[[Signature et renouvellement|Signature-et-renouvellement]]
 
-**Guide**
-- [[Trackpad]]
-- [[Clavier]]
-- [[Média|Media]]
-- [[Onglet Mac|Mac]]
-- [[Réglages|Reglages]]
+**Guide**<br>
+[[Trackpad]]<br>
+[[Clavier]]<br>
+[[Média|Media]]<br>
+[[Onglet Mac|Mac]]<br>
+[[Réglages|Reglages]]
 
-**Aller plus loin**
-- [[Macros]]
-- [[Mode jeu|Mode-jeu]]
-- [[Surface MIDI|Surface-MIDI]]
-- [[Transports]]
+**Aller plus loin**<br>
+[[Macros]]<br>
+[[Mode jeu|Mode-jeu]]<br>
+[[Surface MIDI|Surface-MIDI]]<br>
+[[Transports]]
 
-**Comprendre**
-- [[Sécurité|Securite]]
-- [[Architecture]]
+**Comprendre**<br>
+[[Sécurité|Securite]]<br>
+[[Architecture]]
 
-**Aide**
-- [[Dépannage|Depannage]]
-- [[FAQ]]
+**Aide**<br>
+[[Dépannage|Depannage]]<br>
+[[FAQ]]

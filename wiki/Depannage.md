@@ -1,5 +1,7 @@
 # Dépannage
 
+*Quand quelque chose ne marche pas : comment le prouver plutôt que le deviner.*
+
 ## La commande qui tranche
 
 Avant toute hypothèse, regardez ce que le Mac reçoit réellement :
@@ -11,7 +13,7 @@ Avant toute hypothèse, regardez ce que le Mac reçoit réellement :
 | Ce que vous voyez | Ce que ça signifie |
 |---|---|
 | `reçu · …` puis `action · …` | L'iPhone envoie **et** le Mac exécute |
-| `reçu · …` seul | Le message arrive, l'exécution échoue — regardez la ligne `problème` |
+| `reçu · …` seul | Le message arrive, l'exécution échoue. Regardez la ligne `problème` |
 | Rien | Rien n'arrive : le problème est sur la liaison |
 
 > Le journal montre ce qui **change**, pas ce qui **est**. Une liaison déjà

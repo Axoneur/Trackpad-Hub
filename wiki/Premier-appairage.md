@@ -1,5 +1,7 @@
 # Premier appairage
 
+*Relier l'iPhone au Mac la première fois. Six étapes, cinq minutes, une seule fois.*
+
 <div align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/captures/mac-fenetre.png" width="90%"></div>
 
 ## Les six étapes
@@ -11,7 +13,7 @@
 | **3** | Sur l'**iPhone**, ouvrez l'app et acceptez l'accès au **réseau local**. |
 | **4** | Sur le Mac : **« Ajouter un appareil » → « Afficher le code d'appairage »**. Un QR code et six chiffres apparaissent, valables cinq minutes. |
 | **5** | Sur l'iPhone : **Réglages → Scanner un QR code**, ou saisissez le code à la main. |
-| **6** | La pastille passe au **vert**. C'est fait — et ce ne sera plus jamais demandé. |
+| **6** | La pastille passe au **vert**. C'est fait, et ce ne sera plus jamais demandé. |
 
 ## Si ça bloque
 

@@ -1,5 +1,7 @@
 # FAQ
 
+*Les questions qui reviennent, avec des réponses courtes.*
+
 ### Faut-il un compte Apple payant ?
 
 Non. Un identifiant Apple **gratuit** suffit, avec une contrainte : la
@@ -36,8 +38,8 @@ Mac.
 
 ### Pourquoi le clic droit et le clic gauche ont-ils des boutons dédiés ?
 
-Pour cliquer **sans bouger le curseur**. Les gestes équivalents — appui à un ou
-deux doigts — restent disponibles.
+Pour cliquer **sans bouger le curseur**. Les gestes équivalents, appui à un ou
+deux doigts, restent disponibles.
 
 ### Peut-on simuler un vrai clic fort ?
 
