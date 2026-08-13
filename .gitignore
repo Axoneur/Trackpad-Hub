@@ -20,3 +20,6 @@ KeyboardExt/Info.plist
 
 # Configuration locale : équipe de signature, propre à chaque personne.
 trackpadhub.conf
+
+# Configuration de l'agent, sans intérêt pour le projet.
+.claude/

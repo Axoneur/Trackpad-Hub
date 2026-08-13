@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-label="TrackPad Hub — votre iPhone devient le trackpad de votre Mac">
+  <defs>
+    <linearGradient id="fond" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1020"/>
+      <stop offset="55%" stop-color="#141C33"/>
+      <stop offset="100%" stop-color="#0A0F1C"/>
+    </linearGradient>
+
+    <linearGradient id="lueur" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#60A5FA" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+                        values="-1 0; 1 0; -1 0" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+
+    <linearGradient id="titre" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#9CC4FF"/>
+    </linearGradient>
+
+    <filter id="halo" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14" result="f"/>
+      <feMerge><feMergeNode in="f"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="320" fill="url(#fond)"/>
+  <rect width="1200" height="3" fill="url(#lueur)"/>
+
+  <!-- Surface du trackpad, à gauche : le doigt qui la parcourt donne le sujet
+       du projet sans une ligne de texte. -->
+  <g transform="translate(78 74)">
+    <rect width="300" height="176" rx="26" fill="#FFFFFF" fill-opacity="0.05"
+          stroke="#FFFFFF" stroke-opacity="0.14"/>
+    <circle r="17" fill="#60A5FA" fill-opacity="0.28" filter="url(#halo)">
+      <animateMotion dur="6s" repeatCount="indefinite"
+                     path="M 62,124 C 120,42 196,150 244,58"/>
+    </circle>
+    <circle r="7" fill="#DBEAFE">
+      <animateMotion dur="6s" repeatCount="indefinite"
+                     path="M 62,124 C 120,42 196,150 244,58"/>
+    </circle>
+  </g>
+
+  <!-- Le curseur du Mac suit le même tracé, décalé : c'est exactement ce que
+       fait l'app. -->
+  <g transform="translate(470 96)">
+    <rect width="640" height="150" rx="14" fill="#FFFFFF" fill-opacity="0.035"
+          stroke="#FFFFFF" stroke-opacity="0.10"/>
+    <g fill="#FFFFFF" fill-opacity="0.9">
+      <path d="M0 0 L0 17 L4.4 13.2 L7.2 19.4 L10.2 18 L7.4 11.9 L13 11.6 Z">
+        <animateMotion dur="6s" repeatCount="indefinite" begin="0.35s"
+                       path="M 96,104 C 220,26 380,132 486,42"/>
+      </path>
+    </g>
+  </g>
+
+  <text x="78" y="52" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial"
+        font-size="34" font-weight="700" fill="url(#titre)">TrackPad Hub</text>
+
+  <text x="470" y="76" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial"
+        font-size="19" fill="#C7D6F5">Votre iPhone devient le trackpad de votre Mac.</text>
+
+  <!-- Les trois transports, qui s'allument à tour de rôle. -->
+  <g font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial" font-size="14">
+    <g transform="translate(470 268)">
+      <rect width="112" height="30" rx="15" fill="#3B82F6" fill-opacity="0.16"
+            stroke="#60A5FA" stroke-opacity="0.5">
+        <animate attributeName="fill-opacity" values="0.16;0.45;0.16" dur="4.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="56" y="20" text-anchor="middle" fill="#BFDBFE">USB · 1 ms</text>
+    </g>
+    <g transform="translate(596 268)">
+      <rect width="112" height="30" rx="15" fill="#3B82F6" fill-opacity="0.16"
+            stroke="#60A5FA" stroke-opacity="0.5">
+        <animate attributeName="fill-opacity" values="0.16;0.45;0.16" dur="4.5s" begin="1.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="56" y="20" text-anchor="middle" fill="#BFDBFE">Wi-Fi · 3 ms</text>
+    </g>
+    <g transform="translate(722 268)">
+      <rect width="126" height="30" rx="15" fill="#3B82F6" fill-opacity="0.16"
+            stroke="#60A5FA" stroke-opacity="0.5">
+        <animate attributeName="fill-opacity" values="0.16;0.45;0.16" dur="4.5s" begin="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="63" y="20" text-anchor="middle" fill="#BFDBFE">Bluetooth · secours</text>
+    </g>
+  </g>
+</svg>

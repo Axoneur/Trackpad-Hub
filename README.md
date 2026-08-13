@@ -1,89 +1,105 @@
-# TrackPad Hub
+<div align="center">
 
-Transforme un iPhone en trackpad pour un Mac — pensé comme un vrai trackpad,
-pas comme une souris émulée : accélération, défilement à inertie, gestes à
-plusieurs doigts, clavier, contrôle des fenêtres et du média.
+<img src="docs/banniere.svg" alt="TrackPad Hub" width="100%">
 
-Quatre cibles : l'hôte macOS, l'app iPhone, un clavier système iOS et des
-widgets. Tout le code, les commentaires et l'interface sont en français.
+**Votre iPhone devient le trackpad de votre Mac.**
+Pas une souris émulée : accélération, inertie, gestes à plusieurs doigts, clavier, fenêtres, média.
 
----
+[![Plateformes](https://img.shields.io/badge/macOS-14%2B-0A84FF?style=flat-square&logo=apple&logoColor=white)](#)
+[![iOS](https://img.shields.io/badge/iOS-18%2B-0A84FF?style=flat-square&logo=apple&logoColor=white)](#)
+[![Swift](https://img.shields.io/badge/Swift-SwiftUI-FA7343?style=flat-square&logo=swift&logoColor=white)](#)
+[![Licence](https://img.shields.io/badge/licence-GPL--3.0-3DA639?style=flat-square)](LICENSE)
+[![Transports](https://img.shields.io/badge/transports-USB%20%C2%B7%20Wi--Fi%20%C2%B7%20Bluetooth-8B5CF6?style=flat-square)](#trois-transports-le-plus-rapide-gagne)
 
-## Installation
-
-Il n'y a **pas de binaire à télécharger** : chacun compile et signe avec son
-propre identifiant Apple. Un identifiant gratuit suffit.
-
-### Ce qu'il vous faut
-
-- un Mac sous macOS 14 ou plus récent, et Xcode ;
-- un iPhone sous iOS 18 ou plus récent ;
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen) — le projet Xcode est
-  généré, pas versionné.
-
-> **Piège XcodeGen** : il lui faut son dossier `SettingPresets/` **à côté du
-> binaire**. Sans lui, il produit un projet sans `PRODUCT_NAME` et la
-> compilation échoue sur `module name "" is not a valid identifier`.
-
-### Trois commandes
-
-```bash
-git clone <votre-fork>
-cd TrackPadHub
-./setup.sh
-```
-
-`setup.sh` demande deux choses, une fois pour toutes :
-
-| | Pourquoi |
-|---|---|
-| **Équipe de signature** | propre à votre identifiant Apple — Xcode > Settings > Accounts |
-| **Préfixe d'identifiant** | un App ID explicite est **unique dans tout le système d'Apple**. Ceux du dépôt d'origine appartiennent déjà à un autre compte et seront refusés. |
-
-Elles sont écrites dans `trackpadhub.conf`, qui n'est pas versionné. Ensuite :
-
-```bash
-./reinstall.sh --all
-```
-
-### La limite des 7 jours, à connaître d'avance
-
-Avec un compte Apple **gratuit**, une signature est valable **7 jours**. Passé
-ce délai, l'app cesse de s'ouvrir — ce n'est pas une panne, c'est la règle
-d'Apple. Il faut réinstaller.
-
-```bash
-./reinstall.sh --install
-```
-
-pose un agent `launchd` qui réinstalle tout seul tous les 6 jours. L'iPhone
-doit être branché à ce moment-là ; sinon la tentative échoue sans dégât et
-recommence au cycle suivant.
-
-Un compte payant (99 €/an) lève cette limite et permet la notarisation, via
-`notarize.sh`. Ce n'est nécessaire que pour distribuer l'app à d'autres.
-
-### Autorisations macOS
-
-L'app en demande deux, à la première utilisation :
-
-- **Accessibilité** — indispensable, tout en dépend ;
-- **Automatisation** — pour les bureaux, App Exposé, le redémarrage et
-  l'extinction.
-
-Certaines fonctions optionnelles demandent un réglage supplémentaire, indiqué
-dans l'app au moment voulu : un raccourci nommé pour les modes de
-concentration, et une case Safari pour détecter ce qui est en cours de lecture.
+</div>
 
 ---
 
-## Licence
+## Ce que ça fait
 
-GNU GPL v3 — voir [LICENSE](LICENSE).
+<table>
+<tr>
+<td width="50%" valign="top">
 
-Concrètement : vous pouvez utiliser, modifier et redistribuer ce code, à
-condition que les versions modifiées que vous distribuez restent elles aussi
-sous GPL, sources comprises.
+### 🖱️ Un vrai trackpad
+Curseur à accélération, défilement à inertie, pincer-zoomer.
+Gestes à 2, 3 et 4 doigts : Mission Control, bureaux, App Exposé.
+Clic maintenu pour déplacer et redimensionner une fenêtre.
+
+### ⌨️ Clavier complet
+Disposition AZERTY, QWERTY, QWERTZ. Touches F1–F12, navigation,
+dictée vocale, presse-papiers partagé.
+**Un keycode désigne une touche physique, pas une lettre** — le Mac
+traduit contre sa disposition active, donc ⌘A ne devient jamais ⌘Q.
+
+### 🪟 Fenêtres et onglets
+Moitiés, quarts, tiers, plein écran, réduire, écran suivant.
+Onglets Safari et Chrome : naviguer, fermer, rouvrir.
+
+</td>
+<td width="50%" valign="top">
+
+### 🎵 Média et reprise de lecture
+Lecture, volume, luminosité, mode présentation.
+Ce qui joue sur le Mac est **proposé sur l'iPhone** — page ouverte
+ou vidéo en cours, Picture in Picture compris.
+
+### 🎛️ Surface MIDI
+Le Mac se présente comme un contrôleur MIDI. Serato, Traktor,
+Ableton, Logic et les plugins d'égalisation l'apprennent en un clic.
+
+### 🎮 Et aussi
+Manette plein écran · Macros enregistrables · Historique du
+presse-papiers · Notes rapides · Statistiques d'usage ·
+Défilement par inclinaison · Mode poche
+
+</td>
+</tr>
+</table>
+
+---
+
+## Trois transports, le plus rapide gagne
+
+| | Quand | Latence |
+|---|---|---|
+| 🔌 **USB** | câble branché | **1–2 ms**, constante |
+| 📶 **Wi-Fi** | réseau commun | 2–5 ms |
+| 🔵 **Bluetooth** | ni l'un ni l'autre | 15–30 ms |
+
+Le choix est automatique et les trois portent **le même appairage et le même
+chiffrement**. Un câble ne donne aucun droit de plus : brancher un iPhone
+inconnu ne le rend pas maître du Mac.
+
+<details>
+<summary><b>Comment la sécurité fonctionne</b></summary>
+
+<br>
+
+Établir la connexion ne donne **aucun droit**. Tant qu'un appareil n'a pas
+prouvé qu'il connaît le secret, ses messages de contrôle sont jetés.
+
+1. Le Mac envoie un défi aléatoire à chaque connexion.
+2. L'iPhone répond `HMAC-SHA256(secret, défi)`. **Le secret ne circule jamais.**
+3. Premier appairage : le secret est le code à 6 chiffres affiché sur le Mac.
+4. Ensuite : un jeton permanent, gardé dans le trousseau des deux côtés.
+5. Cinq échecs bloquent l'appareil.
+
+Une fois appairé, chaque trame est scellée en **AES-GCM** avec une clé dérivée
+du jeton et salée par le défi de la connexion — elle change donc à chaque fois.
+Un compteur croissant par canal interdit le rejeu.
+
+</details>
+
+---
+
+## Aperçu
+
+<div align="center">
+
+<!-- CAPTURES -->
+
+</div>
 
 ---
 
