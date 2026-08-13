@@ -365,7 +365,7 @@ final class USBLink {
                 listener.start(queue: self.queue)
                 self.listener = listener
             } catch {
-                NSLog("TrackPadHub: écoute USB impossible — %@", "\(error)")
+                NSLog("TrackPadHub: écoute USB impossible : %@", "\(error)")
             }
         }
     }

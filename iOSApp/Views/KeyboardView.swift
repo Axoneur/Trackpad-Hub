@@ -60,10 +60,10 @@ struct KeyboardView: View {
     }
 
     private var statusText: String {
-        if dictation.isListening { return "Dictée en cours — parlez" }
+        if dictation.isListening { return "Dictée en cours · parlez" }
         if case .denied(let reason) = dictation.state { return reason }
         if case .error(let reason) = dictation.state { return reason }
-        return isPaired ? "Connecté — texte et raccourcis" : "Non connecté au Mac"
+        return isPaired ? "Connecté · texte et raccourcis" : "Non connecté au Mac"
     }
 
     // MARK: - Saisie et dictée
@@ -150,7 +150,7 @@ struct KeyboardView: View {
                         Text("Copié sur le Mac")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        Text(mac.clipboard.isEmpty ? "— rien pour l'instant —" : mac.clipboard)
+                        Text(mac.clipboard.isEmpty ? "rien pour l'instant" : mac.clipboard)
                             .font(.footnote)
                             .foregroundStyle(mac.clipboard.isEmpty ? .tertiary : .primary)
                             .lineLimit(3)
@@ -178,7 +178,7 @@ struct KeyboardView: View {
                     PasteButton(payloadType: String.self) { strings in
                         guard let copied = strings.first, !copied.isEmpty else { return }
                         connection.send(.clipboardPush(copied))
-                        clipboardFeedback = "Envoyé — collez avec ⌘V sur le Mac."
+                        clipboardFeedback = "Envoyé, collez avec ⌘V sur le Mac."
                     }
                     .labelStyle(.titleAndIcon)
                     .buttonBorderShape(.roundedRectangle(radius: 12))

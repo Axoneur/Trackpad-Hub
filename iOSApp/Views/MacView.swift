@@ -92,7 +92,7 @@ struct MacView: View {
                         VStack(alignment: .leading, spacing: 1) {
                             Text(lastHostName.isEmpty ? "Votre Mac" : lastHostName)
                                 .font(.subheadline.weight(.semibold))
-                            Text("Injoignable — il dort peut-être")
+                            Text("Injoignable · il dort peut-être")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -411,7 +411,7 @@ struct MacView: View {
                 VStack(alignment: .leading, spacing: 1) {
                     Text("Surface MIDI")
                         .font(.subheadline.weight(.semibold))
-                    Text("DJ, égaliseur, palettes — via MIDI learn")
+                    Text("DJ, égaliseur, palettes, via MIDI learn")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

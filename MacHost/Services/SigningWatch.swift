@@ -142,7 +142,7 @@ final class SigningWatch: ObservableObject {
     /// terminal et de retrouver le chemin du projet.
     func renouveler() {
         guard let chemin = cheminProjet, !renouvellementEnCours else {
-            dernierMessage = "Chemin du projet inconnu — relancez ./reinstall.sh une fois depuis le dossier."
+            dernierMessage = "Chemin du projet inconnu. Relancez ./reinstall.sh une fois depuis le dossier."
             return
         }
 

@@ -189,7 +189,7 @@ struct FeaturesView: View {
 
             Feature(name: "Réveil du Mac à distance",
                     icon: "bolt.horizontal",
-                    location: "Onglet Mac — apparaît seulement quand le Mac est injoignable",
+                    location: "Onglet Mac, apparaît seulement quand le Mac est injoignable",
                     state: wakeMacAddress.isEmpty
                         ? .conditional("Disponible après un premier appairage")
                         : (isPaired
@@ -225,7 +225,7 @@ struct FeaturesView: View {
     private var microphoneState: State {
         switch AVAudioApplication.shared.recordPermission {
         case .granted:  return .active("Micro autorisé, reconnaissance en français")
-        case .denied:   return .toEnable("Micro refusé — à réactiver dans les Réglages iOS")
+        case .denied:   return .toEnable("Micro refusé, à réactiver dans les Réglages iOS")
         default:        return .conditional("Autorisation demandée à la première utilisation")
         }
     }

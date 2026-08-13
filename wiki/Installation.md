@@ -1,4 +1,4 @@
-# Installation
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/arrow-down-app-fill.png" width="26" align="center"> Installation
 
 > Il n'y a **aucun binaire à télécharger**. Chacun compile et signe avec son
 > propre identifiant Apple. Un identifiant **gratuit** suffit.

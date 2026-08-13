@@ -1,4 +1,4 @@
-# Premier appairage
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/qrcode-viewfinder.png" width="26" align="center"> Premier appairage
 
 *Relier l'iPhone au Mac la première fois. Six étapes, cinq minutes, une seule fois.*
 

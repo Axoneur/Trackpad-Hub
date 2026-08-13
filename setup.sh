@@ -4,7 +4,7 @@
 #
 # Deux valeurs seulement sont propres à chaque personne : l'équipe de
 # signature Apple et le préfixe d'identifiant. Ce script les demande, les
-# écrit dans `trackpadhub.conf` — jamais versionné — puis génère le projet.
+# écrit dans `trackpadhub.conf` (jamais versionné) puis génère le projet.
 #
 # Pourquoi c'est indispensable :
 #
@@ -26,7 +26,7 @@ echo ""
 echo "   Où la trouver : Xcode > Settings > Accounts > sélectionnez votre"
 echo "   identifiant Apple. L'identifiant d'équipe est affiché à droite."
 echo ""
-echo "   Un identifiant Apple gratuit suffit — aucun abonnement requis."
+echo "   Un identifiant Apple gratuit suffit, aucun abonnement requis."
 echo ""
 
 # Aide : les certificats présents donnent une piste sur les comptes connus.

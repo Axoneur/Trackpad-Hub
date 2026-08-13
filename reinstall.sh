@@ -241,7 +241,7 @@ if ! xcrun devicectl device install app --device "$DEVICE" "$APP" > /tmp/trackpa
         echo "Trois solutions, de la plus simple à la plus radicale :"
         echo ""
         echo "  1. Supprimez de l'iPhone les autres apps installées depuis"
-        echo "     Xcode ou un outil de sideloading — y compris une ancienne"
+        echo "     Xcode ou un outil de sideloading, y compris une ancienne"
         echo "     version de TrackPad Hub. Appui long sur l'icône, Supprimer."
         echo ""
         echo "  2. Installez la version allégée, sans clavier système ni"
@@ -254,7 +254,7 @@ if ! xcrun devicectl device install app --device "$DEVICE" "$APP" > /tmp/trackpa
     exit 1
 fi
 
-# La vraie date, lue dans le profil embarqué — et non « 7 jours »
+# La vraie date, lue dans le profil embarqué, et non « 7 jours »
 # supposés. Mesuré : Xcode réutilise souvent le profil existant au lieu d'en
 # émettre un neuf, et l'échéance ne bouge alors pas d'un jour. Annoncer 7
 # jours dans ce cas, c'est promettre une marge qui n'existe pas.
@@ -275,17 +275,17 @@ if [ -n "$ECHEANCE" ]; then
     JOURS=$(( (EPOCH - $(date +%s)) / 86400 ))
     LISIBLE=$(LC_TIME=fr_FR.UTF-8 date -j -r "$EPOCH" "+%A %d %B à %Hh%M" 2>/dev/null)
     if [ "$JOURS" -gt 0 ] 2>/dev/null; then
-        echo "Terminé — l'app iPhone fonctionne jusqu'au $LISIBLE"
+        echo "Terminé, l'app iPhone fonctionne jusqu'au $LISIBLE"
         echo "          soit encore $JOURS jour(s)."
         echo ""
         echo "Relancer ce script ne repousse pas toujours l'échéance : Apple ne"
         echo "délivre un nouveau profil de 7 jours que lorsque l'ancien approche"
         echo "de sa fin. C'est normal, et l'app macOS vous préviendra à temps."
     else
-        echo "Terminé — installation faite."
+        echo "Terminé, installation faite."
     fi
 else
-    echo "Terminé — installation faite."
+    echo "Terminé, installation faite."
 fi
 echo ""
 echo "Si c'est la première installation, l'iPhone refusera d'ouvrir l'app."

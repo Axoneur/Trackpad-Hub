@@ -251,7 +251,7 @@ struct AppActionsSheet: View {
                         .frame(width: 60, height: 60)
                     Text(app.name).font(.headline)
                     if app.isSuspended {
-                        Text("Suspendue — elle ne consomme plus de processeur")
+                        Text("Suspendue · elle ne consomme plus de processeur")
                             .font(.caption)
                             .foregroundStyle(.orange)
                             .multilineTextAlignment(.center)

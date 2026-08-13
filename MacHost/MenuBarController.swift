@@ -84,7 +84,7 @@ final class MenuBarController: NSObject, ObservableObject {
 
         let paired = connection?.pairingState == .paired
         let title = paired
-            ? "Connecté — \(connection?.connectedPeers.first?.displayName ?? "iPhone")"
+            ? "Connecté · \(connection?.connectedPeers.first?.displayName ?? "iPhone")"
             : "En attente d'un iPhone…"
         let status = NSMenuItem(title: title, action: nil, keyEquivalent: "")
         status.isEnabled = false
@@ -188,7 +188,7 @@ final class MenuBarController: NSObject, ObservableObject {
                 try SMAppService.mainApp.register()
             }
         } catch {
-            NSLog("TrackPadHub: lancement au démarrage — %@", error.localizedDescription)
+            NSLog("TrackPadHub: lancement au démarrage : %@", error.localizedDescription)
         }
         statusItem?.menu = buildMenu()
     }

@@ -137,7 +137,7 @@ struct SettingsView: View {
                             Text(style.name).tag(style.rawValue)
                         }
                     }
-                    Text("Ne change que les lettres dessinées sur les touches. Le Mac traduit ensuite selon sa propre disposition — réglable dans l'app macOS.")
+                    Text("Ne change que les lettres dessinées sur les touches. Le Mac traduit ensuite selon sa propre disposition, réglable dans l'app macOS.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -166,7 +166,7 @@ struct SettingsView: View {
 
                 Section("Capteurs") {
                     Toggle("Mode poche", isOn: $pocketModeEnabled)
-                    Text("Ignore le tactile quand le capteur de proximité est couvert — poche, table. Évite qu'un téléphone rangé sans verrouiller envoie des clics au hasard.")
+                    Text("Ignore le tactile quand le capteur de proximité est couvert (poche, table). Évite qu'un téléphone rangé sans verrouiller envoie des clics au hasard.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
 
@@ -320,7 +320,7 @@ struct SettingsView: View {
                         Text("• " + quand.formatted(.dateTime.weekday(.wide).day().month(.wide).hour().minute()))
                     }
                     if rappelJourJ {
-                        Text("• " + expiration.formatted(.dateTime.weekday(.wide).day().month(.wide).hour().minute()) + " — expiration")
+                        Text("• " + expiration.formatted(.dateTime.weekday(.wide).day().month(.wide).hour().minute()) + " · expiration")
                     }
                 }
                 Text("Rafraîchir l'app depuis le Mac : ./reinstall.sh --all")

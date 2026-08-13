@@ -1,4 +1,4 @@
-# FAQ
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/questionmark-circle-fill.png" width="26" align="center"> FAQ
 
 *Les questions qui reviennent, avec des réponses courtes.*
 

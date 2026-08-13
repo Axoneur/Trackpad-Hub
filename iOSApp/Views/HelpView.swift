@@ -107,7 +107,7 @@ enum HelpLibrary {
             purpose: "Empêcher les gestes accidentels quand l'iPhone est rangé.",
             steps: [
                 "Réglages > Capteurs > activez « Mode poche ».",
-                "Dès que le capteur de proximité est couvert — poche, table retournée — l'écran se voile et plus rien ne part vers le Mac.",
+                "Dès que le capteur de proximité est couvert (poche, table retournée), l'écran se voile et plus rien ne part vers le Mac.",
                 "Découvrez l'écran : tout reprend."
             ],
             troubleshooting: [
@@ -229,13 +229,13 @@ enum HelpLibrary {
             tint: .indigo,
             purpose: "Ce que fait chaque bouton, de gauche à droite.",
             steps: [
-                "Curseur avec index — Clic gauche. Le même qu'un appui bref à un doigt, mais sans bouger le curseur.",
-                "Curseur avec deux traits — Clic droit. Ouvre le menu contextuel, comme un appui à deux doigts.",
-                "Main levée — Maintenir le clic. Le bouton gauche reste enfoncé jusqu'au prochain appui : c'est ce qui permet de déplacer une fenêtre ou de la redimensionner en faisant glisser un doigt. Le bouton s'entoure de couleur tant que le clic est maintenu.",
-                "Main avec point — Souris en l'air. Le curseur suit l'inclinaison de l'iPhone. Grisé si les capteurs sont indisponibles.",
-                "Viseur — Recentrer la souris en l'air, quand le curseur a dérivé. Actif seulement quand elle tourne.",
-                "Compteur — Réglages de vitesse : sensibilité du curseur et du défilement.",
-                "Clavier — Ouvre le clavier par-dessus le trackpad, sans quitter l'écran."
+                "Curseur avec index : clic gauche. Le même qu'un appui bref à un doigt, mais sans bouger le curseur.",
+                "Curseur avec deux traits : clic droit. Ouvre le menu contextuel, comme un appui à deux doigts.",
+                "Main levée : maintenir le clic. Le bouton gauche reste enfoncé jusqu'au prochain appui : c'est ce qui permet de déplacer une fenêtre ou de la redimensionner en faisant glisser un doigt. Le bouton s'entoure de couleur tant que le clic est maintenu.",
+                "Main avec point : souris en l'air. Le curseur suit l'inclinaison de l'iPhone. Grisé si les capteurs sont indisponibles.",
+                "Viseur : recentrer la souris en l'air, quand le curseur a dérivé. Actif seulement quand elle tourne.",
+                "Compteur : réglages de vitesse, sensibilité du curseur et du défilement.",
+                "Clavier : ouvre le clavier par-dessus le trackpad, sans quitter l'écran."
             ],
             troubleshooting: [
                 ("Tout ce que je touche se met à glisser",
@@ -255,7 +255,7 @@ enum HelpLibrary {
             title: "Souris en l'air",
             icon: "dot.circle.and.hand.point.up.left.fill",
             tint: .teal,
-            purpose: "Déplacer le curseur en inclinant l'iPhone, sans toucher l'écran — utile à distance, pendant une présentation.",
+            purpose: "Déplacer le curseur en inclinant l'iPhone, sans toucher l'écran, utile à distance, pendant une présentation.",
             steps: [
                 "Dans l'onglet Trackpad, touchez l'icône de main pour activer le mode.",
                 "Tenez l'iPhone devant vous et inclinez-le : le curseur suit.",
@@ -400,7 +400,7 @@ enum HelpLibrary {
             steps: [
                 "Réglages iOS > Général > Clavier > Claviers > Ajouter un clavier.",
                 "Choisissez « Clavier TrackPad Hub ».",
-                "Touchez son nom, puis activez « Autoriser l'accès complet » — nécessaire pour accéder au réseau.",
+                "Touchez son nom, puis activez « Autoriser l'accès complet », nécessaire pour accéder au réseau.",
                 "Dans n'importe quel champ de saisie, basculez avec l'icône 🌐."
             ],
             troubleshooting: [

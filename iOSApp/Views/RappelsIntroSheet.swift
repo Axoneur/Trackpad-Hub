@@ -37,7 +37,7 @@ struct RappelsIntroSheet: View {
                     .font(.title2.weight(.bold))
                     .multilineTextAlignment(.center)
 
-                Text("C'est une règle d'Apple pour les comptes de développeur gratuits, pas un défaut de TrackPad Hub. Passé ce délai, l'app **refuse simplement de s'ouvrir** — rien n'est perdu, il suffit de la réinstaller depuis le Mac.")
+                Text("C'est une règle d'Apple pour les comptes de développeur gratuits, pas un défaut de TrackPad Hub. Passé ce délai, l'app **refuse simplement de s'ouvrir**. Rien n'est perdu, il suffit de la réinstaller depuis le Mac.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)

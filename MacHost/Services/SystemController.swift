@@ -339,7 +339,7 @@ final class SystemController: ObservableObject {
             }
             return true
         } catch {
-            NSLog("TrackPadHub: échec de %@ — %@", launchPath, error.localizedDescription)
+            NSLog("TrackPadHub: échec de %@ : %@", launchPath, error.localizedDescription)
             return false
         }
     }

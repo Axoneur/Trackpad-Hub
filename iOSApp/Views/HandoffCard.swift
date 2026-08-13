@@ -76,7 +76,7 @@ struct HandoffCard: View {
 
             // Le Mac ne voit que la page : dire quoi cocher, une fois.
             if media.needsJavaScriptPermission {
-                Text("Pour détecter ce qui est réellement lu — y compris en Picture in Picture — activez « Autoriser JavaScript depuis les Apple Events » dans Safari : Réglages > Avancé > Fonctionnalités pour développeurs web, puis menu Développement.")
+                Text("Pour détecter ce qui est réellement lu, Picture in Picture compris, activez « Autoriser JavaScript depuis les Apple Events » dans Safari : Réglages > Avancé > Fonctionnalités pour développeurs web, puis menu Développement.")
                     .font(.caption2)
                     .foregroundStyle(.orange)
                     .frame(maxWidth: .infinity, alignment: .leading)

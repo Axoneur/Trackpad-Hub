@@ -6,6 +6,22 @@
 
 <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/banniere.svg" width="100%">
 
+
+<table>
+<tr>
+<td align="center" width="25%"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/hand-draw-fill.png" width="40"><br><b>Trackpad</b><br><sub>Accélération, inertie,<br>gestes à 4 doigts</sub></td>
+<td align="center" width="25%"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/keyboard-fill.png" width="40"><br><b>Clavier</b><br><sub>AZERTY respecté,<br>dictée, presse-papiers</sub></td>
+<td align="center" width="25%"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/play-rectangle-fill.png" width="40"><br><b>Média</b><br><sub>Lecture, volume,<br>reprise sur l'iPhone</sub></td>
+<td align="center" width="25%"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/macwindow.png" width="40"><br><b>Fenêtres</b><br><sub>Moitiés, quarts,<br>plein écran, apps</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/bolt-horizontal-fill.png" width="40"><br><b>Trois liaisons</b><br><sub>USB, Wi-Fi, Bluetooth<br>choix automatique</sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/lock-fill.png" width="40"><br><b>Chiffré</b><br><sub>Appairage obligatoire,<br>AES-GCM de bout en bout</sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/gamecontroller-fill.png" width="40"><br><b>Mode jeu</b><br><sub>Manette plein écran,<br>touches maintenues</sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/wand-and-stars.png" width="40"><br><b>Macros et MIDI</b><br><sub>Séquences rejouables,<br>contrôleur MIDI</sub></td>
+</tr>
+</table>
+
 ## En bref
 
 | | |

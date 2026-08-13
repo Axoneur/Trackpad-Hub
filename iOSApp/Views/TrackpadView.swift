@@ -103,7 +103,7 @@ struct TrackpadView: View {
     private var statusText: String {
         guard isPaired else { return "Recherche du Mac…" }
         return airMouse.isRunning
-            ? "Souris en l'air — inclinez l'iPhone"
+            ? "Souris en l'air · inclinez l'iPhone"
             : "1 doigt : curseur · 2 : défilement · 3 : glisser"
     }
 

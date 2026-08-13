@@ -30,7 +30,7 @@ struct MacrosView: View {
     }
 
     private var statusText: String {
-        if macros.isRecording { return "Enregistrement — \(macros.draft.count) actions" }
+        if macros.isRecording { return "Enregistrement · \(macros.draft.count) actions" }
         return macros.macros.isEmpty ? "Aucune macro" : "\(macros.macros.count) macros"
     }
 
@@ -54,7 +54,7 @@ struct MacrosView: View {
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else if macros.ignoredCount > 0 {
-                    Text("\(macros.ignoredCount) mouvements ignorés — touchez une touche, un clic ou un raccourci pour enregistrer une action.")
+                    Text("\(macros.ignoredCount) mouvements ignorés. Touchez une touche, un clic ou un raccourci pour enregistrer une action.")
                         .font(.caption)
                         .foregroundStyle(.orange)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -146,7 +146,7 @@ struct MacrosView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Ce qui est enregistré")
                 .font(.caption.weight(.semibold))
-            Text("Touches, clics, raccourcis, commandes système, fenêtres et onglets — avec les pauses que vous faites entre eux. Les déplacements du curseur, le défilement et le zoom sont ignorés : ils dépendent de l'endroit exact où se trouvait le curseur et ne se rejouent pas.")
+            Text("Touches, clics, raccourcis, commandes système, fenêtres et onglets, avec les pauses que vous faites entre eux. Les déplacements du curseur, le défilement et le zoom sont ignorés : ils dépendent de l'endroit exact où se trouvait le curseur et ne se rejouent pas.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

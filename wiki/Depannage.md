@@ -1,4 +1,4 @@
-# Dépannage
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/stethoscope.png" width="26" align="center"> Dépannage
 
 *Quand quelque chose ne marche pas : comment le prouver plutôt que le deviner.*
 

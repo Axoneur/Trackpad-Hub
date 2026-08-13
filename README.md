@@ -16,7 +16,7 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 ---
 
-## Sommaire
+## <img src="docs/icones/sections/list-bullet-rectangle-fill.png" width="26" align="center"> Sommaire
 
 <table>
 <tr>
@@ -59,9 +59,33 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 ---
 
+
+<div align="center">
+
+## Ce que ça sait faire
+
+<table>
+<tr>
+<td align="center" width="25%"><img src="docs/icones/sections/hand-draw-fill.png" width="40"><br><b>Trackpad</b><br><sub>Accélération, inertie,<br>gestes à 4 doigts</sub></td>
+<td align="center" width="25%"><img src="docs/icones/sections/keyboard-fill.png" width="40"><br><b>Clavier</b><br><sub>AZERTY respecté,<br>dictée, presse-papiers</sub></td>
+<td align="center" width="25%"><img src="docs/icones/sections/play-rectangle-fill.png" width="40"><br><b>Média</b><br><sub>Lecture, volume,<br>reprise sur l'iPhone</sub></td>
+<td align="center" width="25%"><img src="docs/icones/sections/macwindow.png" width="40"><br><b>Fenêtres</b><br><sub>Moitiés, quarts,<br>plein écran, apps</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/icones/sections/bolt-horizontal-fill.png" width="40"><br><b>Trois liaisons</b><br><sub>USB, Wi-Fi, Bluetooth<br>choix automatique</sub></td>
+<td align="center"><img src="docs/icones/sections/lock-fill.png" width="40"><br><b>Chiffré</b><br><sub>Appairage obligatoire,<br>AES-GCM de bout en bout</sub></td>
+<td align="center"><img src="docs/icones/sections/gamecontroller-fill.png" width="40"><br><b>Mode jeu</b><br><sub>Manette plein écran,<br>touches maintenues</sub></td>
+<td align="center"><img src="docs/icones/sections/wand-and-stars.png" width="40"><br><b>Macros et MIDI</b><br><sub>Séquences rejouables,<br>contrôleur MIDI</sub></td>
+</tr>
+</table>
+
+</div>
+
+---
+
 <a id="apercu"></a>
 
-## Aperçu
+## <img src="docs/icones/sections/eye-fill.png" width="26" align="center"> Aperçu
 
 <div align="center">
 
@@ -132,7 +156,7 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 <a id="installation"></a>
 
-## Installation
+## <img src="docs/icones/sections/arrow-down-app-fill.png" width="26" align="center"> Installation
 
 ### Comment ça marche, en une phrase
 
@@ -154,7 +178,7 @@ choses à toucher.
 
 <a id="sur-le-mac"></a>
 
-## 🖥️ Sur le Mac
+## <img src="docs/icones/sections/desktopcomputer.png" width="26" align="center"> Sur le Mac
 
 ### Étape 1. Installer Xcode
 
@@ -268,7 +292,7 @@ Si vous avez refusé par erreur :
 
 <a id="sur-liphone"></a>
 
-## 📱 Sur l'iPhone
+## <img src="docs/icones/sections/iphone.png" width="26" align="center"> Sur l'iPhone
 
 Vous n'installez rien : le Mac s'en est chargé à l'étape 4. Il reste deux
 choses à toucher.
@@ -294,7 +318,7 @@ C'est tout. Passez à [l'appairage](#appairage).
 
 <a id="appairage"></a>
 
-## Premier appairage
+## <img src="docs/icones/sections/qrcode-viewfinder.png" width="26" align="center"> Premier appairage
 
 <table>
 <tr><td width="6%" align="center">1</td><td>Sur le <b>Mac</b>, ouvrez TrackPad Hub et laissez la fenêtre ouverte.</td></tr>
@@ -315,7 +339,7 @@ C'est tout. Passez à [l'appairage](#appairage).
 
 <a id="guide"></a>
 
-## Guide complet
+## <img src="docs/icones/sections/book-fill.png" width="26" align="center"> Guide complet
 
 ### <img src="docs/icones/rectangle-and-hand-point-up-left.png" width="22" align="center"> Trackpad
 
@@ -544,7 +568,7 @@ supprimer.
 
 <a id="avances"></a>
 
-## Réglages avancés, optionnels
+## <img src="docs/icones/sections/slider-horizontal-3.png" width="26" align="center"> Réglages avancés, optionnels
 
 ### Détecter ce qui est réellement lu
 
@@ -585,7 +609,7 @@ L'extension **réutilise l'appairage** de l'app : aucun code à ressaisir.
 
 <a id="maj"></a>
 
-## 🔄 Rester à jour
+## <img src="docs/icones/sections/arrow-triangle-2-circlepath.png" width="26" align="center"> Rester à jour
 
 À l'ouverture, les deux apps regardent **une fois par jour** s'il existe une
 version plus récente sur GitHub. Un bandeau n'apparaît que s'il y en a une.
@@ -601,7 +625,7 @@ git pull && ./reinstall.sh --all
 
 <a id="signature"></a>
 
-## 🔏 La signature : ce que vous avez à faire
+## <img src="docs/icones/sections/checkmark-seal-fill.png" width="26" align="center"> La signature : ce que vous avez à faire
 
 **Rien.** Il n'existe aucune manipulation de signature à effectuer.
 
@@ -638,7 +662,7 @@ fois, à `./setup.sh`.
 
 <a id="sept-jours"></a>
 
-## ⏳ Pourquoi l'app iPhone s'arrête au bout de 7 jours
+## <img src="docs/icones/sections/calendar-badge-clock.png" width="26" align="center"> Pourquoi l'app iPhone s'arrête au bout de 7 jours
 
 | Type de compte Apple | Durée du profil |
 |---|---|
@@ -757,7 +781,7 @@ ouverture.
 
 <a id="transports"></a>
 
-## Trois transports, le plus rapide gagne
+## <img src="docs/icones/sections/antenna-radiowaves-left-and-right.png" width="26" align="center"> Trois transports, le plus rapide gagne
 
 | | Quand | Latence |
 |---|---|---|
@@ -772,7 +796,7 @@ chiffrement** : un câble ne donne aucun droit de plus.
 
 <a id="securite"></a>
 
-## <img src="docs/icones/lock-shield.png" width="22" align="center"> Sécurité
+## <img src="docs/icones/sections/lock-shield-fill.png" width="26" align="center"> Sécurité
 
 Se connecter au réseau **ne donne aucun droit**. Sans appairage, toutes les
 commandes sont rejetées.
@@ -791,7 +815,7 @@ fois. Un compteur croissant par canal interdit le rejeu.
 
 <a id="architecture"></a>
 
-## Architecture
+## <img src="docs/icones/sections/square-stack-3d-up-fill.png" width="26" align="center"> Architecture
 
 Le **Mac est l'hôte** : il annonce le service Bonjour `_trackpadhub._tcp`
 et écoute. L'**iPhone** le cherche et s'y connecte, de même que l'extension
@@ -840,7 +864,7 @@ ne change pas d'une disposition à l'autre.
 
 <a id="depannage"></a>
 
-## Dépannage
+## <img src="docs/icones/sections/stethoscope.png" width="26" align="center"> Dépannage
 
 | Symptôme | Cause la plus probable |
 |---|---|
@@ -866,7 +890,7 @@ frappes réellement émises.
 
 <a id="licence"></a>
 
-## Licence
+## <img src="docs/icones/sections/doc-text-fill.png" width="26" align="center"> Licence
 
 **GNU GPL v3**, voir [LICENSE](LICENSE).
 

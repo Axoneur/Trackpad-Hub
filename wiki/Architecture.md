@@ -1,4 +1,4 @@
-# Architecture
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/square-stack-3d-up-fill.png" width="26" align="center"> Architecture
 
 Pour qui veut lire ou modifier le code.
 

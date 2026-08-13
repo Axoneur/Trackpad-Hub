@@ -100,7 +100,7 @@ struct PairingView: View {
             return "Vérifiez le code affiché sur votre Mac et réessayez."
         }
         if let scannedHost {
-            return "QR code de « \(scannedHost) » reconnu — vérification…"
+            return "QR code de « \(scannedHost) » reconnu, vérification…"
         }
         if let scanError {
             return scanError

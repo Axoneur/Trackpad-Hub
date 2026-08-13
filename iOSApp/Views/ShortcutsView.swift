@@ -15,7 +15,7 @@ struct ShortcutsView: View {
             GlassScreen(title: "Raccourcis",
                         isConnected: isPaired,
                         statusText: isPaired
-                            ? "Connecté — un toucher lance le raccourci"
+                            ? "Connecté · un toucher lance le raccourci"
                             : "Non connecté au Mac") {
                 if store.items.isEmpty {
                     emptyState

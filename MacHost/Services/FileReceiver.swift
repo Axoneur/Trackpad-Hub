@@ -30,7 +30,7 @@ final class FileReceiver {
         } catch {
             // Le déplacement échoue entre volumes différents : on copie.
             guard (try? FileManager.default.copyItem(at: temporaryURL, to: target)) != nil else {
-                NSLog("TrackPadHub: réception de %@ impossible — %@", name, error.localizedDescription)
+                NSLog("TrackPadHub: réception de %@ impossible : %@", name, error.localizedDescription)
                 return nil
             }
         }

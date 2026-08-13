@@ -171,7 +171,7 @@ struct ContentView: View {
                 .font(.headline)
                 .foregroundStyle((signature.joursRestants ?? 1) < 0 ? .red : .orange)
 
-            Text("Un compte Apple gratuit signe pour 7 jours. Passé ce délai, l'app iPhone cesse de s'ouvrir — ce n'est pas une panne.")
+            Text("Un compte Apple gratuit signe pour 7 jours. Passé ce délai, l'app iPhone cesse de s'ouvrir. Ce n'est pas une panne.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
 
@@ -246,7 +246,7 @@ struct ContentView: View {
                 Text("TrackPad Hub")
                     .font(.title2.bold())
                 Text(connection.isConnected
-                     ? "Connecté — votre iPhone est actif"
+                     ? "Connecté · votre iPhone est actif"
                      : "En attente d'un iPhone…")
                     .foregroundStyle(connection.isConnected ? .green : .secondary)
             }
@@ -450,7 +450,7 @@ struct ContentView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundStyle(.orange)
-                    Text("Automatisation non accordée — changer de bureau, App Exposé, afficher le bureau, redémarrer, éteindre et se déconnecter resteront sans effet.")
+                    Text("Automatisation non accordée : changer de bureau, App Exposé, afficher le bureau, redémarrer, éteindre et se déconnecter resteront sans effet.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                     Spacer()

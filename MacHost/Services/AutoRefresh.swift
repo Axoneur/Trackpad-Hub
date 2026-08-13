@@ -133,7 +133,7 @@ final class AutoRefresh: ObservableObject {
             return
         }
 
-        Trace.action("rafraîchissement · iPhone branché, \(jours) j restants — départ")
+        Trace.action("rafraîchissement · iPhone branché, \(jours) j restants, départ")
         dejaTraite = true
         visible = true
         demarrerCompteARebours()
@@ -189,7 +189,7 @@ final class AutoRefresh: ObservableObject {
     /// n'expire pas, elle n'a de toute façon rien à y gagner.
     func lancer() {
         guard let chemin = signature.cheminProjet else {
-            etat = .echoue("Chemin du projet inconnu — lancez ./reinstall.sh une fois à la main.")
+            etat = .echoue("Chemin du projet inconnu. Lancez ./reinstall.sh une fois à la main.")
             return
         }
         let script = URL(fileURLWithPath: chemin).appendingPathComponent("reinstall.sh")

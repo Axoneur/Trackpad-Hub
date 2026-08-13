@@ -1,4 +1,4 @@
-# Signature et renouvellement
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/checkmark-seal-fill.png" width="26" align="center"> Signature et renouvellement
 
 ## La réponse courte
 

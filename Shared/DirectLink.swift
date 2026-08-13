@@ -236,13 +236,13 @@ final class DirectLink {
             }
             listener.stateUpdateHandler = { state in
                 if case .failed(let error) = state {
-                    NSLog("TrackPadHub: écoute TCP en échec — %@", "\(error)")
+                    NSLog("TrackPadHub: écoute TCP en échec : %@", "\(error)")
                 }
             }
             listener.start(queue: queue)
             tcpListener = listener
         } catch {
-            NSLog("TrackPadHub: impossible d'ouvrir l'écoute TCP — %@", "\(error)")
+            NSLog("TrackPadHub: impossible d'ouvrir l'écoute TCP : %@", "\(error)")
         }
 
         do {
@@ -253,7 +253,7 @@ final class DirectLink {
             listener.start(queue: queue)
             udpListener = listener
         } catch {
-            NSLog("TrackPadHub: impossible d'ouvrir l'écoute UDP — %@", "\(error)")
+            NSLog("TrackPadHub: impossible d'ouvrir l'écoute UDP : %@", "\(error)")
         }
     }
 
@@ -294,7 +294,7 @@ final class DirectLink {
         }
         browser.stateUpdateHandler = { state in
             if case .failed(let error) = state {
-                NSLog("TrackPadHub: recherche en échec — %@", "\(error)")
+                NSLog("TrackPadHub: recherche en échec : %@", "\(error)")
             }
         }
         browser.start(queue: queue)

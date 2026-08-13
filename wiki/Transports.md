@@ -1,4 +1,4 @@
-# Transports
+# <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/antenna-radiowaves-left-and-right.png" width="26" align="center"> Transports
 
 Trois liaisons possibles entre l'iPhone et le Mac. Le choix est **automatique** :
 la plus rapide disponible gagne.

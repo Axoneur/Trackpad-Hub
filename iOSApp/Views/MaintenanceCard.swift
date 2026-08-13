@@ -25,7 +25,7 @@ struct MaintenanceCard: View {
 
             Text(SigningExpiry.isExpired
                  ? "L'app ne s'ouvrira plus tant qu'elle n'aura pas été réinstallée. Ce n'est pas une panne : un compte Apple gratuit signe pour 7 jours."
-                 : "Un compte Apple gratuit signe pour 7 jours. Passé ce délai l'app cesse de s'ouvrir — ce n'est pas une panne.")
+                 : "Un compte Apple gratuit signe pour 7 jours. Passé ce délai l'app cesse de s'ouvrir. Ce n'est pas une panne.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 

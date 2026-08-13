@@ -15,7 +15,7 @@ struct MediaView: View {
             GlassScreen(title: "Média",
                         isConnected: isPaired,
                         statusText: isPaired
-                            ? "Connecté — contrôles envoyés à votre Mac"
+                            ? "Connecté · contrôles envoyés à votre Mac"
                             : "Non connecté au Mac") {
                 HandoffCard()
                 transportSection

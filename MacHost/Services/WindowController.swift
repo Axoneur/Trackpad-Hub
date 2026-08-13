@@ -126,7 +126,7 @@ final class WindowController {
         // Ne pas déplacer sa propre fenêtre : la commande vient de l'iPhone,
         // la fenêtre attendue est celle que l'utilisateur regarde.
         guard pid != ProcessInfo.processInfo.processIdentifier else {
-            lastError = "TrackPad Hub est au premier plan — activez d'abord la fenêtre à déplacer."
+            lastError = "TrackPad Hub est au premier plan. Activez d'abord la fenêtre à déplacer."
             return
         }
 
