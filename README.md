@@ -1,1 +1,353 @@
-# Trackpad-Hub
+# TrackPad Hub
+
+Transforme un iPhone en trackpad pour un Mac — pensé comme un vrai trackpad,
+pas comme une souris émulée : accélération, défilement à inertie, gestes à
+plusieurs doigts, clavier, contrôle des fenêtres et du média.
+
+Quatre cibles : l'hôte macOS, l'app iPhone, un clavier système iOS et des
+widgets. Tout le code, les commentaires et l'interface sont en français.
+
+---
+
+## Installation
+
+Il n'y a **pas de binaire à télécharger** : chacun compile et signe avec son
+propre identifiant Apple. Un identifiant gratuit suffit.
+
+### Ce qu'il vous faut
+
+- un Mac sous macOS 14 ou plus récent, et Xcode ;
+- un iPhone sous iOS 18 ou plus récent ;
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen) — le projet Xcode est
+  généré, pas versionné.
+
+> **Piège XcodeGen** : il lui faut son dossier `SettingPresets/` **à côté du
+> binaire**. Sans lui, il produit un projet sans `PRODUCT_NAME` et la
+> compilation échoue sur `module name "" is not a valid identifier`.
+
+### Trois commandes
+
+```bash
+git clone <votre-fork>
+cd TrackPadHub
+./setup.sh
+```
+
+`setup.sh` demande deux choses, une fois pour toutes :
+
+| | Pourquoi |
+|---|---|
+| **Équipe de signature** | propre à votre identifiant Apple — Xcode > Settings > Accounts |
+| **Préfixe d'identifiant** | un App ID explicite est **unique dans tout le système d'Apple**. Ceux du dépôt d'origine appartiennent déjà à un autre compte et seront refusés. |
+
+Elles sont écrites dans `trackpadhub.conf`, qui n'est pas versionné. Ensuite :
+
+```bash
+./reinstall.sh --all
+```
+
+### La limite des 7 jours, à connaître d'avance
+
+Avec un compte Apple **gratuit**, une signature est valable **7 jours**. Passé
+ce délai, l'app cesse de s'ouvrir — ce n'est pas une panne, c'est la règle
+d'Apple. Il faut réinstaller.
+
+```bash
+./reinstall.sh --install
+```
+
+pose un agent `launchd` qui réinstalle tout seul tous les 6 jours. L'iPhone
+doit être branché à ce moment-là ; sinon la tentative échoue sans dégât et
+recommence au cycle suivant.
+
+Un compte payant (99 €/an) lève cette limite et permet la notarisation, via
+`notarize.sh`. Ce n'est nécessaire que pour distribuer l'app à d'autres.
+
+### Autorisations macOS
+
+L'app en demande deux, à la première utilisation :
+
+- **Accessibilité** — indispensable, tout en dépend ;
+- **Automatisation** — pour les bureaux, App Exposé, le redémarrage et
+  l'extinction.
+
+Certaines fonctions optionnelles demandent un réglage supplémentaire, indiqué
+dans l'app au moment voulu : un raccourci nommé pour les modes de
+concentration, et une case Safari pour détecter ce qui est en cours de lecture.
+
+---
+
+## Licence
+
+GNU GPL v3 — voir [LICENSE](LICENSE).
+
+Concrètement : vous pouvez utiliser, modifier et redistribuer ce code, à
+condition que les versions modifiées que vous distribuez restent elles aussi
+sous GPL, sources comprises.
+
+---
+
+## Fonctionnalités
+
+### Ajouté en août 2026
+
+- **Trois transports** — câble USB (1–2 ms), Wi-Fi (2–5 ms), Bluetooth LE en
+  secours. Même appairage et même chiffrement sur les trois ; le plus rapide
+  disponible est choisi automatiquement.
+- **Macros** — enregistrer une séquence d'actions et la rejouer, pauses
+  comprises.
+- **Gestion des fenêtres** — moitiés, quarts, tiers, plein écran, réduire,
+  écran suivant.
+- **Maintenir le clic** — bouton dédié, pour déplacer ou redimensionner une
+  fenêtre en glissant.
+- **Onglets du navigateur** — lister, changer, fermer, rouvrir (Safari et
+  famille Chrome).
+- **Historique du presse-papiers** — les 30 derniers textes copiés sur le Mac,
+  en mémoire seulement.
+- **Reprise de lecture** — ce qui joue sur le Mac, proposé sur l'iPhone.
+- **Surface MIDI** — le Mac se présente comme un contrôleur ; Serato, Traktor,
+  Ableton, Logic et les plugins d'égalisation l'apprennent.
+- **Notes rapides** — un texte de l'iPhone arrive en notification sur le Mac.
+- **Concentration et sous-titres** — via l'app Raccourcis.
+- **Défilement par inclinaison** — le doigt reste libre, zone morte de 7°.
+- **Mode poche** — le capteur de proximité coupe les entrées quand l'iPhone
+  est rangé.
+- **Accessibilité** — fort contraste, mode une main.
+- **Animation des touches** — la touche s'enfonce sous le doigt.
+- **Macros** — enregistrer une séquence d'actions, la rejouer.
+- **Mode jeu** — joystick et boutons tactiles, en touches maintenues.
+- **Statistiques d'usage** — temps connecté et gestes les plus utilisés, gardés
+  sur l'iPhone.
+- **iPad** — l'app s'installe aussi sur iPad.
+
+| Sur l'iPhone | Effet sur le Mac |
+|---|---|
+| Trackpad multi-touch (1 doigt = curseur, 2 = défilement/zoom, 3 = glisser, appuis = clics) | Curseur, clics, scroll avec phases natives (CGEvent) |
+| Souris gyroscopique : inclinaison de l'iPhone | Curseur piloté sans toucher l'écran (CoreMotion) |
+| Clavier intégré (texte + raccourcis Cmd/Opt/Ctrl/Maj) | Vraies frappes clavier, adaptées à la disposition du Mac |
+| Dictée vocale française, transcrite sur l'appareil | Texte saisi sur le Mac (Speech) |
+| Extension de clavier système Full Access | Touches envoyées même en dehors de l'app |
+| Lecture/pause, piste suivante/précédente, volume | MediaRemote (avec repli touches HID) + CoreAudio |
+| Mode présentation avec minuteur vibrant | Flèches, écran noir/blanc (Keynote, PowerPoint, Slides) |
+| Presse-papiers partagé bidirectionnel | Copie sur le Mac remontée automatiquement |
+| Applications : lancer, afficher, masquer, suspendre, quitter | NSWorkspace + SIGSTOP/SIGCONT |
+| Veille, verrouillage, redémarrage, extinction, déconnexion | System Events (AppleScript) + pmset |
+| Bureau, Mission Control, Launchpad, Spotlight | Touches et services système |
+| Constantes : batterie, processeur, mémoire, disque | IOKit + CoreAudio + mach |
+| Raccourcis personnalisés (app, lien, Raccourci) | NSWorkspace + shortcuts:// |
+| Réveil du Mac endormi | Paquet magique Wake on LAN |
+| Raccourcis Siri et widgets d'écran d'accueil | Actions exécutées à l'ouverture de l'app |
+
+## Architecture
+
+Le **Mac est l'hôte** : il cherche les appareils (Bonjour `_trackpadhub._tcp`).
+L'**iPhone** — et l'extension de clavier, qui tourne dans un processus séparé — annonce sa présence.
+
+```
+TrackPadHub/
+├── project.yml                    # Définition XcodeGen (3 cibles)
+├── generate.sh / notarize.sh      # Génération du projet, signature + notarisation
+├── Shared/                        # Code commun aux 3 cibles
+│   ├── Message.swift              # Protocole JSON (trackpad, char, media, appairage…)
+│   ├── SpecialKey.swift           # Touches nommées → keycodes stables
+│   ├── KeyboardStyle.swift        # Disposition AFFICHÉE sur l'iPhone
+│   ├── Pairing.swift              # Code à 6 chiffres, défi/réponse HMAC-SHA256
+│   ├── PairingStore.swift         # Jetons dans le trousseau (partagé app ↔ extension)
+│   └── MessageConnection.swift    # MultipeerConnectivity + filtrage des non-appairés
+├── MacHost/                       # App macOS (hôte)
+│   ├── ContentView.swift          # Code d'appairage, appareils, autorisations, disposition
+│   ├── Router.swift               # Dispatch des messages reçus
+│   └── Services/
+│       ├── MouseController.swift    # Curseur, clics, scroll à phases, zoom
+│       ├── KeyboardLayout.swift     # Caractère → touche physique, via la vraie disposition
+│       ├── KeyboardController.swift # Frappes + injection Unicode
+│       ├── MediaController.swift    # MediaRemote / touches HID / CoreAudio
+│       ├── ShortcutController.swift
+│       └── AccessibilityManager.swift
+├── iOSApp/                        # App iPhone (contrôleur)
+│   └── Views/                     # Trackpad, clavier, média, raccourcis, réglages, appairage
+└── KeyboardExt/                   # Extension de clavier système (Full Access)
+```
+
+### Pourquoi l'iPhone n'envoie pas de keycodes
+
+Un keycode macOS désigne une **touche physique**, pas une lettre : la touche `0` produit
+`a` en QWERTY US et `q` en AZERTY français. Une table figée transformerait donc ⌘A
+(tout sélectionner) en ⌘Q (quitter l'app) sur un Mac français.
+
+L'iPhone envoie donc des **caractères**, et le Mac les traduit via `UCKeyTranslate` d'après
+la disposition réellement active (ou celle choisie dans l'app macOS). Seules les touches
+nommées — entrée, tabulation, flèches… — voyagent sous forme de keycode, car leur position
+ne change pas d'une disposition à l'autre.
+
+## Sécurité
+
+Établir la connexion réseau ne donne **aucun droit**. Tant que l'iPhone n'a pas prouvé
+qu'il connaît le secret, tous ses messages de contrôle sont jetés côté Mac.
+
+1. Le Mac envoie un défi aléatoire à chaque connexion.
+2. L'iPhone répond avec `HMAC-SHA256(secret, défi)` — le secret ne circule jamais.
+3. Au premier appairage, le secret est le **code à 6 chiffres affiché sur le Mac**.
+4. Ensuite, le Mac délivre un jeton permanent stocké dans le trousseau des deux côtés :
+   les connexions suivantes sont silencieuses.
+5. 5 échecs bloquent l'appareil ; chaque échec renouvelle le défi (pas de rejeu).
+
+L'app et l'extension de clavier partagent un groupe de trousseau : **l'extension n'a jamais
+besoin de code**, elle hérite de l'appairage fait dans l'app.
+
+Vous pouvez retirer un appareil à tout moment depuis l'app macOS (« Oublier »).
+
+## Signature et compte Apple
+
+Le projet contient **quatre cibles** — quatre programmes distincts, chacun devant
+être signé séparément dans Xcode (*Signing & Capabilities* → *Automatically
+manage signing* + votre équipe) :
+
+| Cible | Rôle |
+|---|---|
+| `MacHost` | App macOS, l'hôte qui reçoit les commandes |
+| `iOSApp` | App iPhone |
+| `KeyboardExt` | Clavier système iOS |
+| `Widgets` | Widgets d'écran d'accueil |
+
+Un **compte Apple gratuit suffit**, et c'est vérifié : un compte personnel
+obtient un groupe de trousseau joker (`TEAMID.*`), qui couvre le groupe
+partagé du projet. Les trois cibles iOS sont donc signées avec le même
+`keychain-access-groups`, et se partagent réellement l'appairage et les
+constantes du Mac.
+
+Le projet n'utilise volontairement **aucun App Group** : cette capacité-là est
+bien réservée aux comptes payants, alors que le partage de trousseau ne l'est
+pas.
+
+> **Attention au quota d'App IDs.** Un compte gratuit ne peut créer que
+> **10 App IDs par période glissante de 7 jours**, et chaque cible en consomme
+> un. Les quatre cibles du projet coûtent donc 4 App IDs, une seule fois. Si
+> vous voyez « Your maximum App ID limit has been reached », changez de compte
+> Apple dans `DEVELOPMENT_TEAM` ou attendez que le quota se libère. Ne
+> renommez pas les bundle identifiers pour contourner : cela consomme de
+> nouveaux App IDs.
+
+> Limite du compte gratuit : l'app cesse de se lancer au bout de 7 jours. Il
+> suffit de la relancer depuis Xcode. Des outils comme AltStore ou SideStore
+> réinstallent l'app automatiquement pour contourner cette limite — ils
+> utilisent le même compte gratuit et ne débloquent aucune capacité
+> supplémentaire.
+
+## Prérequis
+
+- Mac avec **Xcode 26+**, sous **macOS 26+**
+- iPhone sous **iOS 26+**
+- Les deux appareils sur le **même réseau Wi-Fi**
+- Un compte Apple (gratuit ou payant — gratuit = 7 jours entre deux builds)
+- **XcodeGen** *(optionnel)* : uniquement si vous modifiez `project.yml`.
+  Le `.xcodeproj` versionné suffit sinon.
+
+> **Piège XcodeGen** : si vous le compilez depuis les sources au lieu de passer
+> par Homebrew, copiez aussi son dossier `SettingPresets/` à côté du binaire.
+> Sans lui, XcodeGen génère un projet sans `PRODUCT_NAME` ni `SDKROOT`, et la
+> compilation échoue sur `module name "" is not a valid identifier`.
+>
+> ```bash
+> git clone --depth 1 --branch 2.43.0 https://github.com/yonaskolb/XcodeGen.git
+> cd XcodeGen && swift build -c release --product xcodegen
+> mkdir -p ~/.local/bin && cp .build/release/xcodegen ~/.local/bin/
+> cp -R SettingPresets ~/.local/bin/
+> ```
+
+## Générer et lancer
+
+```bash
+./generate.sh
+```
+
+Ou directement, sans XcodeGen :
+
+```bash
+open TrackPadHub.xcodeproj
+```
+
+Dans Xcode :
+
+1. Cible **iOSApp** → *Signing & Capabilities* → cochez **Automatically manage signing** et choisissez votre équipe.
+2. Faites de même pour **MacHost** et pour l'extension **KeyboardExt**.
+3. Lancez d'abord la cible **MacHost** sur votre Mac, puis **iOSApp** sur votre iPhone.
+
+> Le trackpad a besoin d'un vrai écran tactile : testez sur l'appareil, pas sur le simulateur.
+
+## Première configuration
+
+### Sur le Mac (une fois)
+
+1. Ouvrez **TrackPad Hub** (macOS).
+2. Cliquez sur **« Accorder l'accès »** et autorisez l'**Accessibilité** :
+   Réglages Système → Confidentialité et sécurité → Accessibilité → cochez TrackPad Hub.
+   *(Obligatoire : permet de bouger le curseur et d'envoyer les touches. L'app détecte
+   l'autorisation dès que vous la cochez, sans redémarrage.)*
+
+### Sur l'iPhone (une fois)
+
+1. Ouvrez **TrackPad Hub**, acceptez la demande d'accès au **réseau local**.
+2. Un **code à 6 chiffres** s'affiche sur le Mac : saisissez-le sur l'iPhone.
+3. L'écran Trackpad affiche « Connecté au Mac ».
+
+### Clavier complet (extension) — optionnel
+
+1. Réglages → Général → Clavier → **Claviers** → **Ajouter un clavier**.
+2. Choisissez **« Clavier TrackPad Hub »**.
+3. Touchez son nom, puis activez **« Autoriser l'accès complet »** (nécessaire pour le réseau).
+4. Dans n'importe quel champ de saisie, basculez sur ce clavier (icône 🌐).
+
+Aucun code à ressaisir : l'extension réutilise l'appairage de l'app.
+
+## Gestes du trackpad
+
+| Geste | Action |
+|---|---|
+| 1 doigt, bouger | Déplacer le curseur (avec accélération) |
+| 1 doigt, appui bref | Clic gauche |
+| 1 doigt, appui puis glisser | Glisser-déposer |
+| 2 doigts, bouger | Défiler (avec inertie) |
+| 2 doigts, écarter/rapprocher | Zoomer |
+| 2 doigts, appui bref | Clic droit |
+| 3 doigts, appui bref | Clic milieu |
+| 3 doigts, bouger | Glisser-déposer |
+
+Vitesses dans l'onglet **Trackpad** ; accélération, inertie, sens du défilement et
+retour haptique dans **Réglages**.
+
+## Dispositions de clavier
+
+- **Sur l'iPhone** (Réglages → Clavier) : la disposition **affichée** sur les touches —
+  AZERTY, QWERTY ou QWERTZ.
+- **Sur le Mac** : la disposition utilisée pour **traduire** les caractères reçus.
+  Par défaut elle suit le clavier actif du Mac ; vous pouvez la figer si besoin.
+
+Les accents (`é`, `è`, `à`, `ç`, `ù`) partent comme de vraies frappes en AZERTY.
+Les caractères introuvables sur la disposition sont injectés directement en Unicode —
+sans jamais toucher au presse-papiers.
+
+## Distribution hors App Store
+
+L'app macOS ne peut pas être sandboxée (l'Accessibilité l'interdit), elle n'est donc
+pas distribuable sur le Mac App Store. Pour la partager :
+
+```bash
+./notarize.sh "Developer ID Application: Votre Nom (TEAMID)"
+```
+
+Le script compile en Release, signe, vérifie le hardened runtime, notarise et agrafe le
+ticket. Il faut un **compte Apple Developer payant**.
+
+## Dépannage
+
+| Problème | Solution |
+|---|---|
+| « Recherche du Mac… » | Vérifiez que l'app macOS est ouverte et les deux appareils sur le même Wi-Fi. |
+| Le code d'appairage ne s'affiche pas | Le Mac ne l'affiche que pour un appareil inconnu. Utilisez « Oublier » pour forcer un nouvel appairage. |
+| Le curseur ne bouge pas | Autorisation **Accessibilité** pas accordée (voir plus haut). |
+| Le défilement part à l'envers | Réglages → Trackpad → **Défilement naturel**. |
+| Mauvaises lettres / ⌘ inattendus | Réglez la disposition dans l'app macOS au lieu de « suivre le clavier actif ». |
+| Le clavier n'envoie rien | Activez **Autoriser l'accès complet**, et appairez d'abord dans l'app. |
+| Lecture/pause sans effet | MediaRemote est bloqué sur certaines versions de macOS ; le repli par touches HID prend le relais mais exige l'Accessibilité. |
+| Message « 7 jours restants » | Compte gratuit : reconstruisez via Xcode pour renouveler. |

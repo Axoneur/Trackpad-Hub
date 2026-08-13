@@ -1,0 +1,22 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Généré par XcodeGen — et volontairement exclu.
+#
+# Le .pbxproj contient l'équipe de signature et les identifiants de bundle
+# résolus. Le versionner exposerait l'équipe du contributeur d'origine et
+# imposerait ses identifiants à tous les forks, alors que chacun doit avoir
+# les siens. `./setup.sh` le régénère.
+TrackPadHub.xcodeproj/
+MacHost/Info.plist
+iOSApp/Info.plist
+KeyboardExt/Info.plist
+
+# macOS
+.DS_Store
+
+# Configuration locale : équipe de signature, propre à chaque personne.
+trackpadhub.conf

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844" height="390" viewBox="0 0 844 390">
+  <!-- Landscape phone frame -->
+  <rect x="1" y="1" width="842" height="388" rx="44" fill="#0a0a0c"/>
+  <rect x="6" y="6" width="832" height="378" rx="38" fill="#000"/>
+  <rect x="330" y="12" width="184" height="32" rx="16" fill="#000"/>
+
+  <circle cx="40" cy="26" r="5" fill="#30d158"/>
+  <text x="52" y="30" font-family="-apple-system, Helvetica, Arial" font-size="13" fill="#98989f">Connecté au Mac — les touches sont envoyées en direct</text>
+
+  <!-- Key rows -->
+  <g font-family="-apple-system, Helvetica, Arial" font-size="20" font-weight="500" fill="#d1d1d6">
+    <!-- Row 1 -->
+    <rect x="15" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="53" y="72" text-anchor="middle">Q</text>
+    <rect x="97" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="135" y="72" text-anchor="middle">W</text>
+    <rect x="179" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="217" y="72" text-anchor="middle">E</text>
+    <rect x="261" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="299" y="72" text-anchor="middle">R</text>
+    <rect x="343" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="381" y="72" text-anchor="middle">T</text>
+    <rect x="425" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="463" y="72" text-anchor="middle">Y</text>
+    <rect x="507" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="545" y="72" text-anchor="middle">U</text>
+    <rect x="589" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="627" y="72" text-anchor="middle">I</text>
+    <rect x="671" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="709" y="72" text-anchor="middle">O</text>
+    <rect x="753" y="44" width="76" height="46" rx="8" fill="#2c2c2e"/><text x="791" y="72" text-anchor="middle">P</text>
+
+    <!-- Row 2 -->
+    <rect x="15" y="98" width="92" height="46" rx="8" fill="#3a3a3e"/><text x="61" y="126" font-size="15" text-anchor="middle">⇥</text>
+    <rect x="113" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="148" y="126" text-anchor="middle">A</text>
+    <rect x="189" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="224" y="126" text-anchor="middle">S</text>
+    <rect x="265" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="300" y="126" text-anchor="middle">D</text>
+    <rect x="341" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="376" y="126" text-anchor="middle">F</text>
+    <rect x="417" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="452" y="126" text-anchor="middle">G</text>
+    <rect x="493" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="528" y="126" text-anchor="middle">H</text>
+    <rect x="569" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="604" y="126" text-anchor="middle">J</text>
+    <rect x="645" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="680" y="126" text-anchor="middle">K</text>
+    <rect x="721" y="98" width="70" height="46" rx="8" fill="#2c2c2e"/><text x="756" y="126" text-anchor="middle">L</text>
+    <rect x="797" y="98" width="32" height="46" rx="8" fill="#3a3a3e"/><text x="813" y="128" font-size="18" text-anchor="middle">⌫</text>
+
+    <!-- Row 3 -->
+    <rect x="15" y="152" width="97" height="46" rx="8" fill="#3a3a3e"/><text x="63" y="180" font-size="16" text-anchor="middle">123</text>
+    <rect x="118" y="152" width="97" height="46" rx="8" fill="#0a84ff"/><text x="166" y="180" font-size="18" text-anchor="middle" fill="#fff">⇧</text>
+    <rect x="221" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="255" y="180" text-anchor="middle">Z</text>
+    <rect x="296" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="330" y="180" text-anchor="middle">X</text>
+    <rect x="371" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="405" y="180" text-anchor="middle">C</text>
+    <rect x="446" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="480" y="180" text-anchor="middle">V</text>
+    <rect x="521" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="555" y="180" text-anchor="middle">B</text>
+    <rect x="596" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="630" y="180" text-anchor="middle">N</text>
+    <rect x="671" y="152" width="69" height="46" rx="8" fill="#2c2c2e"/><text x="705" y="180" text-anchor="middle">M</text>
+    <rect x="746" y="152" width="83" height="46" rx="8" fill="#3a3a3e"/><text x="787" y="180" font-size="14" text-anchor="middle">retour</text>
+
+    <!-- Row 4 -->
+    <rect x="15" y="206" width="92" height="46" rx="8" fill="#3a3a3e"/><text x="61" y="236" font-size="17" text-anchor="middle">🌐</text>
+    <rect x="113" y="206" width="92" height="46" rx="8" fill="#3a3a3e"/><text x="159" y="236" font-size="17" text-anchor="middle">⌘</text>
+    <rect x="211" y="206" width="92" height="46" rx="8" fill="#3a3a3e"/><text x="257" y="236" font-size="17" text-anchor="middle">⌥</text>
+    <rect x="309" y="206" width="92" height="46" rx="8" fill="#3a3a3e"/><text x="355" y="236" font-size="17" text-anchor="middle">⌃</text>
+    <rect x="407" y="206" width="256" height="46" rx="8" fill="#3a3a3e"/><text x="535" y="236" font-size="15" text-anchor="middle">espace</text>
+    <rect x="669" y="206" width="92" height="46" rx="8" fill="#3a3a3e"/><text x="715" y="236" font-size="17" text-anchor="middle">◀</text>
+    <rect x="767" y="206" width="62" height="46" rx="8" fill="#3a3a3e"/><text x="798" y="236" font-size="17" text-anchor="middle">▶</text>
+  </g>
+</svg>

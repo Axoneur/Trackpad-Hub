@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrackPad Hub — Aperçu</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    background: #0a0a0c;
+    color: #f5f5f7;
+  }
+  header {
+    padding: 40px 20px 10px;
+    text-align: center;
+  }
+  header h1 { font-size: 30px; margin: 0 0 6px; }
+  header p { color: #98989f; margin: 0 0 30px; font-size: 15px; }
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 32px;
+    justify-items: center;
+  }
+  .screen {
+    background: #161618;
+    border: 1px solid #2c2c2e;
+    border-radius: 18px;
+    padding: 18px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  .screen.wide { max-width: 640px; }
+  .screen.wide img { border-radius: 14px; }
+  .screen img {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+    background: #000;
+  }
+  .screen h2 { margin: 14px 0 6px; font-size: 17px; }
+  .screen p { margin: 0; color: #8e8e93; font-size: 13px; line-height: 1.45; }
+  .badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #0a84ff22;
+    color: #64b5ff;
+    font-size: 11px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>TrackPad Hub — Aperçu de l'app</h1>
+    <p>Maquettes générées depuis le projet Xcode (SVG exportés en PNG).</p>
+  </header>
+  <main>
+    <div class="screen">
+      <img src="trackpad.svg.png" alt="Onglet Trackpad">
+      <h2>Trackpad</h2>
+      <p>Surface multi-touch : 1 doigt = curseur, 2 = défilement, 3 = glisser. Appuis = clics. Vitesse réglable.</p>
+      <span class="badge">Onglet principal</span>
+    </div>
+    <div class="screen">
+      <img src="keyboard.svg.png" alt="Onglet Clavier">
+      <h2>Clavier</h2>
+      <p>Texte + raccourcis ⌘/⌥/⌃/⇧ envoyés au Mac, touches spéciales et flèches.</p>
+      <span class="badge">Dans l'app</span>
+    </div>
+    <div class="screen">
+      <img src="media.svg.png" alt="Onglet Média">
+      <h2>Média</h2>
+      <p>Lecture/pause, piste suivante/précédente et volume du Mac.</p>
+      <span class="badge">MediaRemote + AppleScript</span>
+    </div>
+    <div class="screen">
+      <img src="shortcuts.svg.png" alt="Onglet Raccourcis">
+      <h2>Raccourcis</h2>
+      <p>Lancer une app, ouvrir un lien ou exécuter un raccourci d'un toucher.</p>
+      <span class="badge">Personnalisable</span>
+    </div>
+    <div class="screen">
+      <img src="settings.svg.png" alt="Onglet Réglages">
+      <h2>Réglages</h2>
+      <p>Statut de connexion, guide de l'extension clavier et astuces trackpad.</p>
+      <span class="badge">Guide pas à pas</span>
+    </div>
+    <div class="screen wide">
+      <img src="keyboard_extension.svg.png" alt="Extension de clavier">
+      <h2>Extension de clavier (Full Access)</h2>
+      <p>Clavier système avec couche chiffres/symboles, Maj, ⌘/⌥/⌃ et flèches. Fonctionne dans n'importe quelle app.</p>
+      <span class="badge">Processus séparé</span>
+    </div>
+    <div class="screen wide">
+      <img src="mac_app.svg.png" alt="App macOS">
+      <h2>App macOS (hôte)</h2>
+      <p>Statut de connexion, appareils détectés et autorisation Accessibilité en un coup d'œil.</p>
+      <span class="badge">Reçoit et contrôle le Mac</span>
+    </div>
+  </main>
+</body>
+</html>

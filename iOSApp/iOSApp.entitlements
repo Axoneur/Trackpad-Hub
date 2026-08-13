@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Trousseau partagé entre l'app et l'extension de clavier : l'extension
+	  réutilise le jeton d'appairage obtenu par l'app et ne redemande donc
+	  jamais le code affiché sur le Mac.
+
+	  Le groupe listé en premier est celui où les nouveaux éléments sont
+	  écrits — d'où l'ordre ci-dessous.
+	-->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.trackpadhub.shared</string>
+	</array>
+
+	<!--
+	  Pas d'App Group : cette capacité exige une adhésion Apple payante.
+	  Les widgets lisent l'état du Mac par le trousseau partagé ci-dessus.
+	-->
+</dict>
+</plist>

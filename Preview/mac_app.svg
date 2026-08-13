@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="560" viewBox="0 0 520 560">
+  <!-- Window -->
+  <rect x="10" y="10" width="500" height="540" rx="14" fill="#2b2b2e"/>
+  <rect x="10" y="10" width="500" height="44" rx="14" fill="#323236"/>
+  <circle cx="30" cy="32" r="6" fill="#ff5f57"/>
+  <circle cx="50" cy="32" r="6" fill="#febc2e"/>
+  <circle cx="70" cy="32" r="6" fill="#28c840"/>
+  <text x="260" y="37" font-family="-apple-system, Helvetica, Arial" font-size="13" fill="#b8b8bd" text-anchor="middle">TrackPad Hub</text>
+
+  <!-- Header -->
+  <rect x="30" y="74" width="34" height="34" rx="8" fill="#0a84ff"/>
+  <rect x="40" y="82" width="14" height="18" rx="3" fill="#fff"/>
+  <text x="74" y="92" font-family="-apple-system, Helvetica, Arial" font-size="19" font-weight="700" fill="#fff">TrackPad Hub</text>
+  <circle cx="76" cy="105" r="5" fill="#30d158"/>
+  <text x="88" y="109" font-family="-apple-system, Helvetica, Arial" font-size="12" fill="#8e8e93">Connecté — votre iPhone est actif</text>
+
+  <!-- Appareils -->
+  <text x="30" y="140" font-family="-apple-system, Helvetica, Arial" font-size="14" font-weight="600" fill="#fff">Appareils</text>
+  <rect x="30" y="150" width="440" height="96" rx="12" fill="#3a3a3e"/>
+  <circle cx="52" cy="175" r="8" fill="#0a84ff"/>
+  <rect x="48" y="169" width="8" height="12" rx="2" fill="#fff"/>
+  <text x="68" y="180" font-family="-apple-system, Helvetica, Arial" font-size="14" fill="#fff">iPhone de Tim</text>
+  <circle cx="440" cy="175" r="5" fill="#30d158"/>
+  <line x1="30" y1="197" x2="470" y2="197" stroke="#4a4a4e" stroke-width="0.5"/>
+  <circle cx="52" cy="221" r="8" fill="#0a84ff"/>
+  <rect x="48" y="215" width="8" height="12" rx="2" fill="#fff"/>
+  <text x="68" y="226" font-family="-apple-system, Helvetica, Arial" font-size="14" fill="#fff">iPhone de Tim (Clavier)</text>
+  <circle cx="440" cy="221" r="5" fill="#30d158"/>
+
+  <!-- Autorisations -->
+  <text x="30" y="276" font-family="-apple-system, Helvetica, Arial" font-size="14" font-weight="600" fill="#fff">Autorisations</text>
+  <rect x="30" y="286" width="440" height="64" rx="12" fill="#3a3a3e"/>
+  <circle cx="52" cy="318" r="10" fill="#30d158" opacity="0.2"/>
+  <path d="M47 318 l4 4 7 -8" stroke="#30d158" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="313" font-family="-apple-system, Helvetica, Arial" font-size="14" fill="#fff">Accès Accessibilité accordé</text>
+  <text x="72" y="332" font-family="-apple-system, Helvetica, Arial" font-size="12" fill="#8e8e93">Souris, clavier et médias contrôlables.</text>
+
+  <!-- Footer -->
+  <text x="30" y="400" font-family="-apple-system, Helvetica, Arial" font-size="11" fill="#8e8e93">L'iPhone doit être sur le même réseau Wi-Fi (ou à proximité en Bluetooth).</text>
+  <rect x="396" y="488" width="74" height="26" rx="7" fill="#4a4a4e"/>
+  <text x="433" y="505" font-family="-apple-system, Helvetica, Arial" font-size="12" fill="#fff" text-anchor="middle">Quitter</text>
+</svg>

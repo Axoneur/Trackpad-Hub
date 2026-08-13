@@ -1,0 +1,170 @@
+name: TrackPadHub
+options:
+  # Préfixe et équipe viennent de `trackpadhub.conf`, écrit par `./setup.sh`.
+  # XcodeGen substitue les variables d'environnement à la génération.
+  #
+  # Pourquoi ne pas les figer : un App ID explicite est **unique dans tout le
+  # système d'Apple**. Quiconque clone ce dépôt doit donc utiliser son propre
+  # préfixe, sinon l'enregistrement est refusé — les identifiants d'origine
+  # appartiennent déjà à un autre compte.
+  bundleIdPrefix: ${TPH_PREFIX}
+  # Plancher volontairement bas : l'app fonctionne dès iOS 18 / macOS 14, et
+  # active le Liquid Glass uniquement là où il existe (iOS 26+).
+  deploymentTarget:
+    macOS: "14.0"
+    iOS: "18.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.7"
+    CODE_SIGN_STYLE: Automatic
+    # Équipe de signature appliquée aux quatre cibles d'un coup.
+    # Renseignée par `./setup.sh`, jamais en dur : elle est propre à chacun.
+    DEVELOPMENT_TEAM: ${TPH_TEAM}
+    SWIFT_EMIT_LOC_STRINGS: YES
+    # Sans valeur explicite, PRODUCT_NAME ressort vide et Swift n'a plus de
+    # nom de module valide (« module name "" is not a valid identifier »).
+    PRODUCT_NAME: $(TARGET_NAME)
+
+targets:
+  MacHost:
+    type: application
+    platform: macOS
+    sources:
+      - path: MacHost
+      - path: Shared
+      - path: MacHost/Assets.xcassets
+      - path: AppIcon.icon
+    info:
+      path: MacHost/Info.plist
+      properties:
+        CFBundleDisplayName: TrackPad Hub
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "14.0"
+        NSHighResolutionCapable: true
+        LSApplicationCategoryType: public.app-category.utilities
+        NSAppleEventsUsageDescription: "TrackPad Hub utilise System Events pour mettre le Mac en veille, le redémarrer ou l'éteindre depuis votre iPhone."
+        # Le Mac est désormais l'annonceur Bonjour : c'est lui qui publie le
+        # service et écoute. macOS 15+ exige l'autorisation « réseau local »
+        # pour ça, et refuse sans description d'usage.
+        NSLocalNetworkUsageDescription: "TrackPad Hub annonce ce Mac sur le réseau local pour que votre iPhone puisse s'y connecter et le contrôler."
+        NSBonjourServices:
+          - _trackpadhub._tcp
+        # Rôle central : le Mac cherche l'iPhone quand le Wi-Fi manque.
+        NSBluetoothAlwaysUsageDescription: "Le Bluetooth sert de secours quand votre iPhone et ce Mac ne sont pas sur le même réseau Wi-Fi."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${TPH_PREFIX}.machost
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        # Requis pour la notarisation (distribution hors App Store).
+        # Pas de sandbox : l'Accessibilité est incompatible avec l'App Sandbox.
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_ENTITLEMENTS: MacHost/MacHost.entitlements
+
+  iOSApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: iOSApp
+      - path: Shared
+      - path: SharediOS
+      - path: iOSApp/Assets.xcassets
+      - path: AppIcon.icon
+    info:
+      path: iOSApp/Info.plist
+      properties:
+        CFBundleDisplayName: TrackPad Hub
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        NSLocalNetworkUsageDescription: "TrackPad Hub se connecte à votre Mac via le réseau local (Wi-Fi ou Bluetooth) pour le contrôler."
+        NSBonjourServices:
+          - _trackpadhub._tcp
+          - _trackpadhub._udp
+        # Rôle périphérique : l'iPhone s'annonce quand le Wi-Fi manque.
+        NSBluetoothAlwaysUsageDescription: "Le Bluetooth sert de secours quand votre iPhone et votre Mac ne sont pas sur le même réseau Wi-Fi."
+        NSBluetoothPeripheralUsageDescription: "Le Bluetooth sert de secours quand votre iPhone et votre Mac ne sont pas sur le même réseau Wi-Fi." 
+        # iOS termine l'app si une autorisation est demandée sans description.
+        NSMicrophoneUsageDescription: "La dictée vocale utilise le micro pour transcrire ce que vous dites et le taper sur votre Mac."
+        NSSpeechRecognitionUsageDescription: "La reconnaissance vocale transforme votre voix en texte, envoyé ensuite à votre Mac."
+        NSMotionUsageDescription: "La souris gyroscopique utilise les capteurs de mouvement pour déplacer le curseur du Mac quand vous inclinez l'iPhone."
+        NSCameraUsageDescription: "La caméra sert à scanner le QR code d'appairage affiché par votre Mac."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${TPH_PREFIX}.ios
+        IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+        # 1 = iPhone, 2 = iPad. L'interface est déjà adaptative : elle
+        # s'élargit en paysage, ce que l'iPad utilise en permanence.
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_ENTITLEMENTS: iOSApp/iOSApp.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    dependencies:
+      - target: KeyboardExt
+        embed: true
+        codeSign: true
+      - target: Widgets
+        embed: true
+        codeSign: true
+
+  Widgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets
+      - path: Shared
+      - path: SharediOS
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: TrackPad Hub
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${TPH_PREFIX}.ios.widgets
+        IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+        SKIP_INSTALL: YES
+        CODE_SIGN_ENTITLEMENTS: Widgets/Widgets.entitlements
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+  KeyboardExt:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: KeyboardExt
+      - path: Shared
+    info:
+      path: KeyboardExt/Info.plist
+      properties:
+        CFBundleDisplayName: Clavier TrackPad Hub
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        NSLocalNetworkUsageDescription: "Le clavier se connecte à votre Mac via le réseau local pour envoyer les touches."
+        NSBonjourServices:
+          - _trackpadhub._tcp
+          - _trackpadhub._udp
+        # Rôle périphérique : l'iPhone s'annonce quand le Wi-Fi manque.
+        NSBluetoothAlwaysUsageDescription: "Le Bluetooth sert de secours quand votre iPhone et votre Mac ne sont pas sur le même réseau Wi-Fi."
+        NSBluetoothPeripheralUsageDescription: "Le Bluetooth sert de secours quand votre iPhone et votre Mac ne sont pas sur le même réseau Wi-Fi." 
+        NSExtension:
+          NSExtensionAttributes:
+            IsASCIICapable: false
+            RequestsOpenAccess: true
+            PrimaryLanguage: fr-FR
+            PrefersRightToLeft: false
+            SupportsDictation: false
+          NSExtensionPointIdentifier: com.apple.keyboard-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KeyboardViewController
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${TPH_PREFIX}.ios.keyboard
+        IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+        SKIP_INSTALL: YES
+        CODE_SIGN_ENTITLEMENTS: KeyboardExt/KeyboardExt.entitlements

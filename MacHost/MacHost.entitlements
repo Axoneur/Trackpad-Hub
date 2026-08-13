@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Pas de com.apple.security.app-sandbox : l'API Accessibilité
+	  (AXIsProcessTrusted + CGEvent.post) est incompatible avec le sandbox.
+	  L'app est donc distribuée hors App Store, signée Developer ID + notarisée.
+	-->
+
+	<!-- Autorise dlopen() de MediaRemote.framework sous hardened runtime. -->
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<true/>
+
+	<!--
+	  Indispensable pour piloter System Events (bureaux, App Exposé, bureau,
+	  redémarrage, extinction).
+
+	  Sous hardened runtime, TCC ne se contente pas de refuser l'événement
+	  Apple quand cet entitlement manque : il refuse de **poser la question**.
+	  Aucune fenêtre d'autorisation, aucun effet, et l'app n'apparaît jamais
+	  dans Réglages Système → Automatisation. Mesuré dans le journal de tccd :
+
+	      Prompting policy for hardened runtime; service: kTCCServiceAppleEvents
+	      requires entitlement com.apple.security.automation.apple-events
+	      but it is missing
+
+	  Le code AppleScript, lui, était correct — d'où plusieurs heures perdues
+	  à chercher du côté de NSAppleScript et de la file principale.
+	-->
+	<key>com.apple.security.automation.apple-events</key>
+	<true/>
+</dict>
+</plist>
