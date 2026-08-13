@@ -20,45 +20,39 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 <table>
 <tr>
-<td valign="top" width="33%">
+<th align="left" width="33%">Mettre en place</th>
+<th align="left" width="33%">S'en servir et l'entretenir</th>
+<th align="left" width="33%">Comprendre et dépanner</th>
+</tr>
+<tr>
+<td valign="top">
 
-**Mettre en place**<br>
-[1. Aperçu](#apercu)<br>
-[2. Installation](#installation)<br>
-[3. Sur le Mac](#sur-le-mac)<br>
-[4. Sur l'iPhone](#sur-liphone)<br>
-[5. Premier appairage](#appairage)
-
+<img src="docs/icones/sections/eye-fill.png" width="17" align="center">&nbsp;<a href="#apercu"><b>Aperçu</b></a><br><sub>Les six écrans, en images</sub><br><br>
+<img src="docs/icones/sections/arrow-down-app-fill.png" width="17" align="center">&nbsp;<a href="#installation"><b>Installation</b></a><br><sub>Ce qu'il faut, et pourquoi</sub><br><br>
+<img src="docs/icones/sections/desktopcomputer.png" width="17" align="center">&nbsp;<a href="#sur-le-mac"><b>Sur le Mac</b></a><br><sub>Cinq étapes, 15 minutes</sub><br><br>
+<img src="docs/icones/sections/iphone.png" width="17" align="center">&nbsp;<a href="#sur-liphone"><b>Sur l'iPhone</b></a><br><sub>Deux réglages à toucher</sub><br><br>
+<img src="docs/icones/sections/qrcode-viewfinder.png" width="17" align="center">&nbsp;<a href="#appairage"><b>Premier appairage</b></a><br><sub>Un QR code, une seule fois</sub><br><br>
 </td>
-<td valign="top" width="33%">
+<td valign="top">
 
-**Se servir de l'app**<br>
-[6. Guide complet](#guide)<br>
-[7. Réglages avancés](#avances)
-
-**Entretien**<br>
-[8. Rester à jour](#maj)<br>
-[9. La signature](#signature)<br>
-[10. La limite des 7 jours](#sept-jours)
-
+<img src="docs/icones/sections/book-fill.png" width="17" align="center">&nbsp;<a href="#guide"><b>Guide complet</b></a><br><sub>Chaque onglet en détail</sub><br><br>
+<img src="docs/icones/sections/slider-horizontal-3.png" width="17" align="center">&nbsp;<a href="#avances"><b>Réglages avancés</b></a><br><sub>Safari, Concentration, clavier</sub><br><br>
+<img src="docs/icones/sections/arrow-triangle-2-circlepath.png" width="17" align="center">&nbsp;<a href="#maj"><b>Rester à jour</b></a><br><sub>L'app vous prévient toute seule</sub><br><br>
+<img src="docs/icones/sections/checkmark-seal-fill.png" width="17" align="center">&nbsp;<a href="#signature"><b>La signature</b></a><br><sub>Vous n'avez rien à signer</sub><br><br>
+<img src="docs/icones/sections/calendar-badge-clock.png" width="17" align="center">&nbsp;<a href="#sept-jours"><b>La limite des 7 jours</b></a><br><sub>Pourquoi, et comment l'oublier</sub><br><br>
 </td>
-<td valign="top" width="33%">
+<td valign="top">
 
-**Comprendre**<br>
-[11. Les trois transports](#transports)<br>
-[12. Sécurité](#securite)<br>
-[13. Architecture](#architecture)
-
-**Si ça coince**<br>
-[14. Dépannage](#depannage)<br>
-[15. Licence](#licence)
-
+<img src="docs/icones/sections/antenna-radiowaves-left-and-right.png" width="17" align="center">&nbsp;<a href="#transports"><b>Les trois transports</b></a><br><sub>USB, Wi-Fi, Bluetooth</sub><br><br>
+<img src="docs/icones/sections/lock-shield-fill.png" width="17" align="center">&nbsp;<a href="#securite"><b>Sécurité</b></a><br><sub>Appairage et chiffrement</sub><br><br>
+<img src="docs/icones/sections/square-stack-3d-up-fill.png" width="17" align="center">&nbsp;<a href="#architecture"><b>Architecture</b></a><br><sub>Pour lire ou modifier le code</sub><br><br>
+<img src="docs/icones/sections/stethoscope.png" width="17" align="center">&nbsp;<a href="#depannage"><b>Dépannage</b></a><br><sub>La commande qui tranche</sub><br><br>
+<img src="docs/icones/sections/doc-text-fill.png" width="17" align="center">&nbsp;<a href="#licence"><b>Licence</b></a><br><sub>GPL v3, sources comprises</sub><br><br>
 </td>
 </tr>
 </table>
 
 ---
-
 
 <div align="center">
 
