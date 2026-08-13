@@ -1,0 +1,1 @@
+TrackPad Hub — GPL-3.0 · [Dépôt](https://github.com/Axoneur/Trackpad-Hub)
