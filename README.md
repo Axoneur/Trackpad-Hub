@@ -338,10 +338,27 @@ L'iPhone **dépose ses avertissements à l'avance**, dès le lancement. C'est
 indispensable : une fois la signature expirée l'app ne s'ouvre plus, donc elle
 ne peut plus prévenir de rien. iOS les délivre quand même.
 
-> **Si vous aviez refusé les notifications**, l'app macOS le détecte et affiche
-> une carte **« Notifications désactivées »** avec un bouton vers les Réglages.
-> macOS ne redemande jamais après un refus : seuls les Réglages Système
-> débloquent.
+**Au tout premier lancement**, l'iPhone explique la règle des 7 jours avant de
+demander l'autorisation d'envoyer des notifications. C'est délibéré : iOS
+n'affiche cette alerte **qu'une seule fois**, et un refus est définitif.
+
+**Tout est réglable** — onglet ⚙️ Réglages, section
+**Rappels d'expiration** :
+
+| Réglage | Choix |
+|---|---|
+| Me rappeler de rafraîchir l'app | oui / non |
+| Premier rappel | 5, 3, 2 jours avant, ou la veille |
+| Rappel la veille | oui / non |
+| Au moment de l'expiration | oui / non |
+| Heure des rappels | n'importe quelle heure |
+
+La section affiche les dates exactes qui sont programmées, pas une promesse.
+
+> **Si vous aviez refusé les notifications**, les deux apps le détectent et
+> affichent une carte **« Notifications désactivées »** avec un bouton vers les
+> Réglages. Ni iOS ni macOS ne redemandent après un refus : seuls les Réglages
+> du système débloquent.
 
 **L'app macOS annonce aussi les nouvelles versions** : elle consulte les
 publications du dépôt au lancement et vous notifie une fois, pas à chaque

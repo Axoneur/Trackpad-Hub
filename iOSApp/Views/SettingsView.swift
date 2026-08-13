@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct SettingsView: View {
     @EnvironmentObject private var connection: MessageConnection
@@ -15,6 +16,14 @@ struct SettingsView: View {
     @AppStorage("pocketModeEnabled") private var pocketModeEnabled = false
     @AppStorage("highContrast") private var highContrast = false
     @AppStorage("oneHanded") private var oneHanded = false
+
+    @AppStorage(ReglagesRappels.actifs)  private var rappelsActifs = true
+    @AppStorage(ReglagesRappels.premier) private var rappelPremier = 3
+    @AppStorage(ReglagesRappels.veille)  private var rappelVeille = true
+    @AppStorage(ReglagesRappels.jourJ)   private var rappelJourJ = true
+    @AppStorage(ReglagesRappels.heure)   private var rappelHeure = 9
+
+    @State private var autorisation: UNAuthorizationStatus = .notDetermined
 
 
     enum Appearance: String, CaseIterable, Identifiable {
@@ -195,6 +204,8 @@ struct SettingsView: View {
                     ])
                 }
 
+                rappelsSection
+
                 Section("Sur votre Mac") {
                     steps([
                         "Ouvrez l'app « TrackPad Hub » (macOS).",
@@ -222,12 +233,102 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Réglages")
-            .onAppear { connection.refreshKnownHosts() }
+            .onAppear {
+                connection.refreshKnownHosts()
+                ExpiryNotice.autorisation { autorisation = $0 }
+            }
+            // Un réglage changé doit valoir tout de suite : les notifications
+            // sont déposées d'avance, celles déjà en place seraient sinon
+            // restées sur l'ancien horaire jusqu'au prochain lancement.
+            .onChange(of: rappelsActifs)  { _, _ in ExpiryNotice.programmer() }
+            .onChange(of: rappelPremier)  { _, _ in ExpiryNotice.programmer() }
+            .onChange(of: rappelVeille)   { _, _ in ExpiryNotice.programmer() }
+            .onChange(of: rappelJourJ)    { _, _ in ExpiryNotice.programmer() }
+            .onChange(of: rappelHeure)    { _, _ in ExpiryNotice.programmer() }
             .onChange(of: connection.pairingState) { _, state in
                 if state == .paired { connection.refreshKnownHosts() }
             }
         }
         .preferredColorScheme(colorScheme)
+    }
+
+    // MARK: - Rappels d'expiration
+
+    /// Réglage des rappels qui invitent à rafraîchir l'app avant sa date
+    /// limite.
+    ///
+    /// La section affiche **les dates réellement programmées**, calculées par
+    /// le même code que celui qui dépose les notifications. Une description
+    /// écrite à la main finirait par diverger du comportement, et c'est
+    /// exactement le genre d'écart qu'on ne remarque qu'au moment où le rappel
+    /// n'arrive pas.
+    @ViewBuilder
+    private var rappelsSection: some View {
+        Section {
+            Toggle("Me rappeler de rafraîchir l'app", isOn: $rappelsActifs)
+
+            if rappelsActifs {
+                Picker("Premier rappel", selection: $rappelPremier) {
+                    ForEach(ReglagesRappels.avancesPossibles, id: \.self) { jours in
+                        Text(jours == 1 ? "La veille" : "\(jours) jours avant").tag(jours)
+                    }
+                }
+                Toggle("Rappel la veille", isOn: $rappelVeille)
+                Toggle("Au moment de l'expiration", isOn: $rappelJourJ)
+
+                Picker("Heure des rappels", selection: $rappelHeure) {
+                    ForEach(0..<24, id: \.self) { h in
+                        Text(String(format: "%02dh00", h)).tag(h)
+                    }
+                }
+            }
+        } header: {
+            Text("Rappels d'expiration")
+        } footer: {
+            rappelsPied
+        }
+
+        if rappelsActifs, autorisation == .denied {
+            Section {
+                Label("Notifications refusées", systemImage: "bell.slash.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.orange)
+                Text("Aucun rappel ne peut partir. iOS ne redemande jamais après un refus : l'autorisation se rétablit uniquement depuis les Réglages du système.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Button("Ouvrir les Réglages iOS") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var rappelsPied: some View {
+        if !rappelsActifs {
+            Text("L'app cessera de s'ouvrir à sa date limite sans aucun avertissement préalable.")
+        } else if let expiration = SigningExpiry.date {
+            let moments = ExpiryNotice.moments(pour: expiration)
+            VStack(alignment: .leading, spacing: 4) {
+                if moments.isEmpty && !rappelJourJ {
+                    Text("Aucun rappel programmé : les délais choisis sont déjà passés.")
+                } else {
+                    Text("Rappels programmés :")
+                    ForEach(moments, id: \.0) { quand, _ in
+                        Text("• " + quand.formatted(.dateTime.weekday(.wide).day().month(.wide).hour().minute()))
+                    }
+                    if rappelJourJ {
+                        Text("• " + expiration.formatted(.dateTime.weekday(.wide).day().month(.wide).hour().minute()) + " — expiration")
+                    }
+                }
+                Text("Rafraîchir l'app depuis le Mac : ./reinstall.sh --all")
+                    .padding(.top, 2)
+            }
+        } else {
+            Text("La date limite n'a pas pu être lue. Les rappels se programmeront à la prochaine installation depuis le Mac.")
+        }
     }
 
     private var colorScheme: ColorScheme? {

@@ -930,6 +930,56 @@ dans le profil embarqué et l'affiche, en heure locale (`date -j -u` à la
 lecture : la date du profil est en UTC, sans `-u` elle était décalée de deux
 heures).
 
+### Rappels réglables et présentation du premier lancement (13 août 2026)
+
+Les trois rappels sont paramétrables dans l'onglet Réglages de l'iPhone :
+activation, délai du premier rappel (5/3/2/1 jours), rappel de la veille,
+constat à l'expiration, et **heure** d'envoi. Tout changement reprogramme
+immédiatement — les notifications étant déposées d'avance, celles déjà en
+place resteraient sinon sur l'ancien horaire.
+
+Le pied de section affiche les **dates réellement programmées**, calculées par
+`ExpiryNotice.moments(pour:)`, la même fonction que celle qui dépose. Une
+description rédigée à la main finirait par diverger du comportement, et l'écart
+ne se remarquerait qu'au moment où le rappel n'arrive pas.
+
+#### La demande d'autorisation vient après l'explication
+
+`RappelsIntroSheet` s'affiche une seule fois, au premier lancement, et c'est
+**elle** qui déclenche `requestAuthorization`. Auparavant l'alerte système
+surgissait au démarrage brut, sans contexte.
+
+Ce n'est pas cosmétique : iOS et macOS n'affichent cette alerte **qu'une
+fois**. Refusée, elle ne revient jamais, et seuls les Réglages du système
+peuvent rétablir la situation. Le Mac de développement était précisément dans
+cet état — refus enregistré de longue date, aucune notification possible,
+aucun signalement. Expliquer avant de demander est la seule protection contre
+un refus réflexe.
+
+#### Piège : une feuille demandée depuis la structure `App` ne s'affiche pas
+
+`.sheet(isPresented:)` attaché à `ContentView()` dans le `WindowGroup`, piloté
+par un `@State` de la structure `App`, **n'est jamais présenté**. Mesuré : la
+trace confirmait `montrer=true` alors que rien n'apparaissait à l'écran.
+
+Déplacé dans `ContentView` avec `.task` plutôt que `.onAppear` — la feuille est
+alors demandée après l'installation de la hiérarchie, et non pendant.
+Vérifié au simulateur, capture à l'appui.
+
+#### Piège : `xcodebuild` lancé à la main produit un identifiant vide
+
+`project.yml` utilise `${TPH_PREFIX}`. Sans `source ./trackpadhub.conf`, la
+variable est vide et le bundle s'installe sous l'identifiant **`.ios`** —
+`simctl install` réussit, puis `simctl launch com.trackpadhub.ios` échoue avec
+`FBSApplicationLibrary returned nil`, ce qui ressemble à s'y méprendre à un
+plantage au démarrage.
+
+Toujours compiler ainsi hors de `reinstall.sh` :
+
+```bash
+source ./trackpadhub.conf && xcodebuild -project TrackPadHub.xcodeproj ...
+```
+
 #### Ce qui n'a pas pu être vérifié
 
 Le dépôt effectif des notifications **sur l'iPhone** n'est pas mesuré :

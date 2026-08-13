@@ -3,6 +3,10 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var connection: MessageConnection
 
+    /// Faux tant que la présentation du premier lancement n'a pas été vue.
+    @AppStorage(ReglagesRappels.presentationVue) private var presentationVue = false
+    @State private var montrerPresentation = false
+
     var body: some View {
         TabView {
             Tab("Trackpad", systemImage: "rectangle.and.hand.point.up.left") {
@@ -33,6 +37,20 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut(duration: 0.2), value: needsPairing)
+        // Portée par la vue, et non par la structure `App` : une feuille
+        // demandée depuis un `@State` de l'`App` n'est pas présentée — mesuré,
+        // le drapeau passait bien à vrai sans que rien n'apparaisse.
+        //
+        // `.task` plutôt que `.onAppear` : la feuille est demandée après
+        // l'installation de la hiérarchie, pas pendant.
+        .sheet(isPresented: $montrerPresentation) {
+            RappelsIntroSheet()
+        }
+        .task {
+            guard !presentationVue else { return }
+            montrerPresentation = true
+            TraceiOS.action("présentation du premier lancement affichée")
+        }
     }
 
     /// Point d'entrée unique de l'écran d'appairage : celui que le Mac

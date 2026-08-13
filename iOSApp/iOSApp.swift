@@ -9,6 +9,11 @@ struct iOSApp: App {
     @StateObject private var releases = ReleaseChecker()
 
     init() {
+        // Avant toute lecture : le programmateur des rappels lit les
+        // préférences hors de toute vue, et obtiendrait `false` partout tant
+        // que les valeurs par défaut ne sont pas enregistrées.
+        ReglagesRappels.enregistrerDefauts()
+
         let name = UIDevice.current.name.isEmpty ? "iPhone" : UIDevice.current.name
         _connection = StateObject(wrappedValue: MessageConnection(displayName: name, isHost: false))
     }
@@ -39,7 +44,10 @@ struct iOSApp: App {
                     releases.verifier()
                     // Déposées d'avance : quand la signature expire, l'app ne
                     // s'ouvre plus et ne peut donc plus prévenir de rien.
+                    // Ne demande aucune autorisation : c'est la présentation
+                    // ci-dessous qui s'en charge, après avoir expliqué.
                     ExpiryNotice.programmer()
+
                 }
                 .onChange(of: connection.pairingState) { _, state in
                     SharedStore.isPaired = (state == .paired)

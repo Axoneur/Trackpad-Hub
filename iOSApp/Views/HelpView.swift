@@ -426,7 +426,8 @@ enum HelpLibrary {
                 "Un compte Apple gratuit signe pour 7 jours : passé ce délai, l'app iPhone cesse de s'ouvrir.",
                 "Vous êtes prévenu par notification à trois moments : trois jours avant, la veille, et le jour même.",
                 "L'iPhone dépose ces avertissements à l'avance, dès l'ouverture : une fois expirée l'app ne s'ouvre plus, elle ne pourrait donc plus prévenir.",
-                "L'app macOS prévient elle aussi, et propose de renouveler en un clic."
+                "L'app macOS prévient elle aussi, et propose de renouveler en un clic.",
+                "Délai et heure des rappels se règlent dans Réglages > Rappels d'expiration."
             ],
             troubleshooting: [
                 ("L'app iPhone ne s'ouvre plus du tout",

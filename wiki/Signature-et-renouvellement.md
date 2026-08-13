@@ -130,6 +130,31 @@ réinstallation repousse la date.
 jours ; sans cette relecture, la date lue au lancement resterait figée et le
 palier « expire demain » ne serait jamais franchi.
 
+### Régler les rappels
+
+Sur l'iPhone : onglet **Réglages**, section **Rappels d'expiration**.
+
+| Réglage | Choix | Par défaut |
+|---|---|---|
+| Me rappeler de rafraîchir l'app | oui / non | oui |
+| Premier rappel | 5, 3, 2 jours avant, ou la veille | 3 jours |
+| Rappel la veille | oui / non | oui |
+| Au moment de l'expiration | oui / non | oui |
+| Heure des rappels | n'importe quelle heure | 09h00 |
+
+La section affiche en dessous **les dates exactes** qui seront utilisées. Un
+changement reprogramme aussitôt : les notifications étant déposées d'avance,
+celles déjà en place resteraient sinon sur l'ancien horaire.
+
+Un rappel dont l'heure tomberait après l'expiration est simplement ignoré — il
+n'apprendrait plus rien, l'app aurait déjà cessé de s'ouvrir.
+
+### La demande d'autorisation, au premier lancement
+
+L'app explique la règle des 7 jours **avant** de demander l'autorisation
+d'envoyer des notifications. iOS n'affiche cette alerte qu'une seule fois : un
+refus réflexe serait définitif.
+
 ### Si vous ne recevez rien
 
 Un refus des notifications est définitif du point de vue de l'app : macOS ne
