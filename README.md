@@ -18,14 +18,16 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 ## <img src="docs/icones/sections/list-bullet-rectangle-fill.png" width="26" align="center"> Sommaire
 
-<table>
+<div align="center">
+
+<table width="88%">
 <tr>
-<th align="left" width="33%">Mettre en place</th>
-<th align="left" width="33%">S'en servir et l'entretenir</th>
-<th align="left" width="33%">Comprendre et dépanner</th>
+<th align="center" width="33%">Mettre en place</th>
+<th align="center" width="33%">S'en servir et l'entretenir</th>
+<th align="center" width="33%">Comprendre et dépanner</th>
 </tr>
 <tr>
-<td valign="top">
+<td align="center" valign="top">
 
 <a href="#apercu"><img src="docs/icones/sections/eye-fill.png" width="17" align="center">&nbsp;<b>Aperçu</b></a><br><sub>Les six écrans, en images</sub><br><br>
 <a href="#installation"><img src="docs/icones/sections/arrow-down-app-fill.png" width="17" align="center">&nbsp;<b>Installation</b></a><br><sub>Ce qu'il faut, et pourquoi</sub><br><br>
@@ -33,7 +35,7 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 <a href="#sur-liphone"><img src="docs/icones/sections/iphone.png" width="17" align="center">&nbsp;<b>Sur l'iPhone</b></a><br><sub>Deux réglages à toucher</sub><br><br>
 <a href="#appairage"><img src="docs/icones/sections/qrcode-viewfinder.png" width="17" align="center">&nbsp;<b>Premier appairage</b></a><br><sub>Un QR code, une seule fois</sub><br><br>
 </td>
-<td valign="top">
+<td align="center" valign="top">
 
 <a href="#guide"><img src="docs/icones/sections/book-fill.png" width="17" align="center">&nbsp;<b>Guide complet</b></a><br><sub>Chaque onglet en détail</sub><br><br>
 <a href="#avances"><img src="docs/icones/sections/slider-horizontal-3.png" width="17" align="center">&nbsp;<b>Réglages avancés</b></a><br><sub>Safari, Concentration, clavier</sub><br><br>
@@ -41,7 +43,7 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 <a href="#signature"><img src="docs/icones/sections/checkmark-seal-fill.png" width="17" align="center">&nbsp;<b>La signature</b></a><br><sub>Vous n'avez rien à signer</sub><br><br>
 <a href="#sept-jours"><img src="docs/icones/sections/calendar-badge-clock.png" width="17" align="center">&nbsp;<b>La limite des 7 jours</b></a><br><sub>Pourquoi, et comment l'oublier</sub><br><br>
 </td>
-<td valign="top">
+<td align="center" valign="top">
 
 <a href="#transports"><img src="docs/icones/sections/antenna-radiowaves-left-and-right.png" width="17" align="center">&nbsp;<b>Les trois transports</b></a><br><sub>USB, Wi-Fi, Bluetooth</sub><br><br>
 <a href="#securite"><img src="docs/icones/sections/lock-shield-fill.png" width="17" align="center">&nbsp;<b>Sécurité</b></a><br><sub>Appairage et chiffrement</sub><br><br>
@@ -51,6 +53,8 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 </td>
 </tr>
 </table>
+
+</div>
 
 ---
 
