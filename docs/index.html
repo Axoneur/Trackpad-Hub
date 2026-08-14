@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrackPad Hub — Votre iPhone devient le trackpad de votre Mac</title>
+<meta name="description" content="TrackPad Hub transforme votre iPhone en trackpad et clavier pour Mac : gestes multi-doigts, chiffrement de bout en bout, open source GPL-3.0.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/trackpad-hub-icon-32.png">
+<link rel="apple-touch-icon" href="assets/trackpad-hub-icon-256.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* fond : noir-nuit à teinte marine, calé sur le vrai fond iOS de l'app (#12141C)
+     et sur le halo de la bannière du dépôt (#070B16 → #111A31) */
+  --bg: oklch(8% 0.018 267);
+  --bg-2: oklch(15% 0.028 267);
+  --surface: oklch(21% 0.014 265);
+  --surface-2: oklch(27% 0.014 264);
+  --fg: oklch(97% 0.004 265);
+  --muted: oklch(68% 0.014 265);
+  --muted-2: oklch(52% 0.014 265);
+  --border: oklch(90% 0.01 265 / .14);
+  --border-strong: oklch(90% 0.01 265 / .26);
+  /* accent : bleu réel de l'app (bouton macOS #327AFA / pastille iOS active),
+     quasi identique au systemBlue d'Apple — les deux sources convergent */
+  --accent: oklch(60.7% 0.205 260.9);
+  --accent-soft: oklch(60.7% 0.205 260.9 / .16);
+  /* fond plein des boutons : assombri par rapport à --accent pour garder un texte
+     blanc lisible (AA 4.5:1) ; --accent reste inchangé pour le texte/icônes, où il
+     passe déjà AA sur les fonds sombres */
+  --accent-fill: oklch(56% 0.205 260.9);
+  --accent-fill-hover: oklch(46% 0.205 260.9);
+  /* dégradé de marque : bannière réelle du dépôt (#3B82F6 → #7DD3FC) — la seule
+     fioriture décisive du site, réservée au titre du héro et aux halos */
+  --brand-grad-1: oklch(62.3% 0.188 259.8);
+  --brand-grad-2: oklch(82.8% 0.101 230.3);
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --ease: cubic-bezier(.22,1,.36,1);
+  --maxw: 1180px;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Manrope', sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  --font-mono: 'SF Mono', ui-monospace, 'JetBrains Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+body{
+  margin:0;
+  background: radial-gradient(ellipse 120% 60% at 50% -10%, oklch(28% 0.05 264 / .4), transparent 60%), var(--bg);
+  color:var(--fg);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:var(--font-display); font-weight:800; letter-spacing:-0.02em; margin:0;}
+p{margin:0; text-wrap:pretty;}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
+.skip-link{
+  position:fixed; top:-100px; left:16px; z-index:300;
+  background:var(--accent-fill); color:#fff; font-weight:600; font-size:14px;
+  padding:12px 20px; border-radius:12px; transition:top .2s var(--ease);
+}
+.skip-link:focus-visible{top:16px;}
+a{color:inherit; text-decoration:none;}
+img,svg{display:block; max-width:100%;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+section{position:relative; padding:120px 0;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-body); font-weight:600; font-size:13px;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--accent);
+}
+.eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+.section-head{max-width:640px; margin:0 0 56px;}
+.section-head h2{font-size:clamp(28px,4vw,44px); line-height:1.15; margin-top:14px; text-wrap:balance;}
+.section-head p{color:var(--muted); font-size:clamp(16px,1.6vw,19px); margin-top:16px;}
+.center{text-align:center; margin-left:auto; margin-right:auto;}
+
+/* focus */
+a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:10px;}
+
+/* glass */
+.glass{
+  background: linear-gradient(165deg, oklch(32% 0.02 265 / .5), oklch(16% 0.014 265 / .55));
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border:1px solid var(--border);
+  box-shadow: inset 0 1px 0 oklch(100% 0 0 / .08), 0 24px 60px -28px oklch(0% 0 0 / .7);
+}
+
+/* buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:52px; padding:0 26px; border-radius:999px;
+  font-family:var(--font-body); font-weight:600; font-size:15.5px;
+  border:1px solid transparent; cursor:pointer; transition:background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease), color .2s var(--ease);
+  white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--accent-fill); color:#fff;}
+.btn-primary:hover{background:var(--accent-fill-hover);}
+.btn-ghost{background:oklch(100% 0 0 / .04); color:var(--fg); border-color:var(--border-strong);}
+.btn-ghost:hover{background:oklch(100% 0 0 / .1); border-color:oklch(90% 0.01 265 / .4);}
+.btn-sm{height:40px; padding:0 18px; font-size:14px;}
+.btn-text{display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--fg); height:52px; padding:0 6px;}
+.btn-text .arrow{transition:transform .2s var(--ease);}
+.btn-text:hover .arrow{transform:translateX(4px);}
+
+/* nav */
+.nav{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%);
+  width:min(1080px,94vw); z-index:200;
+  border-radius:999px; padding:8px 8px 8px 22px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.nav-logo{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:800; font-size:16px;}
+.nav-logo .mark{width:26px; height:26px; border-radius:7px; display:block; box-shadow:0 3px 8px -2px oklch(60.7% 0.205 260.9 / .55);}
+.nav-links{display:flex; align-items:center; gap:28px; font-size:14.5px; font-weight:500; color:var(--muted);}
+.nav-links a{transition:color .2s var(--ease); position:relative;}
+.nav-links a:hover{color:var(--fg);}
+.nav-actions{display:flex; align-items:center; gap:10px;}
+.nav-burger{display:none; width:40px; height:40px; border-radius:50%; border:1px solid var(--border-strong); background:oklch(100% 0 0 / .04); align-items:center; justify-content:center; cursor:pointer;}
+.nav-burger span, .nav-burger span::before, .nav-burger span::after{content:''; display:block; width:16px; height:2px; background:var(--fg); position:relative; transition:transform .2s var(--ease), opacity .2s;}
+.nav-burger span::before{position:absolute; top:-5px;}
+.nav-burger span::after{position:absolute; top:5px;}
+.mobile-sheet{
+  position:fixed; top:74px; left:50%; transform:translateX(-50%) translateY(-8px); width:min(420px,92vw);
+  border-radius:24px; padding:18px; z-index:199; display:flex; flex-direction:column; gap:4px;
+  opacity:0; pointer-events:none; transition:opacity .22s var(--ease), transform .22s var(--ease);
+}
+.mobile-sheet.open{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+.mobile-sheet a{padding:14px 12px; border-radius:14px; font-weight:600; font-size:16px;}
+.mobile-sheet a:hover{background:oklch(100% 0 0 / .06);}
+
+/* hero */
+.hero{padding:190px 0 60px; overflow:hidden;}
+.hero-grid{display:grid; grid-template-columns:1fr; gap:64px; align-items:center;}
+.hero-copy{max-width:640px; margin:0 auto; text-align:center;}
+.hero-badges{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:28px;}
+.badge{
+  display:inline-flex; align-items:center; height:30px; padding:0 13px; border-radius:999px;
+  font-size:12.5px; font-weight:600; color:var(--muted); border:1px solid var(--border);
+  background:oklch(100% 0 0 / .03);
+}
+.hero h1{font-size:clamp(32px,6.4vw,74px); line-height:1.08; margin-top:22px; text-wrap:balance;}
+.hero h1 .accent-word{
+  background:linear-gradient(100deg, var(--fg) 0%, var(--brand-grad-2) 55%, var(--brand-grad-1) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero-sub{color:var(--muted); font-size:clamp(16px,1.8vw,20px); margin-top:22px; max-width:560px; margin-left:auto; margin-right:auto; text-wrap:balance;}
+.hero-cta{display:flex; gap:16px; justify-content:center; align-items:center; flex-wrap:wrap; margin-top:36px;}
+
+/* 3D scene */
+.scene-wrap{position:relative; height:clamp(360px,52vw,560px); margin-top:72px;}
+.orb{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; pointer-events:none;}
+.orb-a{width:420px; height:420px; background:oklch(60.7% 0.205 260.9 / .5); top:-120px; left:8%;}
+.orb-b{width:340px; height:340px; background:oklch(82.8% 0.101 230.3 / .4); bottom:-100px; right:10%;}
+.scene{position:absolute; inset:0; perspective:1800px; display:flex; align-items:center; justify-content:center;}
+.device-group{
+  position:relative; transform-style:preserve-3d; width:min(880px,86vw); height:100%;
+  display:flex; align-items:center; justify-content:center;
+  transform: rotateX(var(--rx,10deg)) rotateY(var(--ry,-16deg));
+  transition:transform .4s var(--ease);
+  will-change:transform;
+}
+@media (prefers-reduced-motion: reduce){ .device-group{transition:none;} }
+
+.mac{position:relative; transform:translateZ(0) translateX(-6%); width:min(560px,68vw);}
+.mac-screen{
+  aspect-ratio:16/10.2; border-radius:20px 20px 6px 6px; padding:14px 14px 20px;
+  background:linear-gradient(155deg, oklch(24% 0.01 260), oklch(12% 0.006 260));
+  border:1px solid oklch(90% 0.02 260 / .18);
+  box-shadow: inset 0 0 0 3px oklch(4% 0 0), 0 60px 90px -40px oklch(0% 0 0 / .8), 0 1px 0 oklch(100% 0 0 / .1) inset;
+  position:relative; transform:translateZ(30px);
+}
+.mac-notch{position:absolute; top:0; left:50%; transform:translateX(-50%); width:110px; height:16px; background:oklch(4% 0 0); border-radius:0 0 10px 10px;}
+.mac-window{
+  height:100%; border-radius:10px; overflow:hidden; display:flex; flex-direction:column;
+  background:linear-gradient(170deg, oklch(20% 0.02 265 / .6), oklch(10% 0.014 265 / .8));
+  border:1px solid oklch(90% 0.02 265 / .12);
+}
+.mac-titlebar{display:flex; align-items:center; gap:9px; padding:11px 14px; flex:none; border-bottom:1px solid oklch(90% 0.02 265 / .1);}
+.mac-titlebar .traffic{display:flex; gap:6px;}
+.mac-titlebar .traffic span{width:10px; height:10px; border-radius:50%; display:block;}
+.mac-titlebar .traffic .red{background:#FF5F57;}
+.mac-titlebar .traffic .yellow{background:#FEBC2E;}
+.mac-titlebar .traffic .green{background:#28C840;}
+.mac-titlebar .title{font-size:11.5px; font-weight:600; color:var(--muted); margin-left:2px;}
+.mac-ui{
+  flex:1; display:grid; grid-template-columns:1fr 1.2fr; overflow:hidden;
+}
+.mac-ui-col{padding:18px 16px; display:flex; flex-direction:column; gap:10px;}
+.mac-ui-col:first-child{border-right:1px solid oklch(90% 0.02 260 / .1);}
+.mac-ui-title{font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted-2);}
+.mac-ui-row{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted); background:oklch(100% 0 0 / .04); border-radius:8px; padding:8px 10px;}
+.mac-ui-row.muted{color:var(--muted-2); border:1px dashed oklch(90% 0.02 260 / .18); background:transparent;}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--muted-2); flex:none;}
+.dot-live{background:oklch(72% 0.19 148); box-shadow:0 0 8px oklch(72% 0.19 148 / .8);}
+.mac-ui-line{height:8px; border-radius:5px; background:oklch(100% 0 0 / .07); width:92%;}
+.mac-ui-line.short{width:58%;}
+.mac-ui-line + .mac-ui-line{margin-top:2px;}
+.mac-base{
+  height:16px; margin-top:-3px; border-radius:0 0 12px 12px;
+  background:linear-gradient(180deg, oklch(48% 0.006 260), oklch(30% 0.006 260));
+  transform:translateZ(30px) rotateX(-18deg); transform-origin:top; position:relative;
+  box-shadow:0 30px 40px -20px oklch(0% 0 0 / .7);
+}
+.mac-notch-base{position:absolute; top:0; left:50%; transform:translateX(-50%); width:110px; height:5px; background:oklch(20% 0.006 260); border-radius:0 0 6px 6px;}
+
+.iphone{position:relative; transform:translateZ(90px) translateX(-14%) translateY(6%) rotateY(-8deg) rotateZ(-3deg); width:min(190px,26vw);}
+.iphone-frame{
+  aspect-ratio:9/18.5; border-radius:38px; padding:8px;
+  background:linear-gradient(160deg, oklch(55% 0.01 260), oklch(20% 0.006 260));
+  box-shadow: 0 40px 70px -25px oklch(0% 0 0 / .85), inset 0 0 0 1px oklch(100% 0 0 / .15);
+}
+.iphone-island{position:absolute; top:20px; left:50%; transform:translateX(-50%); width:64px; height:20px; background:oklch(4% 0 0); border-radius:12px; z-index:2;}
+.iphone-trackpad{
+  height:100%; border-radius:30px; position:relative; overflow:hidden;
+  background:linear-gradient(170deg, oklch(30% 0.03 265 / .9), oklch(12% 0.02 267 / .95));
+  border:1px solid oklch(90% 0.03 265 / .18);
+  display:flex; flex-direction:column;
+}
+.iphone-trackpad::before{
+  content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(120deg, transparent 30%, oklch(100% 0 0 / .18) 45%, transparent 60%);
+  transform:translateX(-120%); animation:sheen 4.5s ease-in-out infinite;
+}
+@keyframes sheen{ 0%,60%{transform:translateX(-120%);} 100%{transform:translateX(120%);} }
+.iphone-statusbar{
+  flex:none; display:flex; align-items:center; gap:6px; margin:15px 12px 0; padding:6px 9px;
+  border-radius:999px; background:oklch(100% 0 0 / .08); font-size:7.6px; font-weight:600;
+  color:var(--muted); letter-spacing:.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.iphone-gesture-zone{position:relative; flex:1;}
+.gesture-path{position:absolute; inset:14% 10%; width:80%; height:72%;}
+.gesture-path path{fill:none; stroke:oklch(100% 0 0 / .35); stroke-width:2; stroke-dasharray:4 7; stroke-linecap:round;}
+.gesture-dot{position:absolute; width:12px; height:12px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, var(--accent)); box-shadow:0 0 14px oklch(60.7% 0.205 260.9 / .8); offset-rotate:0deg;}
+.gesture-dot.dot-1{offset-path:path('M30,20 C 30,60 70,60 70,100'); animation:travel 3.2s ease-in-out infinite;}
+.gesture-dot.dot-2{offset-path:path('M30,20 C 30,60 70,60 70,100'); animation:travel 3.2s ease-in-out infinite; animation-delay:.35s; opacity:.7;}
+@keyframes travel{ 0%{offset-distance:0%; opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{offset-distance:100%; opacity:0;} }
+@media (prefers-reduced-motion: reduce){ .gesture-dot, .iphone-trackpad::before{animation:none;} }
+.iphone-tabbar{
+  flex:none; display:flex; justify-content:space-between; gap:5px; margin:0 12px 15px;
+  padding:7px 9px; border-radius:999px; background:oklch(100% 0 0 / .06); border:1px solid oklch(90% 0.02 265 / .12);
+  position:relative; z-index:2;
+}
+.iphone-tabbar .tab{width:19px; height:19px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:none;}
+.iphone-tabbar .tab::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--muted-2);}
+.iphone-tabbar .tab.active{background:var(--accent); box-shadow:0 0 10px oklch(60.7% 0.205 260.9 / .6);}
+.iphone-tabbar .tab.active::before{background:#fff;}
+
+/* feature grid */
+.grid-features{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.f-card{border-radius:var(--radius-md); padding:26px 22px; display:flex; flex-direction:column; gap:14px; transition:transform .25s var(--ease), border-color .25s var(--ease);}
+.f-card:hover{transform:translateY(-4px); border-color:var(--border-strong);}
+.f-icon{width:44px; height:44px; border-radius:12px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; color:var(--accent);}
+.f-icon svg{width:22px; height:22px;}
+.f-card h3{font-size:17px;}
+.f-card p{color:var(--muted); font-size:14.5px; line-height:1.55;}
+
+/* gestures row */
+.gestures{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:16px;}
+.g-card{border-radius:var(--radius-md); padding:22px; text-align:center;}
+.g-fingers{display:flex; gap:5px; justify-content:center; margin-bottom:14px;}
+.g-fingers span{width:9px; height:26px; border-radius:5px; background:var(--accent-soft); border:1px solid oklch(60.7% 0.205 260.9 / .4);}
+.g-card h4{font-size:14.5px; font-weight:700; margin-bottom:6px;}
+.g-card p{font-size:13px; color:var(--muted);}
+
+/* security */
+.sec-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:20px; align-items:start;}
+.sec-list{display:flex; flex-direction:column; gap:14px;}
+.sec-item{display:flex; gap:14px; padding:18px; border-radius:var(--radius-md);}
+.sec-num{flex:none; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center;}
+.sec-item h4{font-size:15.5px; font-weight:700; margin-bottom:4px;}
+.sec-item p{font-size:14px; color:var(--muted);}
+.sec-panel{border-radius:var(--radius-lg); padding:28px; display:flex; flex-direction:column; gap:22px;}
+.sec-panel .stat{display:flex; justify-content:space-between; align-items:baseline; padding-bottom:16px; border-bottom:1px solid var(--border);}
+.sec-panel .stat:last-child{border-bottom:none; padding-bottom:0;}
+.sec-panel .stat b{font-family:var(--font-display); font-size:22px;}
+.sec-panel .stat span{font-size:13px; color:var(--muted);}
+
+/* latency bars */
+.lat-row{display:flex; align-items:center; gap:16px; margin-bottom:18px;}
+.lat-label{width:96px; flex:none; font-size:14px; font-weight:600;}
+.lat-track{flex:1; height:14px; border-radius:999px; background:oklch(100% 0 0 / .06); overflow:hidden;}
+.lat-fill{height:100%; border-radius:999px; background:linear-gradient(90deg, var(--accent), oklch(70% 0.14 200));}
+.lat-value{width:96px; flex:none; text-align:right; font-family:var(--font-mono); font-size:13px; color:var(--muted);}
+
+/* comparatif */
+.compare-wrap{border-radius:var(--radius-lg); overflow-x:auto; -webkit-overflow-scrolling:touch;}
+table.compare{width:100%; min-width:560px; border-collapse:collapse; font-size:14.5px;}
+table.compare th, table.compare td{padding:16px 18px; text-align:left; border-bottom:1px solid var(--border); vertical-align:middle;}
+table.compare thead th{font-family:var(--font-display); font-size:13px; letter-spacing:.03em; text-transform:uppercase; color:var(--muted); font-weight:700;}
+table.compare th:first-child, table.compare td:first-child{width:34%; color:var(--muted); font-weight:500;}
+table.compare th.col-us{color:var(--accent);}
+table.compare td.col-us{font-weight:600;}
+table.compare tr:last-child td{border-bottom:none;}
+.chk{display:inline-flex; align-items:center; gap:8px;}
+.chk svg{width:16px; height:16px; color:var(--accent); flex:none;}
+.chk.no svg{color:var(--muted-2);}
+
+/* install */
+.install-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.i-card{border-radius:var(--radius-md); padding:24px; display:flex; flex-direction:column; gap:14px;}
+.i-num{font-family:var(--font-display); font-weight:800; font-size:13px; color:var(--accent);}
+.i-card h3{font-size:16.5px;}
+.i-card p{font-size:13.8px; color:var(--muted);}
+.code{
+  font-family:var(--font-mono); font-size:12.6px; color:oklch(88% 0.03 150);
+  background:oklch(6% 0.006 260); border:1px solid var(--border); border-radius:10px;
+  padding:12px 14px; overflow-x:auto; white-space:pre;
+}
+.install-note{margin-top:24px; display:flex; gap:12px; align-items:flex-start; padding:18px 20px; border-radius:var(--radius-md);}
+.install-note svg{width:20px; height:20px; color:var(--accent); flex:none; margin-top:2px;}
+.install-note p{font-size:14px; color:var(--muted);}
+
+/* opensource */
+.os-band{border-radius:var(--radius-lg); padding:44px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+.os-band h3{font-size:22px; max-width:420px;}
+.os-band p{color:var(--muted); font-size:14.5px; margin-top:8px; max-width:420px;}
+.os-badges{display:flex; gap:8px; flex-wrap:wrap;}
+
+/* final cta */
+.final-cta{padding:100px 0 130px; text-align:center;}
+.final-cta h2{font-size:clamp(28px,4.4vw,46px); max-width:640px; margin:0 auto; text-wrap:balance;}
+.final-cta p{color:var(--muted); margin-top:16px; font-size:16.5px;}
+.final-cta .btn-primary{margin-top:32px;}
+
+/* footer */
+footer{border-top:1px solid var(--border); padding:48px 0;}
+.foot-grid{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
+.foot-links{display:flex; gap:24px; font-size:13.5px; color:var(--muted); flex-wrap:wrap;}
+.foot-links a:hover{color:var(--fg);}
+.foot-legal{font-size:12.5px; color:var(--muted);}
+
+/* responsive */
+@media (max-width:1020px){
+  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .grid-features{grid-template-columns:repeat(2,1fr);}
+  .gestures{grid-template-columns:repeat(2,1fr);}
+  .sec-grid{grid-template-columns:1fr;}
+  .install-grid{grid-template-columns:1fr;}
+}
+@media (max-width:640px){
+  section{padding:80px 0;}
+  .hero{padding:150px 0 40px;}
+  .grid-features{grid-template-columns:1fr;}
+  .gestures{grid-template-columns:1fr 1fr;}
+  table.compare{font-size:12.8px;}
+  table.compare th, table.compare td{padding:12px 10px;}
+  .os-band{padding:30px 22px; flex-direction:column; align-items:flex-start;}
+  .nav{padding:8px 8px 8px 16px;}
+  .hero-cta{flex-direction:column; width:100%;}
+  .hero-cta .btn{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<a href="#contenu" class="skip-link">Aller au contenu</a>
+
+<nav class="nav glass" data-od-id="nav-bar">
+  <a href="#accueil" class="nav-logo" data-od-id="nav-logo"><img class="mark" src="assets/trackpad-hub-icon-64.png" alt="" width="26" height="26">TrackPad Hub</a>
+  <div class="nav-links">
+    <a href="#fonctionnalites">Fonctionnalités</a>
+    <a href="#securite">Sécurité</a>
+    <a href="#comparatif">Comparatif</a>
+    <a href="#installation">Installation</a>
+  </div>
+  <div class="nav-actions">
+    <a class="btn btn-ghost btn-sm" href="https://github.com/Axoneur/Trackpad-Hub" target="_blank" rel="noopener" data-od-id="nav-github-link">GitHub</a>
+    <button class="nav-burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileSheet"><span></span></button>
+  </div>
+</nav>
+<div class="mobile-sheet glass" id="mobileSheet" data-od-id="nav-mobile-sheet">
+  <a href="#fonctionnalites">Fonctionnalités</a>
+  <a href="#securite">Sécurité</a>
+  <a href="#comparatif">Comparatif</a>
+  <a href="#installation">Installation</a>
+  <a href="https://github.com/Axoneur/Trackpad-Hub" target="_blank" rel="noopener">Voir sur GitHub</a>
+</div>
+
+<main id="contenu">
+  <section class="hero" id="accueil" data-od-id="hero-section">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">TrackPad Hub · open source</span>
+        <h1 data-od-id="hero-title">Votre iPhone devient le <span class="accent-word">trackpad de votre Mac</span>.</h1>
+        <p class="hero-sub" data-od-id="hero-subtitle">Pas une souris émulée : accélération, inertie, gestes à plusieurs doigts, clavier complet, contrôle des fenêtres, du média et des applications.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="https://github.com/Axoneur/Trackpad-Hub" target="_blank" rel="noopener" data-od-id="hero-cta-primary">Voir le projet sur GitHub</a>
+          <a class="btn btn-text" href="#fonctionnalites" data-od-id="hero-cta-secondary">Découvrir les fonctionnalités <span class="arrow">→</span></a>
+        </div>
+        <div class="hero-badges">
+          <span class="badge">macOS 14+</span>
+          <span class="badge">iOS 18+</span>
+          <span class="badge">SwiftUI</span>
+          <span class="badge">GPL-3.0</span>
+        </div>
+      </div>
+    </div>
+    <div class="scene-wrap">
+      <div class="orb orb-a" aria-hidden="true"></div>
+      <div class="orb orb-b" aria-hidden="true"></div>
+      <div class="scene" id="scene">
+        <div class="device-group" id="deviceGroup">
+          <div class="mac" aria-hidden="true">
+            <div class="mac-screen">
+              <div class="mac-notch"></div>
+              <div class="mac-window">
+                <div class="mac-titlebar">
+                  <span class="traffic"><span class="red"></span><span class="yellow"></span><span class="green"></span></span>
+                  <span class="title">TrackPad Hub</span>
+                </div>
+                <div class="mac-ui">
+                  <div class="mac-ui-col">
+                    <span class="mac-ui-title">Appairage</span>
+                    <span class="mac-ui-row"><span class="dot dot-live"></span>iPhone de vous</span>
+                    <span class="mac-ui-row muted">+ Ajouter un appareil</span>
+                  </div>
+                  <div class="mac-ui-col">
+                    <span class="mac-ui-title">Diagnostic</span>
+                    <span class="mac-ui-line"></span>
+                    <span class="mac-ui-line"></span>
+                    <span class="mac-ui-line short"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mac-base"><div class="mac-notch-base"></div></div>
+          </div>
+          <div class="iphone" aria-hidden="true">
+            <div class="iphone-frame">
+              <div class="iphone-island"></div>
+              <div class="iphone-trackpad">
+                <div class="iphone-statusbar"><span class="dot dot-live"></span>1 doigt · 2 doigts · 3 doigts</div>
+                <div class="iphone-gesture-zone">
+                  <svg class="gesture-path" viewBox="0 0 100 120"><path d="M30,20 C 30,60 70,60 70,100"/></svg>
+                  <span class="gesture-dot dot-1"></span>
+                  <span class="gesture-dot dot-2"></span>
+                </div>
+                <div class="iphone-tabbar">
+                  <span class="tab active"></span>
+                  <span class="tab"></span>
+                  <span class="tab"></span>
+                  <span class="tab"></span>
+                  <span class="tab"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fonctionnalites" data-od-id="features-section">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Fonctionnalités</span>
+        <h2>Ce que ça sait faire</h2>
+        <p>Chaque onglet de l'iPhone couvre un usage complet du Mac — pas seulement un curseur.</p>
+      </div>
+      <div class="grid-features">
+        <article class="f-card glass" data-od-id="feature-card-trackpad">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 9c1.5 3 6.5 3 8 0" stroke-linecap="round"/></svg></span>
+          <h3>Trackpad</h3>
+          <p>Accélération, inertie, gestes à quatre doigts, glisser-déposer natif du Mac.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-keyboard">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M7 11h.01M11 11h.01M15 11h.01M9 14h6" stroke-linecap="round"/></svg></span>
+          <h3>Clavier</h3>
+          <p>Disposition AZERTY respectée, dictée locale sur l'iPhone, presse-papiers partagé.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-media">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Média</h3>
+          <p>Lecture, volume, luminosité et reprise de lecture directement depuis l'iPhone.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-windows">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M12 4v16M4 12h8"/></svg></span>
+          <h3>Fenêtres</h3>
+          <p>Moitiés, quarts, plein écran, lancement d'applications en un geste.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-transports">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 0 1 16 0M7 12a5 5 0 0 1 10 0M12 12v.01"/></svg></span>
+          <h3>Trois liaisons</h3>
+          <p>USB, Wi-Fi et Bluetooth : le transport le plus rapide gagne, sans rien régler.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-encryption">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3>Chiffré de bout en bout</h3>
+          <p>Appairage par défi HMAC-SHA256, trames scellées en AES-GCM.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-game">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="9" rx="4"/><path d="M8 12.5h-.01M8 11v3M6.5 12.5h3M16 12h.01M18 10.5h.01" stroke-linecap="round"/></svg></span>
+          <h3>Mode jeu</h3>
+          <p>Manette plein écran, touches maintenues, pensé pour jouer au clavier.</p>
+        </article>
+        <article class="f-card glass" data-od-id="feature-card-macros">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.8 4.7L18.5 9l-4.7 1.8L12 15.5l-1.8-4.7L5.5 9l4.7-1.3L12 3z"/></svg></span>
+          <h3>Macros et MIDI</h3>
+          <p>Séquences rejouables et contrôleur MIDI pour vos raccourcis les plus utilisés.</p>
+        </article>
+      </div>
+
+      <div class="gestures">
+        <article class="g-card glass" data-od-id="gesture-card-1">
+          <div class="g-fingers"><span></span></div>
+          <h4>1 doigt</h4>
+          <p>Déplace le curseur, appui bref = clic gauche</p>
+        </article>
+        <article class="g-card glass" data-od-id="gesture-card-2">
+          <div class="g-fingers"><span></span><span></span></div>
+          <h4>2 doigts</h4>
+          <p>Défilement avec inertie, zoom, clic droit</p>
+        </article>
+        <article class="g-card glass" data-od-id="gesture-card-3">
+          <div class="g-fingers"><span></span><span></span><span></span></div>
+          <h4>3 doigts</h4>
+          <p>Mission Control, App Exposé, bureaux</p>
+        </article>
+        <article class="g-card glass" data-od-id="gesture-card-4">
+          <div class="g-fingers"><span></span><span></span><span></span><span></span></div>
+          <h4>4 doigts</h4>
+          <p>Afficher le bureau, recherche</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="securite" data-od-id="security-section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Sécurité</span>
+        <h2>Chiffré de bout en bout, sans compte ni cloud</h2>
+        <p>Se connecter au réseau ne donne aucun droit. Sans appairage, toutes les commandes sont rejetées.</p>
+      </div>
+      <div class="sec-grid">
+        <div class="sec-list">
+          <div class="sec-item glass">
+            <span class="sec-num">1</span>
+            <div><h4>Défi aléatoire</h4><p>Le Mac envoie un défi à chaque connexion ; l'iPhone répond par HMAC-SHA256 — le code lui-même ne circule jamais.</p></div>
+          </div>
+          <div class="sec-item glass">
+            <span class="sec-num">2</span>
+            <div><h4>Jeton dans le trousseau</h4><p>Après réussite, un jeton permanent est rangé dans le trousseau des deux appareils. L'appairage ne se refait jamais.</p></div>
+          </div>
+          <div class="sec-item glass">
+            <span class="sec-num">3</span>
+            <div><h4>AES-GCM, salé à chaque trame</h4><p>Chaque message est scellé avec une clé dérivée du jeton et salée par le défi de connexion : jamais la même deux fois.</p></div>
+          </div>
+          <div class="sec-item glass">
+            <span class="sec-num">4</span>
+            <div><h4>Blocage après 5 échecs</h4><p>Cinq codes erronés bloquent l'appareil. « Oublier » retire un appareil du Mac à tout moment.</p></div>
+          </div>
+        </div>
+        <div class="sec-panel glass" data-od-id="security-stats-panel">
+          <div class="stat"><span>Chiffrement</span><b>AES-GCM</b></div>
+          <div class="stat"><span>Appairage</span><b>HMAC-SHA256</b></div>
+          <div class="stat"><span>Comptes requis</span><b>Aucun</b></div>
+          <div class="stat"><span>Trafic sortant</span><b>1 vérif./jour</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="latence" data-od-id="latency-section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Performance</span>
+        <h2>Trois transports, le plus rapide gagne</h2>
+        <p>Le choix est automatique. USB, Wi-Fi et Bluetooth partagent le même appairage et le même chiffrement.</p>
+      </div>
+      <div class="glass" style="border-radius:var(--radius-lg); padding:32px 32px 8px;">
+        <div class="lat-row" data-od-id="latency-bar-usb">
+          <span class="lat-label">USB</span>
+          <span class="lat-track"><span class="lat-fill" style="width:8%"></span></span>
+          <span class="lat-value">1–2 ms</span>
+        </div>
+        <div class="lat-row" data-od-id="latency-bar-wifi">
+          <span class="lat-label">Wi-Fi</span>
+          <span class="lat-track"><span class="lat-fill" style="width:18%"></span></span>
+          <span class="lat-value">2–5 ms</span>
+        </div>
+        <div class="lat-row" data-od-id="latency-bar-bluetooth">
+          <span class="lat-label">Bluetooth</span>
+          <span class="lat-track"><span class="lat-fill" style="width:100%"></span></span>
+          <span class="lat-value">15–30 ms</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="comparatif" data-od-id="comparison-section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Comparatif</span>
+        <h2>Face aux solutions de trackpad à distance classiques</h2>
+        <p>La plupart des apps de ce genre sont fermées, payantes par abonnement, et passent par un serveur cloud.</p>
+      </div>
+      <div class="compare-wrap glass" data-od-id="comparison-table">
+        <table class="compare">
+          <thead>
+            <tr><th><span class="sr-only">Critère</span></th><th class="col-us">TrackPad Hub</th><th>Solutions classiques</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Code source</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>Ouvert, GPL-3.0</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>Fermé, propriétaire</span></td>
+            </tr>
+            <tr>
+              <td>Coût</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>Gratuit, à vie</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>Abonnement récurrent</span></td>
+            </tr>
+            <tr>
+              <td>Chiffrement</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>AES-GCM documenté</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>Rarement précisé</span></td>
+            </tr>
+            <tr>
+              <td>Passage par un serveur</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>Aucun, réseau local direct</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>Souvent requis</span></td>
+            </tr>
+            <tr>
+              <td>Clavier</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>AZERTY natif, dictée</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>QWERTY uniquement</span></td>
+            </tr>
+            <tr>
+              <td>Mode jeu / MIDI / macros</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>Inclus</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>Rarement proposé</span></td>
+            </tr>
+            <tr>
+              <td>Compte requis</td>
+              <td class="col-us"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L19 7"/></svg>Aucun</span></td>
+              <td><span class="chk no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>Souvent un compte cloud</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="installation" data-od-id="install-section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Installation</span>
+        <h2>Tout se fait depuis le Mac</h2>
+        <p>Vous compilez les deux apps vous-même et les signez avec votre propre identifiant Apple — gratuit, sans abonnement. Aucun binaire à télécharger.</p>
+      </div>
+      <div class="install-grid">
+        <article class="i-card glass" data-od-id="install-step-1">
+          <span class="i-num">ÉTAPE 1</span>
+          <h3>Xcode + votre identifiant Apple</h3>
+          <p>App Store → Xcode → ajoutez votre compte Apple dans Settings → Accounts. Aucun abonnement payant requis.</p>
+        </article>
+        <article class="i-card glass" data-od-id="install-step-2">
+          <span class="i-num">ÉTAPE 2</span>
+          <h3>Cloner et configurer</h3>
+          <div class="code">git clone https://github.com/Axoneur/Trackpad-Hub.git
+cd Trackpad-Hub
+./setup.sh</div>
+        </article>
+        <article class="i-card glass" data-od-id="install-step-3">
+          <span class="i-num">ÉTAPE 3</span>
+          <h3>Compiler et installer</h3>
+          <div class="code">./reinstall.sh --all</div>
+          <p>iPhone branché et déverrouillé. Quelques minutes la première fois.</p>
+        </article>
+      </div>
+      <div class="install-note glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+        <p>Avec un identifiant Apple gratuit, l'app iPhone doit être signée à nouveau tous les 7 jours — c'est une règle d'Apple, pas un bug. TrackPad Hub propose un renouvellement automatique tous les 6 jours, iPhone simplement branché.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="open-source" data-od-id="opensource-section">
+    <div class="wrap">
+      <div class="os-band glass">
+        <div>
+          <h3>Entièrement open source, licence GPL-3.0</h3>
+          <p>Le code est ouvert : lisez-le, modifiez-le, redistribuez-le — à condition que vos versions modifiées restent elles aussi sous GPL, sources comprises.</p>
+        </div>
+        <div class="os-badges">
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Axoneur/Trackpad-Hub" target="_blank" rel="noopener">Code source</a>
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Axoneur/Trackpad-Hub/blob/main/LICENSE" target="_blank" rel="noopener">Licence</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta" data-od-id="final-cta-section">
+    <div class="wrap">
+      <span class="eyebrow">C'est gratuit</span>
+      <h2>Prêt à transformer votre iPhone en trackpad&nbsp;?</h2>
+      <p>Cinq minutes de lecture, quinze de compilation, et votre iPhone ne quitte plus votre Mac.</p>
+      <a class="btn btn-primary" href="https://github.com/Axoneur/Trackpad-Hub" target="_blank" rel="noopener" data-od-id="final-cta-button">Cloner le dépôt sur GitHub</a>
+    </div>
+  </section>
+</main>
+
+<footer data-od-id="site-footer">
+  <div class="wrap foot-grid">
+    <div class="nav-logo"><img class="mark" src="assets/trackpad-hub-icon-64.png" alt="" width="26" height="26">TrackPad Hub</div>
+    <div class="foot-links">
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#securite">Sécurité</a>
+      <a href="#comparatif">Comparatif</a>
+      <a href="#installation">Installation</a>
+      <a href="https://github.com/Axoneur/Trackpad-Hub" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot-legal">GPL-3.0 · projet personnel open source</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var burger = document.getElementById('burger');
+  var sheet = document.getElementById('mobileSheet');
+  burger.addEventListener('click', function(){
+    var open = sheet.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  sheet.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ sheet.classList.remove('open'); burger.setAttribute('aria-expanded','false'); });
+  });
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var scene = document.getElementById('scene');
+  var group = document.getElementById('deviceGroup');
+  if(scene && group && !reduceMotion){
+    var baseRX = 10, baseRY = -16, mx = 0, my = 0, targetMx = 0, targetMy = 0, t = 0;
+    scene.addEventListener('mousemove', function(e){
+      var r = scene.getBoundingClientRect();
+      targetMx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      targetMy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    });
+    scene.addEventListener('mouseleave', function(){ targetMx = 0; targetMy = 0; });
+    function tick(){
+      mx += (targetMx - mx) * 0.06;
+      my += (targetMy - my) * 0.06;
+      t += 0.0022;
+      var autoY = Math.sin(t) * 4;
+      group.style.setProperty('--rx', (baseRX - my * 6).toFixed(2) + 'deg');
+      group.style.setProperty('--ry', (baseRY + mx * 10 + autoY).toFixed(2) + 'deg');
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+</body>
+</html>
