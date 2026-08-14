@@ -6,8 +6,9 @@
 
 <img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/banniere.svg" width="100%">
 
+<div align="center">
 
-<table>
+<table width="88%">
 <tr>
 <td align="center" width="25%"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/hand-draw-fill.png" width="40"><br><b>Trackpad</b><br><sub>Accélération, inertie,<br>gestes à 4 doigts</sub></td>
 <td align="center" width="25%"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/keyboard-fill.png" width="40"><br><b>Clavier</b><br><sub>AZERTY respecté,<br>dictée, presse-papiers</sub></td>
@@ -21,6 +22,8 @@
 <td align="center"><img src="https://raw.githubusercontent.com/Axoneur/Trackpad-Hub/main/docs/icones/sections/wand-and-stars.png" width="40"><br><b>Macros et MIDI</b><br><sub>Séquences rejouables,<br>contrôleur MIDI</sub></td>
 </tr>
 </table>
+
+</div>
 
 ## En bref
 

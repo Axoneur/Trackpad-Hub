@@ -62,7 +62,7 @@ clavier complet, contrôle des fenêtres, du média et des applications.
 
 ## Ce que ça sait faire
 
-<table>
+<table width="88%">
 <tr>
 <td align="center" width="25%"><img src="docs/icones/sections/hand-draw-fill.png" width="40"><br><b>Trackpad</b><br><sub>Accélération, inertie,<br>gestes à 4 doigts</sub></td>
 <td align="center" width="25%"><img src="docs/icones/sections/keyboard-fill.png" width="40"><br><b>Clavier</b><br><sub>AZERTY respecté,<br>dictée, presse-papiers</sub></td>
