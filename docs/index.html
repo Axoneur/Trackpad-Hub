@@ -85,6 +85,10 @@ section{position:relative; padding:120px 0;}
 /* focus */
 a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:10px;}
 
+/* grille de points interactive, en fond de page */
+#dotgrid{position:fixed; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; display:block;}
+@media (prefers-reduced-motion: reduce){ #dotgrid{display:none;} }
+
 /* glass */
 .glass{
   background: linear-gradient(165deg, oklch(32% 0.02 265 / .5), oklch(16% 0.014 265 / .55));
@@ -97,20 +101,32 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-o
 /* buttons */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  height:52px; padding:0 26px; border-radius:999px;
+  height:52px; padding:0 26px; border-radius:999px; position:relative;
   font-family:var(--font-body); font-weight:600; font-size:15.5px;
-  border:1px solid transparent; cursor:pointer; transition:background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease), color .2s var(--ease);
+  border:1px solid transparent; cursor:pointer;
+  transition:background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease),
+             box-shadow .2s var(--ease), transform .16s cubic-bezier(.34,1.56,.64,1);
   white-space:nowrap;
 }
-.btn:active{transform:scale(.97);}
-.btn-primary{background:var(--accent-fill); color:#fff;}
-.btn-primary:hover{background:var(--accent-fill-hover);}
+.btn:hover{transform:translateY(-1px);}
+.btn:active{transform:translateY(0) scale(.96); transition-duration:.08s;}
+.btn-primary{background:var(--accent-fill); color:#fff; overflow:hidden;}
+.btn-primary:hover{background:var(--accent-fill-hover); box-shadow:0 12px 28px -10px oklch(56% 0.205 260.9 / .55);}
+.btn-primary::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, transparent 25%, oklch(100% 0 0 / .28) 50%, transparent 75%);
+  transform:translateX(-130%);
+}
 .btn-ghost{background:oklch(100% 0 0 / .04); color:var(--fg); border-color:var(--border-strong);}
 .btn-ghost:hover{background:oklch(100% 0 0 / .1); border-color:oklch(90% 0.01 265 / .4);}
 .btn-sm{height:40px; padding:0 18px; font-size:14px;}
 .btn-text{display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--fg); height:52px; padding:0 6px;}
 .btn-text .arrow{transition:transform .2s var(--ease);}
 .btn-text:hover .arrow{transform:translateX(4px);}
+@media (prefers-reduced-motion: no-preference){
+  @keyframes btn-sweep{ from{transform:translateX(-130%);} to{transform:translateX(160%);} }
+  .btn-primary:hover::before{animation:btn-sweep .85s var(--ease);}
+}
 
 /* nav */
 .nav{
@@ -124,6 +140,11 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-o
 .nav-links{display:flex; align-items:center; gap:28px; font-size:14.5px; font-weight:500; color:var(--muted);}
 .nav-links a{transition:color .2s var(--ease); position:relative;}
 .nav-links a:hover{color:var(--fg);}
+.nav-links a::after{
+  content:''; position:absolute; left:0; right:0; bottom:-8px; height:2px; border-radius:2px;
+  background:var(--accent); transform:scaleX(0); transform-origin:center; transition:transform .25s var(--ease);
+}
+.nav-links a:hover::after{transform:scaleX(1);}
 .nav-actions{display:flex; align-items:center; gap:10px;}
 .nav-burger{display:none; width:40px; height:40px; border-radius:50%; border:1px solid var(--border-strong); background:oklch(100% 0 0 / .04); align-items:center; justify-content:center; cursor:pointer;}
 .nav-burger span, .nav-burger span::before, .nav-burger span::after{content:''; display:block; width:16px; height:2px; background:var(--fg); position:relative; transition:transform .2s var(--ease), opacity .2s;}
@@ -158,9 +179,28 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-o
 
 /* 3D scene */
 .scene-wrap{position:relative; height:clamp(360px,52vw,560px); margin-top:72px;}
-.orb{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; pointer-events:none;}
-.orb-a{width:420px; height:420px; background:oklch(60.7% 0.205 260.9 / .5); top:-120px; left:8%;}
-.orb-b{width:340px; height:340px; background:oklch(82.8% 0.101 230.3 / .4); bottom:-100px; right:10%;}
+@media (prefers-reduced-motion: no-preference){
+  @keyframes hero-rise{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+  .hero-copy .eyebrow{animation:hero-rise .7s var(--ease) both;}
+  .hero-copy h1{animation:hero-rise .7s var(--ease) .08s both;}
+  .hero-sub{animation:hero-rise .7s var(--ease) .16s both;}
+  .hero-cta{animation:hero-rise .7s var(--ease) .24s both;}
+  .hero-badges{animation:hero-rise .7s var(--ease) .32s both;}
+  .scene-wrap{animation:hero-rise 1s var(--ease) .3s both;}
+
+  /* révélation au défilement, ajoutée en JS (dégrade proprement sans JS) */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+}
+.orb{
+  position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; pointer-events:none;
+  /* dégradé radial interne : l'opacité retombe à 0 bien avant le bord de la boîte,
+     pour éviter toute coupure nette si un ancêtre clippe (overflow:hidden du héro) */
+  mask-image:radial-gradient(circle, black 0%, black 35%, transparent 72%);
+  -webkit-mask-image:radial-gradient(circle, black 0%, black 35%, transparent 72%);
+}
+.orb-a{width:420px; height:420px; background:oklch(60.7% 0.205 260.9 / .5); top:-40px; left:8%;}
+.orb-b{width:340px; height:340px; background:oklch(82.8% 0.101 230.3 / .4); bottom:20px; right:10%;}
 .scene{position:absolute; inset:0; perspective:1800px; display:flex; align-items:center; justify-content:center;}
 .device-group{
   position:relative; transform-style:preserve-3d; width:min(880px,86vw); height:100%;
@@ -257,9 +297,16 @@ a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-o
 
 /* feature grid */
 .grid-features{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
-.f-card{border-radius:var(--radius-md); padding:26px 22px; display:flex; flex-direction:column; gap:14px; transition:transform .25s var(--ease), border-color .25s var(--ease);}
-.f-card:hover{transform:translateY(-4px); border-color:var(--border-strong);}
-.f-icon{width:44px; height:44px; border-radius:12px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; color:var(--accent);}
+.f-card{border-radius:var(--radius-md); padding:26px 22px; display:flex; flex-direction:column; gap:14px;}
+.f-card, .i-card, .sec-item, .g-card{
+  transition:transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.f-card:hover, .i-card:hover, .sec-item:hover, .g-card:hover{
+  transform:translateY(-4px); border-color:var(--border-strong);
+  box-shadow:0 20px 44px -24px oklch(0% 0 0 / .6);
+}
+.f-icon{width:44px; height:44px; border-radius:12px; background:var(--accent-soft); display:flex; align-items:center; justify-content:center; color:var(--accent); transition:transform .3s var(--ease), background .3s var(--ease);}
+.f-card:hover .f-icon{transform:scale(1.08) rotate(-4deg); background:oklch(60.7% 0.205 260.9 / .24);}
 .f-icon svg{width:22px; height:22px;}
 .f-card h3{font-size:17px;}
 .f-card p{color:var(--muted); font-size:14.5px; line-height:1.55;}
@@ -301,6 +348,8 @@ table.compare th:first-child, table.compare td:first-child{width:34%; color:var(
 table.compare th.col-us{color:var(--accent);}
 table.compare td.col-us{font-weight:600;}
 table.compare tr:last-child td{border-bottom:none;}
+table.compare tbody tr{transition:background .2s var(--ease);}
+table.compare tbody tr:hover{background:oklch(100% 0 0 / .035);}
 .chk{display:inline-flex; align-items:center; gap:8px;}
 .chk svg{width:16px; height:16px; color:var(--accent); flex:none;}
 .chk.no svg{color:var(--muted-2);}
@@ -363,6 +412,8 @@ footer{border-top:1px solid var(--border); padding:48px 0;}
 </style>
 </head>
 <body>
+
+<canvas id="dotgrid" aria-hidden="true"></canvas>
 
 <a href="#contenu" class="skip-link">Aller au contenu</a>
 
@@ -739,6 +790,38 @@ cd Trackpad-Hub
   });
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(!reduceMotion && 'IntersectionObserver' in window){
+    var staggerParents = ['.grid-features', '.gestures', '.sec-list', '.install-grid'];
+    var singletons = [
+      '.section-head', '.sec-panel', '#latence .glass', '.compare-wrap',
+      '.install-note', '.os-band', '.final-cta .wrap'
+    ];
+
+    staggerParents.forEach(function(sel){
+      var parent = document.querySelector(sel);
+      if(!parent) return;
+      Array.prototype.forEach.call(parent.children, function(child, i){
+        child.classList.add('reveal');
+        child.style.transitionDelay = (Math.min(i, 5) * 0.07) + 's';
+      });
+    });
+    singletons.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){ el.classList.add('reveal'); });
+    });
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  }
+
   var scene = document.getElementById('scene');
   var group = document.getElementById('deviceGroup');
   if(scene && group && !reduceMotion){
@@ -759,6 +842,83 @@ cd Trackpad-Hub
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
+  }
+
+  var canvas = document.getElementById('dotgrid');
+  if(canvas && !reduceMotion){
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, cols = 0, rows = 0;
+    // les points sont physiquement attirés vers le curseur (gravité), pas seulement
+    // agrandis sur place : chaque point a une position au repos + un décalage qui
+    // rejoint sa cible en douceur (ressort), pour un vrai effet de suivi.
+    var SPACING = 40, RADIUS_BASE = 1, RADIUS_MAX = 3.4, INFLUENCE = 190, MAX_PULL = 22;
+    var mouseX = -9999, mouseY = -9999, active = 0, activeTarget = 0;
+    var offX = null, offY = null, radii = null; // état par point
+
+    var baseColor = [148, 161, 182];   // gris-bleu neutre, au repos
+    var hotColor = [90, 155, 255];     // bleu de marque, sous l'attraction
+
+    function resize(){
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(W / SPACING) + 1;
+      rows = Math.ceil(H / SPACING) + 1;
+      var n = cols * rows;
+      offX = new Float32Array(n);
+      offY = new Float32Array(n);
+      radii = new Float32Array(n).fill(RADIUS_BASE);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    window.addEventListener('mousemove', function(e){
+      mouseX = e.clientX; mouseY = e.clientY; activeTarget = 1;
+    });
+    window.addEventListener('mouseleave', function(){ activeTarget = 0; });
+    window.addEventListener('blur', function(){ activeTarget = 0; });
+
+    function draw(){
+      active += (activeTarget - active) * 0.08;
+      ctx.clearRect(0, 0, W, H);
+      var k = 0;
+      for(var i = 0; i < cols; i++){
+        var hx = i * SPACING; // position au repos (home)
+        for(var j = 0; j < rows; j++, k++){
+          var hy = j * SPACING;
+          var dx = mouseX - hx, dy = mouseY - hy;
+          var dist = Math.sqrt(dx*dx + dy*dy) || 0.0001;
+          var force = active * Math.max(0, 1 - dist / INFLUENCE);
+          force = force * force; // attraction faible au loin, forte près du curseur
+
+          // cible : décalage vers le curseur, borné, qui diminue une fois très proche
+          // (les points se massent AUTOUR du curseur plutôt que de s'empiler dessus).
+          var pull = force * MAX_PULL * (0.35 + 0.65 * Math.min(1, dist / 40));
+          var targetOffX = (dx / dist) * pull;
+          var targetOffY = (dy / dist) * pull;
+
+          offX[k] += (targetOffX - offX[k]) * 0.12; // ressort : suit avec un léger retard
+          offY[k] += (targetOffY - offY[k]) * 0.12;
+
+          var targetR = RADIUS_BASE + (RADIUS_MAX - RADIUS_BASE) * force;
+          radii[k] += (targetR - radii[k]) * 0.15;
+
+          var tc = force * 0.6;
+          var alpha = 0.15 + 0.65 * force;
+          var cr = baseColor[0] + (hotColor[0] - baseColor[0]) * tc;
+          var cg = baseColor[1] + (hotColor[1] - baseColor[1]) * tc;
+          var cb = baseColor[2] + (hotColor[2] - baseColor[2]) * tc;
+          ctx.beginPath();
+          ctx.arc(hx + offX[k], hy + offY[k], radii[k], 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + (cr|0) + ',' + (cg|0) + ',' + (cb|0) + ',' + alpha.toFixed(2) + ')';
+          ctx.fill();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
   }
 })();
 </script>
